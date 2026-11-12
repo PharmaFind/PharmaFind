@@ -2,7 +2,7 @@
 
 > **Base 1.0 (11/11/2026) | Atualização factual do GitHub: 12/11/2026 | Contexto consolidado**
 > **Fontes:** Documento de Visão do PharmaFind (`DOC.PharmaFind.pdf`); materiais da disciplina (`DocumentoRomes.pdf` e `SDD.pdf`); estado do repositório observado em 11–12/11/2026; inspeção direta da organização `PharmaFind/PharmaFind` em 12/11/2026; decisões do grupo informadas à equipe.
-> **Legenda:** `[CONFIRMADO]` decisão expressa do grupo; `[DOCUMENTO]` conteúdo do Documento de Visão; `[OBSERVADO]` estado verificado no código/GitHub, sujeito a mudanças; `[PROPOSTA]` orientação de implementação ainda não aprovada; `[PENDENTE]` detalhe que precisa ser definido; `[ATENÇÃO]` risco/restrição; `[AÇÃO]` próxima providência.
+> **Legenda:** `[CONFIRMADO]` decisão aprovada pelo grupo; `[IMPLEMENTADO]` artefato ou comportamento identificável no código versionado, sem implicar teste de execução; `[VERIFICADO]` fato confirmado por inspeção do código ou do GitHub, com sua origem identificada; `[PROPOSTA]` definição ainda não aprovada; `[PENDENTE]` validação, decisão ou implementação não concluída. Rótulos legados preservados neste arquivo: `[DOCUMENTO]` indica origem no Documento de Visão; `[OBSERVADO]` corresponde a inspeção do repositório, **não** a teste executado; `[ATENÇÃO]` indica risco; `[AÇÃO]` indica providência. A combinação de rótulos não transforma uma proposta em decisão confirmada.
 >
 > **Finalidade:** oferecer a membros da equipe e agentes de IA uma referência comum sobre **o que o PharmaFind é, o que deve fazer, o que já existe, o que fica fora do escopo e como o desenvolvimento será organizado**. Este contexto não substitui a especificação técnica verificável (`docs/SPEC.md`), os testes nem o código.
 >
@@ -43,13 +43,13 @@
 ## 3. Estado atual da implementação (verificação de 12/11/2026)
 
 - [OBSERVADO] **Repositório oficial atual:** https://github.com/PharmaFind/PharmaFind, pertencente à organização GitHub **`PharmaFind`**. A referência antiga `tainayyxy/PharmaFind` descrevia a propriedade anterior e não deve ser usada como URL oficial.
-- [OBSERVADO] A branch padrão é `main`. Existem `develop` e `feature/estrutura-documentacao`.
+- [VERIFICADO] A branch padrão é `main`. Existem `develop`, `feature/estrutura-documentacao` (histórica) e as branches de documentação `feature/2-readme-contexto`, `feature/3-spec-api` e `feature/4-adrs-colaboracao`.
 - [OBSERVADO] A ruleset ativa **“Protecao main e develop”** se aplica a `main` e `develop` e exige PR, **uma aprovação**, resolução das conversas de revisão, bloqueio de exclusão e de atualização não fast-forward. Sua presença foi verificada na API do GitHub; não se afirma que os testes automatizados já sejam exigidos por ela.
 - [OBSERVADO] O **PR #1**, “chore: estrutura inicial de documentação”, foi aprovado por `Lucasdsantosb` e integrado à `develop` em 12/11/2026. Ele criou **dez arquivos vazios intencionalmente**: `README.md`, `CONTEXTO.md`, `CONTRIBUTING.md`, `docs/SPEC.md`, `docs/API.md`, dois ADRs e três templates. Isso comprova somente a criação da estrutura, não a conclusão da documentação.
-- [OBSERVADO] A `main` conserva o código original; a `develop` contém esse código e a estrutura documental. No momento da consulta, não havia Issues identificadas por busca no repositório. O Project não foi auditado.
-- [OBSERVADO] Pastas de implementação: `frontend/` (HTML/CSS/JavaScript) e `database/PharmaFindDB.sql` (estrutura das tabelas MySQL), além de `.vscode/settings.json`.
-- [OBSERVADO] `frontend/consulta.js` usa **dez medicamentos demonstrativos fixados no próprio JavaScript**; sua tela atualmente lista cartões de medicamento/oferta, com filtros locais, sem a seleção seguida de comparação de várias ofertas do mesmo medicamento. `frontend/index.html` ainda inclui links de login e cadastro.
-- [OBSERVADO] Não há backend Java, configuração de execução Java, dados iniciais SQL, testes automatizados ou integração efetiva do front-end ao MySQL no conteúdo inspecionado da `develop`.
+- [VERIFICADO] A `main` conserva o código original; a `develop` contém esse código e a documentação criada inicialmente vazia no PR #1, **preenchida e integrada posteriormente pelos PRs #5, #6 e #7**, todos com destino `develop` e integrados em 12/11/2026. As **Issues #2, #3 e #4 continuam abertas**, apesar da integração dos respectivos PRs. O GitHub Project não foi auditado; não se infere sua existência, configuração ou movimentação.
+- [IMPLEMENTADO/VERIFICADO POR CÓDIGO] Pastas de implementação na `develop`: `frontend/` (HTML/CSS/JavaScript) e `database/PharmaFindDB.sql` (script de criação de tabelas MySQL), além de `.vscode/settings.json`. Esta constatação decorre da inspeção de arquivos e não comprova execução do banco.
+- [IMPLEMENTADO/VERIFICADO POR CÓDIGO] `frontend/consulta.js` contém **dez medicamentos demonstrativos fixados no próprio JavaScript**; a página possui busca textual, filtros de tipo e farmácia, ordenação local por preço e cartões com botão demonstrativo que abre um `alert`, **sem consulta HTTP ao backend**. Não há seleção seguida de comparação de várias ofertas de um mesmo medicamento. `frontend/index.html` ainda inclui links de login e cadastro. A presença dos scripts não equivale à validação funcional no navegador.
+- [VERIFICADO POR INSPEÇÃO] Não há backend Java, configuração de execução Java, dados iniciais SQL, testes automatizados ou integração efetiva do front-end ao MySQL na árvore inspecionada da `develop`; **não foram executados testes de funcionamento nesta auditoria**. O JavaScript `frontend/script.js` obtém coordenadas pelo navegador e as registra em `console.log`, mas **não calcula distâncias de ofertas nem integra o GPS ao MySQL**; CEP e autenticação demonstrativa usam `localStorage` no front-end. O registro de coordenadas no console deve ser revisto antes da entrega integrada.
 - [OBSERVADO] `database/PharmaFindDB.sql` define `USUARIO`, `FARMACIA`, `MEDICAMENTO`, `MEDICAMENTO_FARMACIA` e `HISTORICO_PRECO`. A associação de ofertas possui preço decimal e unicidade medicamento/farmácia, mas **não contém `disponibilidade` nem `data_atualizacao`**. O script não cria o database nem insere dados demonstrativos.
 - [CONFIRMADO] **Não existe código mais recente fora do GitHub que deva ser integrado:** o repositório é o ponto de partida real da continuação.
 - [AÇÃO] Preservar o visual existente; implementar o novo fluxo por Issue e PR; tirar login/cadastro da navegação ativa sem atribuir a mudança a uma implementação já feita.
@@ -148,11 +148,11 @@
 
 - [CONFIRMADO/OBSERVADO] **Branches:** `main` como versão estável, `develop` como integração e `feature/<id-issue>-<descricao>` para novos trabalhos. PRs de `feature/*` para `develop`; PR de integração `develop` para `main` quando houver entrega estável. Já existe `feature/estrutura-documentacao` como branch histórica sem ID de Issue.
 - [OBSERVADO] **Proteção ativa:** uma ruleset cobre `main` e `develop`, exige PR com pelo menos **uma aprovação**, resolve conversas de revisão e impede exclusões e atualizações não fast-forward. Manter a configuração e não adulterar os commits antigos de `main`.
-- [PROPOSTA] **Planejamento:** Issues reais com descrição, responsáveis **disponíveis**, critérios de aceite e dependências; GitHub Project em `Backlog`, `Em andamento`, `Em revisão`, `Concluído`, com movimentação verdadeira e rastreável.
+- [VERIFICADO] **Rastreabilidade inicial:** as Issues #2 (README/contexto), #3 (SPEC/API) e #4 (ADRs/governança) permanecem abertas; os PRs associados #5, #6 e #7 foram integrados à `develop` em 12/11/2026. [PENDENTE] Conferir critérios de aceite e encerramento dessas Issues, responsáveis disponíveis e Project. As colunas `Backlog`, `Em andamento`, `Em revisão` e `Concluído` continuam uma **[PROPOSTA]** de organização, não configuração confirmada.
 - [OBSERVADO/DIRETRIZ] O PR #1 foi aprovado e integrado à `develop` com uma aprovação real. Novos PRs devem trazer mudanças legítimas e revisão de outro integrante; não inventar comentários, commits, aprovadores, refinamentos ou atividade.
-- [PROPOSTA] **README:** visão do produto, objetivos, estado real de implementação, stack confirmada/proposta claramente diferenciadas, instruções de executar **o que já funciona** e links para SPEC, ADRs, Issues e Project.
-- [PROPOSTA] **`docs/SPEC.md`:** problema, requisitos funcionais, não funcionais mensuráveis, regras de negócio numeradas, contratos JSON de entrada/saída com status HTTP e formato de erro, critérios verificáveis e decomposição em unidades vinculáveis às Issues. Endpoints e contratos publicados antes de existir backend devem ser rotulados **propostos**.
-- [PROPOSTA] **ADRs sintéticos** para decisões técnicas de fato tomadas. Uma revisão `v1.0 → v1.1` só conta como evolução quando houver **mudança substantiva justificada** e PR que a registre; não criar diferença cosmética para fabricar evidência.
+- [IMPLEMENTADO/VERIFICADO POR ARQUIVO] **README e CONTEXTO:** `README.md` e `CONTEXTO.md` foram preenchidos na branch `feature/2-readme-contexto` e **integrados à `develop` pelo PR #5** (relacionado à Issue #2). O README distingue a demonstração estática da integração futura, com instruções para os componentes versionados; conteúdo documental não comprova execução do MVP.
+- [IMPLEMENTADO/VERIFICADO POR ARQUIVO] **SPEC e API:** `docs/SPEC.md` e `docs/API.md` foram preenchidos na branch `feature/3-spec-api` e **integrados à `develop` pelo PR #6** (relacionado à Issue #3), com requisitos, regras, cenários e **contratos HTTP/JSON propostos**. A publicação desses contratos **não equivale à aprovação das propostas técnicas nem à implementação de endpoints**.
+- [IMPLEMENTADO/VERIFICADO POR ARQUIVO] **ADRs e colaboração:** `docs/ADR/001` a `005`, `CONTRIBUTING.md` e templates foram preenchidos na branch `feature/4-adrs-colaboracao` e **integrados à `develop` pelo PR #7** (relacionado à Issue #4). Os ADRs distinguem decisões de produto confirmadas de propostas técnicas; o framework Java no ADR004 continua **[PROPOSTA]**. Uma revisão `v1.0 → v1.1` só conta como evolução quando houver **mudança substantiva justificada** e PR que a registre; não criar diferença cosmética para fabricar evidência.
 - [ATENÇÃO] `main` tem commits diretos históricos, anteriores à governança atual; o requisito de “nenhum commit direto em todo o histórico” não é recuperável sem manipular o histórico. Reconhecer a transição e preservar os registros.
 
 ### Desenvolvimento — até 19/11/2026
@@ -178,10 +178,10 @@
 
 1. Confirmar **quem está disponível de fato** e quem pode fazer a revisão de ao menos um PR. Se só uma pessoa estiver online, não fingir uma revisão; antecipar documentação/Issues e registrar o trabalho real.
 2. Repositório já transferido à organização; Lucas coordena a governança e os administradores mantêm as regras. Não reabrir como tarefa uma migração que já aconteceu.
-3. `develop`, ruleset, PR #1 e arquivos vazios já criados: **preencher os documentos** em nova `feature/*`, atualizar templates e testar o fluxo, sem alegar que os arquivos estão concluídos antes do merge.
-4. Produzir a SPEC inicial a partir deste contexto, com contratos propostos, RF/RNF/RN, unidades, critérios de aceite e ligações para as Issues.
-5. Montar Project, abrir Issues reais, atribuir **somente tarefas efetivamente assumidas** e movimentá-las conforme o trabalho.
-6. Fazer PRs com alterações reais e revisão de outro membro, **se houver membro disponível**. Registrar aprimoramento efetivo de SPEC em PR, sem alterações de fachada.
+3. As Issues #2–#4 foram abertas, e os PRs #5–#7 tiveram seus conteúdos documentais **integrados à `develop` em 12/11/2026**. Conferir o atendimento dos critérios de aceite antes de encerrar as Issues, que continuam abertas.
+4. Conferir `CONTEXTO.md`/`README.md` e `docs/SPEC.md`/`docs/API.md` já integrados, harmonizando o contexto com decisões da equipe e mantendo contratos ainda não aprovados como propostas.
+5. Verificar separadamente se há Project configurado, responsáveis disponíveis e movimentação real; não confundir Issues abertas com tarefas concluídas.
+6. Para novas alterações, abrir PRs reais e cumprir a revisão independente prevista na ruleset. Refinamentos substantivos da SPEC exigem justificativa e rastreabilidade, não retoques de fachada.
 7. Conferir tudo pelo link do próprio repositório que será avaliado: branches, proteção, Project, Issues, PRs, README, SPEC e ADRs.
 
 ### 13–19/11: construir o fluxo central
@@ -199,9 +199,9 @@
 2. **Permissões e revisões:** a organização GitHub e a ruleset já existem; conferir administração delegada por integrante, quem pode revisar, e se a ruleset permanece ativa após ajustes futuros.
 3. **Base de testes geográfica:** escolher os **CEPs concretos do Gama/arredores** e suas coordenadas; documentar a origem dos pontos e criar uma resposta clara a CEP não mapeado. A abordagem (mapeamento local) já está decidida.
 4. **Detalhes de persistência:** especificar disponibilidade, data de atualização e regras de validação no SQL, incluindo como uma oferta indisponível será distinguida visualmente.
-5. **Regras técnicas:** fixar na `docs/SPEC.md` empate, arredondamento monetário, ausência de ofertas elegíveis, endpoints/contratos e erros.
+5. **Regras técnicas:** revisar e aprovar (ou ajustar justificadamente) as propostas já escritas em `docs/SPEC.md` e `docs/API.md` na branch `feature/3-spec-api`, incluindo empate, arredondamento, ausência de ofertas elegíveis, endpoints e erros. Documentá-las não equivale a implementá-las.
 6. **Escolha da implementação Java:** avaliar alternativa simples e documentar decisão (Spring Boot/Maven/JUnit são proposta, não requisitos confirmados).
-7. **Evidência de colaboração:** o PR #1 possui aprovação real; não inferir que isso cumpre sozinho todas as exigências. Evolução `SPEC v1.0 → v1.1` exige refinamento verdadeiro, motivo e PR.
+7. **Evidência de colaboração:** os PRs #1, #5, #6 e #7 foram integrados à `develop`; as Issues #2, #3 e #4 permanecem abertas nesta verificação. Conferir critérios de aceite e registros reais de revisão antes de declarar o trabalho concluído. Evolução `SPEC v1.0 → v1.1` exige refinamento verdadeiro, motivo e PR.
 
 8. **Apostila e submissão:** conferir com o professor as exigências do documento `DocumentoRomes.pdf` sobre agente configurado, Docker, harness, evidências e PDF único de submissão. Esses artefatos não foram implementados na etapa de produção dos Markdown.
 
@@ -213,7 +213,7 @@
 
 ## Observação editorial de 12/11/2026
 
-Esta atualização **não altera decisões de produto**. Corrige informações factuais desatualizadas sobre proprietário, branches, proteção, PR, estrutura documental, SQL e implementação. Contratos de API e escolhas técnicas permanecem **propostas**, até revisão da equipe. As datas de entrega são as relatadas pela equipe, não certificações de aceite.
+Esta atualização **não altera decisões de produto**. Corrige informações factuais sobre proprietário, branches, proteção, **Issues #2–#4, PRs #5–#7**, estrutura documental, SQL e implementação. Em 12/11/2026, os PRs #5–#7 já foram integrados à `develop`, mas as Issues correspondentes ainda estavam abertas. Publicar documentação não demonstra execução de funcionalidades nem aprovação automática de propostas técnicas. As datas de entrega são as relatadas pela equipe, não certificações de aceite.
 
 ## 16. Materiais de referência
 

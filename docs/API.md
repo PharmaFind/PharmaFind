@@ -1,8 +1,8 @@
-# PharmaFind — Contratos HTTP/JSON propostos
+# PharmaFind — Contratos HTTP/JSON propostos (alinhados à SPEC v1.1)
 
 **Status de toda esta API: PROPOSTA, NÃO IMPLEMENTADA.**  
-**Documento de referência:** [SPEC v1.0](SPEC.md). **Data:** 12/11/2026.  
-**Linguagem-alvo:** Java; framework e formato de implantação ainda serão definidos em ADR. O repositório atual **não contém servidor nem rotas HTTP**.
+**Documento de referência:** [SPEC v1.1](SPEC.md). **Registro inicial:** 12/11/2026. **Refinamento:** 16/11/2026.  
+**Arquitetura-alvo:** Java 21 + Spring Boot / Spring Web + Spring JDBC, API consumida por React + JavaScript + Vite, conforme ADRs 001/004/006 **submetidos à revisão da equipe**. A árvore atualmente inspecionada **não contém servidor nem rotas HTTP**.
 
 ## 1. Princípios
 
@@ -10,7 +10,7 @@
 - Rotas de **leitura** para visitantes, **sem login e sem painel administrativo**. Preços/disponibilidade são modificados pela equipe **diretamente no MySQL**, fora desta API.
 - Nunca misturar medicamentos por nome parecido: a consulta de ofertas usa **ID exato**, inclusive quando as dosagens diferem (SPEC RN06).
 - Arrays vazios são `[]`; informação não disponível é `null`, e não `0` inventado. Respostas de erro têm formato uniforme.
-- A API não conhece trajetos de ruas, vendas, reservas, disponibilidade comercial real ou medicamentos recomendados.
+- A API não conhece trajetos de ruas, vendas, reservas, disponibilidade comercial real, previsão de preços ou medicamentos recomendados. O histórico demonstrativo (U09) usa dados fictícios persistidos da oferta exata.
 - Todos os exemplos deste documento são **dados artificiais apenas para especificação e teste**. Os IDs, CEPs, preços e datas de exemplo **não descrevem registros já gravados**.
 - Todos os formatos, rotas, critérios de desempate e códigos de erro abaixo dependem de aprovação da equipe em PR antes de virarem contrato implementado.
 
@@ -21,6 +21,7 @@
 | `GET` | `/api/v1/medicamentos?termo={texto}` | Buscar lista de medicamentos por nome completo ou parcial, sem ofertas. | RF01–RF03, RF25, RN06 |
 | `GET` | `/api/v1/medicamentos/{id}` | Ler detalhes de um medicamento específico para seleção. | RF03–RF04, RF26, RN06 |
 | `POST` | `/api/v1/medicamentos/{id}/comparacao` | **Consulta sem alteração de dados**: obter ofertas, resumo econômico e, opcionalmente, distância/ordenação. | RF05–RF23, RF30–RF34, RN01–RN12 |
+| `GET` | `/api/v1/medicamentos/{id}/historico?farmaciaId={id}` | Ler histórico temporal **fictício** de uma oferta medicamento/farmácia, sem modificar preços. | RF35–RF38, RN13/RN14, U09 (#19) |
 
 **Por que POST para comparação?** É uma **proposta** para transportar o GPS no corpo da requisição, em vez de expor coordenadas precisas na URL e no histórico convencional de parâmetros. O endpoint é de leitura (não cria pedido nem modifica ofertas). A equipe pode preferir outro desenho, desde que preserve privacidade, critérios de aceite e documentação.
 
@@ -364,14 +365,14 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 
 **Estado observado:** `database/PharmaFindDB.sql` possui `MEDICAMENTO`, `FARMACIA`, `MEDICAMENTO_FARMACIA`, `USUARIO` e `HISTORICO_PRECO`. O par medicamento/farmácia já tem restrição `UNIQUE`; preço já é `DECIMAL(10,2)`; latitude/longitude da farmácia são `DECIMAL(10,7)`. O script **não** tem disponibilidade nem data de atualização na oferta e **não** insere dados. Portanto, a API definida aqui **depende de migração SQL antes de ser implementada**.
 
-**Sugestão de separação [PROPOSTA]:**
+**Separação de responsabilidades na arquitetura-alvo (ainda não implementada):**
 
 1. **Controller** recebe HTTP, valida campos e devolve códigos/JSON, sem fórmulas monetárias embutidas.
 2. **Service** filtra ofertas válidas/disponíveis, calcula resumo com decimal exato, ordena e calcula distâncias opcionalmente.
 3. **Repository** consulta medicamentos/farmácias/ofertas no MySQL com parâmetros vinculados, sem concatenar entradas do usuário em SQL.
 4. **DTOs** representam os contratos JSON definidos aqui, separando-os das entidades persistidas.
 
-Nenhum nome de classe, framework, biblioteca ou porta é obrigatório enquanto a equipe não aprovar o ADR técnico. Não persistir GPS do usuário; não criar login administrativo para fazer updates no banco; registrar erro sem dados sensíveis.
+O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito à revisão do PR documental. Nomes concretos de classes, versões de dependências e portas só serão registrados após implementação. Não persistir GPS do usuário; não criar login administrativo para fazer updates no banco; registrar erros sem dados sensíveis.
 
 ## 9. Critérios de aceitação do contrato
 
@@ -385,16 +386,83 @@ Nenhum nome de classe, framework, biblioteca ou porta é obrigatório enquanto a
 | **CA-API06** | ID inexistente dá `404`; falha de banco dá `503` sem rastros internos. | CT14; RNF38 |
 | **CA-API07** | Entrada é validada também no servidor e consulta SQL é parametrizada. | CT15; RNF23/RNF24 |
 | **CA-API08** | A resposta mantém nomes/preços/datas fictícios e identifica indisponibilidade. | CT02/CT17; RF20/RF30/RF31 |
+| **CA-API09** | Histórico recupera somente pontos da oferta correspondente ao medicamento e à farmácia consultados, em ordem cronológica. | SPEC CT21/CT23; RF35/RN13 |
+| **CA-API10** | Variação nominal e percentual corretas apenas com dois pontos de datas distintas e preço inicial positivo; caso contrário `null`. | SPEC CT21/CT22; RF37/RF38/RN14 |
+| **CA-API11** | A consulta de histórico não gera valores aleatórios; dados fictícios persistidos e estados vazios estão documentados e verificados. | SPEC CT22/CT24; U09 |
 
 **Status dos testes:** acima são **cenários a executar**, não resultados observados. A implementação deve anexar evidências reais nos PRs; nenhum teste foi executado como parte da redação documental.
 
 ## 10. Decisões em aberto
 
 - Aprovar rotas, nomes de campos, limites de busca e formato de erros deste contrato.
-- Escolher framework Java e estratégia de testes/harness compatível com o ambiente exigido pelo professor.
+- A escolha-alvo Java 21 + Spring Boot + Spring JDBC + Maven e frontend React + JavaScript + Vite foi informada pela coordenação em 16/11; confirmar aceite coletivo via PR e compatibilidade com as exigências do professor, além das versões/testes/harness.
 - Fixar regras de preço válido, empate, arredondamento da média e da distância com atualização explícita da SPEC.
 - Definir esquema SQL para disponibilidade e data de atualização, política de migração e massa fictícia de testes.
 - Selecionar CEPs mapeados e coordenadas e indicar sua procedência; nenhuma cobertura geográfica universal é prometida.
 - Definir eventual política de cache/logs que evite retenção indevida de GPS; exigir HTTPS se houver publicação em produção.
 
 **Não há endpoint `/login`, `/farmacias/atualizar`, `/pagamentos`, `/historico`, `/alertas` ou similar neste MVP.** Estes casos não devem ser implementados só porque tabelas antigas ou a visão preliminar citaram recursos futuros.
+
+## 11. Histórico demonstrativo de preços — U09 (contrato novo proposto)
+
+A decisão de incluir histórico e gráfico no produto foi informada em 16/11/2026. Este endpoint de **leitura** é um acréscimo justificado por U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19); os outros três endpoints da seção 2 permanecem conceitualmente inalterados.
+
+### 11.1 Requisição
+
+```http
+GET /api/v1/medicamentos/10/historico?farmaciaId=2 HTTP/1.1
+Accept: application/json
+```
+
+- `id`: inteiro positivo correspondente ao medicamento exato.
+- `farmaciaId`: inteiro positivo **obrigatório**; o histórico é restrito à oferta formada pelo par medicamento/farmácia.
+- Datas/preços devem vir de `HISTORICO_PRECO` associado à oferta; não gerar uma série aleatória em cada consulta.
+- A gravação de histórico por dia ou por evento dependerá de política explícita de persistência na U09 (a tabela existente usa `DATA_REGISTRO DATE`).
+
+### 11.2 Resposta 200 (dados totalmente fictícios)
+
+```json
+{
+  "medicamentoId": 10,
+  "farmaciaId": 2,
+  "ofertaId": 1,
+  "historico": [
+    { "data": "2026-11-01", "preco": 9.90 },
+    { "data": "2026-11-04", "preco": 10.50 },
+    { "data": "2026-11-12", "preco": 8.99 }
+  ],
+  "resumo": {
+    "primeiroPreco": 9.90,
+    "ultimoPreco": 8.99,
+    "variacaoAbsoluta": -0.91,
+    "variacaoPercentual": -9.19
+  },
+  "avisos": ["Histórico ilustrativo com preços fictícios de demonstração."]
+}
+```
+
+O gráfico React/Chart.js exibe pontos em ordem cronológica crescente, com preço em reais. **Variação absoluta = último − primeiro**; **percentual = (variação absoluta / primeiro) × 100**. Neste exemplo, de R$ 9,90 para R$ 8,99: **−R$ 0,91** e **−9,19%** (arredondamento a duas casas, regra final ainda sujeita à aprovação). `BigDecimal` é a escolha para cálculo monetário no backend, sem confiar no número formatado do frontend.
+
+### 11.3 Histórico insuficiente
+
+Uma oferta com zero pontos deve retornar `200` e `historico: []`; com um ponto, retornar esse ponto. Em ambos os casos, **`variacaoAbsoluta` e `variacaoPercentual` são `null`**, sem gráfico ou tendência fabricada. `primeiroPreco`/`ultimoPreco` podem refletir o único preço existente, e devem ser `null` na ausência total de pontos.
+
+```json
+{
+  "medicamentoId": 10,
+  "farmaciaId": 2,
+  "ofertaId": 1,
+  "historico": [],
+  "resumo": {
+    "primeiroPreco": null,
+    "ultimoPreco": null,
+    "variacaoAbsoluta": null,
+    "variacaoPercentual": null
+  },
+  "avisos": ["Ainda não existem registros históricos para esta oferta fictícia."]
+}
+```
+
+**Tratamento de erros [PROPOSTA]:** `400` para `id`/`farmaciaId` inválidos ou ausentes; `404` para medicamento ou par medicamento/farmácia inexistente; `503` para indisponibilidade de dados; `500` para erro inesperado tratado. Usar o envelope de erro da seção 7. Não usar dados de outra farmácia como fallback nem devolver `0` para variação não calculável.
+
+**Verificações:** CT21–CT24 da SPEC v1.1, além de integridade e testes de persistência registrados em PR. Nenhuma resposta acima comprova implementação ou execução real.

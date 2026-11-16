@@ -2,157 +2,132 @@
 
 > **O melhor preço, de um jeito mais simples.**
 
-**Projeto acadêmico de Programação Web | Análise e Desenvolvimento de Sistemas | UNICEPLAC**  
-Professor: **Romes Heriberto Araújo**  
-Repositório oficial: <https://github.com/PharmaFind/PharmaFind>
+Projeto acadêmico de Programação Web — Análise e Desenvolvimento de Sistemas, UNICEPLAC.  
+Professor: **Romes Heriberto Araújo**.  
+Repositório: <https://github.com/PharmaFind/PharmaFind>.
 
-## 1. O que é o PharmaFind
+## 1. Visão do produto
 
-O **PharmaFind** é uma aplicação web para pesquisar medicamentos e comparar ofertas cadastradas de farmácias. Seu objetivo é reduzir o trabalho de consultar estabelecimentos separadamente, permitindo comparar **preços** e, quando o usuário optar por informar uma localização, **distâncias aproximadas em linha reta**.
+O **PharmaFind** é uma aplicação web de pesquisa de medicamentos e comparação de ofertas de farmácias **fictícias**. Nesta etapa, os dados representam o **Gama (DF) e arredores**. O visitante pesquisa, seleciona um medicamento/apresentação específica, consulta suas ofertas e compara preços. Se optar por informar localização, pode visualizar a distância **aproximada em linha reta**.
 
-O público-alvo inicial são consumidores adultos, com uma demonstração situada no **Gama (DF) e arredores**. O PharmaFind **não indica tratamentos, não recomenda medicamentos e não vende, reserva ou recebe pagamentos**. A compra ocorre fora da aplicação.
+O sistema **não recomenda tratamentos, não vende, não reserva, não processa pagamentos e não disponibiliza ofertas comerciais reais**. Os preços, históricos e farmácias desta demonstração são artificiais e não podem ser usados como referência para compras.
 
-**Aviso acadêmico:** a versão planejada utiliza **farmácias, endereços e preços fictícios**. Nenhuma oferta exibida deve ser interpretada como uma disponibilidade comercial real.
+## 2. Entrega e escopo
 
-## 2. MVP previsto para 19/11/2026
+**Entrega final informada pela equipe: 30/11/2026 (segunda-feira).** A antiga previsão de 19/11 foi substituída. A etapa intermediária de governança e documentação ocorreu em 12/11/2026.
 
-O fluxo-alvo é **pesquisar → selecionar um medicamento específico → visualizar suas ofertas → comparar preços → consultar distância opcional**.
+### Fluxo central (prioridade de implementação)
 
-- Pesquisar por nome completo ou parcial e selecionar o medicamento, sem misturar dosagens ou apresentações diferentes.
-- Mostrar ofertas do medicamento em farmácias fictícias, com preço, disponibilidade, endereço e horário quando cadastrado.
-- Exibir menor preço disponível, média aritmética, economia potencial entre a maior e a menor oferta válida e classificação das ofertas disponíveis do menor para o maior preço.
-- **Manter ofertas indisponíveis visíveis e identificadas**, mas fora dos cálculos e do destaque de melhor preço.
-- Permitir comparação sem localização; opcionalmente, usar **CEPs de teste previamente mapeados** ou GPS do navegador com autorização. A distância em quilômetros será aproximada, **em linha reta**, nunca um trajeto viário.
-- Tratar buscas vazias, medicamento sem ofertas, ausência de ofertas disponíveis, CEP fora da base de teste, geolocalização negada e falhas técnicas.
+- Pesquisar nome completo/parcial e **selecionar o ID exato** do medicamento antes de mostrar ofertas, sem misturar dosagens/apresentações.
+- Listar preço, farmácia, disponibilidade, endereço e horário quando cadastrados.
+- Identificar ofertas **indisponíveis**, mas excluí-las de menor preço, média, economia e ranking das disponíveis.
+- Calcular menor preço, média aritmética, economia potencial entre a maior e a menor oferta válida e ranking por menor preço.
+- Permitir comparar sem localização; CEP de teste mapeado ou GPS consentido permite distância aproximada **em linha reta**, sem rotas ou previsão de deslocamento.
+- Tratar medicamento sem oferta, todas indisponíveis, busca vazia, CEP não mapeado, GPS negado e falhas de integração.
 
-**Fora do MVP:** login/cadastro, pagamento, painel de farmácias, dados reais automáticos, histórico/gráficos de preços, alertas, favoritos e pontuação combinada de preço e distância. O modelo comercial com farmácias parceiras é uma **possibilidade futura**, não uma funcionalidade entregue.
+### Funcionalidades adicionais incluídas no planejamento
 
-## 3. Situação atual do projeto
+- **Histórico de preços com gráfico (U09):** registros fictícios persistidos por medicamento e farmácia; evolução temporal, variação nominal e percentual quando calculáveis. Implementar **depois de assegurar o fluxo principal**, sem previsões ou scraping. [Issue #19](https://github.com/PharmaFind/PharmaFind/issues/19).
+- **Revisão integral do frontend (U10):** auditar páginas, responsividade, navegação, acessibilidade e **as observações reais do professor**, ainda a registrar na Issue antes de afirmar correções. [Issue #20](https://github.com/PharmaFind/PharmaFind/issues/20).
 
-**Verificado na branch `develop` em 12/11/2026:**
+**Fora da entrega:** autenticação/cadastro no fluxo público, painel administrativo de farmácias, pagamentos, pedidos, integração automática de preços reais, recomendações clínicas, favoritos, alertas, previsão de preços, score combinado preço/distância, geocodificação de qualquer CEP e rotas por ruas.
 
-| Componente | Situação |
+## 3. Estado real do repositório — verificação de 16/11/2026
+
+| Componente | Estado **verificado por inspeção de arquivos** |
 |---|---|
-| Front-end HTML/CSS/JavaScript | **Existe:** páginas navegáveis e consulta demonstrativa com lista fixa em JavaScript. Ainda não corresponde ao fluxo final de múltiplas ofertas por medicamento. |
-| Banco de dados | **Existe o script de estrutura** `database/PharmaFindDB.sql`. Não há massa inicial de demonstração nem integração em execução. |
-| Backend Java / API HTTP | **Planejado; não implementado** no repositório inspecionado. |
-| Consulta de ofertas por medicamento, estatísticas e localização calculada | **Planejadas; não implementadas** de ponta a ponta. |
-| Testes automatizados, agente e Docker | **Não encontrados** no repositório inspecionado. Verificar exigências do professor e acompanhar via Issues. |
-| Documentação | A estrutura de arquivos foi criada vazia no PR #1, aprovado e integrado à `develop`; o conteúdo deste pacote é **proposto para revisão e futura publicação**. |
+| Frontend | Páginas HTML/CSS/JavaScript e busca demonstrativa com dados fixos em `frontend/consulta.js`. **Ainda não é React** nem consome API Java. |
+| Banco MySQL | Existe `database/PharmaFindDB.sql` com tabelas e `HISTORICO_PRECO`; **sem seed demonstrativa, disponibilidade/data de atualização na oferta ou integração Java**. |
+| Backend Java / Spring Boot | **Não implementado** na árvore consultada. |
+| API, comparação persistida, distância calculada e gráfico | **Planejados, não implementados** na integração atual. |
+| Testes, agentes e ambiente | Testes e builds Java/React ainda não existem. `AGENTS.md` documenta orientações para agentes, **não comprova um agente instalado**. |
+| Governança GitHub | `main` e `develop` protegidas por regras de PR/revisão. PRs #5–#8 foram integrados à `develop`; PR [#9](https://github.com/PharmaFind/PharmaFind/pull/9) foi **aprovado pela Tainá e integrado à `main` em 16/11/2026**. |
+| Trabalho rastreado | Unidades U01–U08 em Issues #10–#17, histórico U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), auditoria frontend U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e revisão documental [#18](https://github.com/PharmaFind/PharmaFind/issues/18). Responsáveis de implementação ainda não confirmados. |
 
-Não existe uma versão integrada Java + MySQL que possa ser executada hoje com um único comando. As instruções seguintes descrevem **apenas os componentes realmente disponíveis**.
+Essa tabela **não é laudo de testes executados**: a verificação foi dos arquivos versionados e dos registros do GitHub.
 
-## 4. Tecnologias
+## 4. Arquitetura escolhida para orientar o desenvolvimento
 
-| Tecnologia | Estado no projeto |
+As tecnologias abaixo foram **indicadas pela coordenação em 16/11/2026**, sujeitas à revisão da equipe neste PR documental. A escolha não significa que estejam instaladas ou implementadas.
+
+| Camada | Escolha para implementação |
 |---|---|
-| HTML, CSS e JavaScript | **Em uso** no front-end existente. |
-| Pico CSS (via CDN), Google Fonts e imagens externas | **Referenciados** nas páginas atuais; dependem de acesso à internet para carregar esses recursos. |
-| MySQL | **Definido** como banco do MVP; existe script SQL de esquema, ainda sem integração de backend. |
-| Java | **Definido** como linguagem para backend; implementação pendente. |
-| Framework Java (por exemplo, Spring Boot), Maven, JUnit | **Propostas em avaliação**, sem decisão final ou configuração publicada. |
+| Frontend | **React + JavaScript + Vite**, reutilizando o CSS/identidade visual atual; **sem TypeScript**. |
+| Backend | **Java 21 + Spring Boot (Spring Web)**, API REST/JSON. |
+| Persistência | **Spring JDBC / JdbcTemplate** + **MySQL**. |
+| Build | Maven (Java) e npm/Vite (frontend). |
+| Gráficos | **Chart.js**, possivelmente via `react-chartjs-2`, para U09. |
+| Testes | JUnit/Spring Boot Test para Java e Vitest para frontend, **planejados**. |
+| Organização | GitHub Issues, Kanban, branches `feature/*`, PR para `develop`, revisão humana. |
 
-A seção de stack no Documento de Visão é preliminar. As escolhas técnicas serão formalizadas em [ADRs](docs/ADR/).
+As versões exatas de Spring Boot/Node e as configurações de execução serão documentadas quando definidas e verificadas. O frontend deverá consumir a API descrita em [docs/API.md](docs/API.md). As decisões estão explicadas nos [ADRs](docs/ADR/), em especial [ADR 004](docs/ADR/004-backend-java.md) e [ADR 006](docs/ADR/006-frontend-react.md).
 
-## 5. Como executar o que já existe
+## 5. Como executar **o que realmente existe**
 
-### 5.1 Front-end de demonstração
+### Frontend legado demonstrativo
 
-1. Clone o repositório:
+```bash
+git clone https://github.com/PharmaFind/PharmaFind.git
+cd PharmaFind
+git switch develop
+```
 
-   ```bash
-   git clone https://github.com/PharmaFind/PharmaFind.git
-   cd PharmaFind
-   git switch develop
-   ```
-2. Abra o arquivo `frontend/index.html` em um navegador moderno, **ou** utilize um servidor local estático (por exemplo, a extensão *Live Server* do VS Code) apontando para a pasta `frontend/`.
-3. Navegue até `frontend/consulta.html` e pesquise os itens demonstrativos. A busca e os filtros usam dados fixos em `frontend/consulta.js`.
+Abra `frontend/index.html` no navegador ou use um servidor estático local, por exemplo o **Live Server** do VS Code, apontando para `frontend/`. A página `frontend/consulta.html` usa uma lista fixa em `frontend/consulta.js`, ainda sem acesso HTTP ao backend. Os botões de oferta são demonstrativos. Alguns elementos de autenticação/CEP pertencem à interface legada e serão revisados em U06/U10.
 
-**Limitações atuais:** o botão “Ver oferta” exibe um `alert` demonstrativo; ainda não há requisições a API Java nem consulta ao banco. Elementos de login/cadastro e localização visíveis no front-end existente **não demonstram o MVP final**. Recursos de GPS no navegador normalmente exigem origem segura (`https://` ou `localhost`), além de consentimento.
+**Ainda não existem comandos reais para iniciar React, Spring Boot ou testes integrados.** Eles serão acrescentados quando os respectivos projetos forem implementados e seus comandos executados por outro integrante.
 
-### 5.2 Estrutura do banco de dados, isoladamente
+### Esquema MySQL isolado
 
-Pré-requisito: MySQL instalado e acesso a uma instância local. O script `database/PharmaFindDB.sql` define tabelas, **mas não cria o banco nem insere registros**.
-
-No **MySQL Workbench**, crie um schema de desenvolvimento (por exemplo, `pharmafind`), selecione-o como padrão e execute o conteúdo de `database/PharmaFindDB.sql` **uma única vez**. Alternativamente, no terminal com cliente MySQL:
+O script `database/PharmaFindDB.sql` define tabelas, **mas não cria o banco nem insere registros**. Com MySQL local e permissão adequada:
 
 ```bash
 mysql -u root -p -e "CREATE DATABASE pharmafind CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 mysql -u root -p pharmafind < database/PharmaFindDB.sql
 ```
 
-Os comandos assumem que o schema ainda não existe e que o usuário possui permissão. Para reutilizar um schema já criado, não repita o `CREATE DATABASE` ou o script de `CREATE TABLE` sem avaliar as consequências. **Isso não sobe uma aplicação:** apenas cria a estrutura de tabelas presente no repositório.
+Execute a criação somente em banco novo; não repita comandos destrutivos sobre dados existentes. Isso cria apenas tabelas e **não sobe aplicação integrada**. A U01 deve fornecer migração e massa fictícia reproduzíveis, inclusive pontos do histórico para U09.
 
-## 6. Estrutura do repositório
-
-O conteúdo abaixo distingue **código existente** de **arquivos documentais preparados para inclusão na `develop`**:
+## 6. Organização do repositório
 
 ```text
 PharmaFind/
-├── .github/                        # templates de Issue e PR (documentação proposta)
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── feature.md
-│   │   └── bug.md
-│   └── PULL_REQUEST_TEMPLATE.md
-├── .vscode/
-│   └── settings.json
+├── .github/                # Templates de Issue e PR
+├── .vscode/                # Configuração de desenvolvimento existente
+├── frontend/               # Páginas legadas HTML/CSS/JS, ainda sem React
 ├── database/
-│   └── PharmaFindDB.sql            # esquema atual, ainda sem dados de exemplo
-├── frontend/                       # HTML, CSS e JS existentes
-│   ├── index.html
-│   ├── consulta.html
-│   ├── consulta.js
-│   ├── como-funciona.html
-│   ├── sobre.html
-│   ├── login.html                   # legado, fora do fluxo-alvo do MVP
-│   ├── conta.html                   # legado, fora do fluxo-alvo do MVP
-│   ├── script.js
-│   ├── auth.js
-│   ├── login.js
-│   ├── conta.js
-│   └── style.css
+│   └── PharmaFindDB.sql    # Esquema inicial sem seed
 ├── docs/
-│   ├── ADR/
-│   │   ├── 001-arquitetura.md
-│   │   ├── 002-governanca-git.md
-│   │   ├── 003-persistencia-demonstrativa.md
-│   │   ├── 004-backend-java.md
-│   │   └── 005-localizacao.md
-│   ├── API.md                       # contratos HTTP propostos
-│   └── SPEC.md                      # especificação SDD v1.0 para revisão
+│   ├── API.md              # Contratos HTTP/JSON propostos
+│   ├── SPEC.md             # SPEC v1.1, refinamento documental
+│   └── ADR/                # Decisões 001 a 006 (ver status de cada ADR)
+├── AGENTS.md               # Orientações para agentes, não instalador de IA
 ├── CONTRIBUTING.md
 ├── CONTEXTO.md
 └── README.md
 ```
 
-**Nota:** os três ADRs numerados de 003 a 005 são **novos arquivos propostos neste pacote**. `main` ainda não possui esses documentos; a publicação depende de PRs revisados.
+**Ainda não existe diretório de implementação Java nem um frontend React** nesta verificação. O layout de pastas será atualizado pelas Issues U02/U06, em vez de descrever uma estrutura fictícia agora.
 
-## 7. Equipe e responsabilidades
+## 7. Equipe
 
-| Integrante | Responsabilidade indicada |
+| Integrante | Papel informado |
 |---|---|
-| Lucas Marques Almeida (`@lucasmarques07`) | Scrum Master; governança GitHub e apoio ao banco |
-| Tainá do Amaral Melo (`@tainayyxy`) | Desenvolvimento |
-| Everton Gabriel da Cunha (GitHub a confirmar) | Desenvolvimento |
+| Lucas Marques (`@lucasmarques07`) | Scrum Master, governança e apoio ao banco |
+| Tainá (`@tainayyxy`) | Desenvolvimento |
+| Everton (`@MrEve3`) | Desenvolvimento; GitHub confirmado em 16/11 |
 | Lucas dos Santos Bezerra (`@Lucasdsantosb`) | Desenvolvimento |
-| Júlia Gabrielle da Silva Lima | Análise de requisitos |
-| Roberto Carlos Martins | Product Owner; prioridades e aceite |
+| Júlia Gabrielle | Análise de requisitos |
+| Roberto Carlos | Product Owner |
 
-Funções acadêmicas não equivalem automaticamente a atribuições em Issues. A equipe define responsáveis de acordo com a disponibilidade real.
+Papéis não equivalem a atribuição automática das Issues. Cada responsável será designado **após confirmar com o time**.
 
-## 8. Colaboração e documentação
+## 8. Trabalho, rastreabilidade e documentos
 
-O repositório adota **Spec-Driven Development (SDD)**: antes de implementar uma funcionalidade, a equipe verifica as regras, o escopo e os critérios de aceite na SPEC. As alterações seguem o fluxo **Issue → `feature/*` → Pull Request para `develop` → revisão humana → integração**. Entregas estáveis podem ser promovidas de `develop` a `main` por PR revisado.
+- [Issues de implementação #10–#17](https://github.com/PharmaFind/PharmaFind/issues), U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e atualização da SPEC v1.1 [#18](https://github.com/PharmaFind/PharmaFind/issues/18).
+- [CONTEXTO.md](CONTEXTO.md): situação e decisões; [SPEC.md](docs/SPEC.md): requisitos e testes; [API.md](docs/API.md): contratos propostos.
+- [ADRs](docs/ADR/): escolhas e suas justificativas; [AGENTS.md](AGENTS.md): instruções para agentes; [CONTRIBUTING.md](CONTRIBUTING.md): contribuição e revisão.
+- Fluxo de entrega: **Issue → feature/* → PR para develop → revisão humana → merge**; entregas estáveis vão à `main` por PR revisado.
 
-A ruleset ativa de `main` e `develop` exige pelo menos **uma aprovação** e resolução de conversas de revisão, além de bloquear exclusão e atualizações não fast-forward. Testes automatizados são uma meta exigida no material acadêmico, **não uma capacidade já existente**.
+A documentação será atualizada conforme mudanças efetivamente implementadas. **Nenhuma aprovação de PR demonstra, por si só, que a aplicação ou testes integrados funcionam.**
 
-Documentos de referência:
-
-- [Contexto consolidado e decisões](CONTEXTO.md)
-- [Especificação técnica SDD](docs/SPEC.md)
-- [Contratos HTTP/JSON propostos](docs/API.md)
-- [Decisões arquiteturais e de governança](docs/ADR/)
-- [Guia de contribuição](CONTRIBUTING.md)
-- [Issues](https://github.com/PharmaFind/PharmaFind/issues) e [Pull Requests](https://github.com/PharmaFind/PharmaFind/pulls)
-
-**Última verificação documental:** 12/11/2026. O README distingue propositalmente plano, código existente e pendências; será atualizado conforme os PRs forem efetivamente integrados.
+**Última verificação documental:** 16/11/2026; revisão submetida à equipe por PR vinculado à Issue #18.

@@ -1,7 +1,7 @@
 # ADR 002 — Governança do GitHub por branches e revisão
 
 - **Status:** **Aceita / observada em operação**.
-- **Data da verificação:** 12/11/2026.
+- **Data da verificação original:** 12/11/2026; **nova verificação:** 16/11/2026.
 - **Repositório:** <https://github.com/PharmaFind/PharmaFind>.
 
 ## 1. Contexto
@@ -14,7 +14,7 @@ Usar `main` para o estado estável, `develop` para integração e branches `feat
 
 A ruleset **“Protecao main e develop”**, verificada como **ativa**, cobre ambas as branches e exige **um review aprovando**, conversas de revisão resolvidas, bloqueio de exclusão e bloqueio de atualização não fast-forward. A regra foi observada no GitHub, **não inventada**.
 
-**Evidência real:** [PR #1](https://github.com/PharmaFind/PharmaFind/pull/1), com os arquivos vazios de documentação, foi aprovado por `Lucasdsantosb` e integrado à `develop` em 12/11/2026.
+**Evidências reais:** [PR #1](https://github.com/PharmaFind/PharmaFind/pull/1) integrou a estrutura inicial à `develop` em 12/11; PRs #5–#8 documentaram e consolidaram conteúdo na `develop`; [PR #9](https://github.com/PharmaFind/PharmaFind/pull/9) foi revisado e aprovado por `@tainayyxy` e integrado à `main` em **16/11/2026**. U01–U08 estão nas Issues #10–#17; revisão documental #18, histórico U09 #19 e auditoria de frontend U10 #20 foram criadas. Issues abertas não significam execução concluída.
 
 ## 3. Justificativa
 
@@ -32,4 +32,4 @@ Cada nova tarefa requer coordenação de revisor disponível; não é possível 
 
 ## 6. Status da decisão
 
-**Aceita / em uso.** A governança foi comprovada por configuração real e pelo PR #1. Questões futuras, como atribuição de permissões individuais e fluxo do GitHub Project, continuam operacionais e devem ser verificadas sem presumir resultados.
+**Aceita / em uso.** A governança foi comprovada por configuração real e pelo PR #1. O usuário demonstrou a criação do **GitHub Project Kanban**, mas detalhes de acessos e movimentação dos cartões não foram verificados por API. Responsáveis serão atribuídos após confirmação real com a equipe. As aprovações e merges devem continuar humanos e rastreáveis.

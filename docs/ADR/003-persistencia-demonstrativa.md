@@ -1,7 +1,7 @@
 # ADR 003 — Persistência em MySQL e dados de demonstração
 
 - **Status:** **Aceita para a escolha MySQL e dados fictícios**; evolução do esquema **pendente**.
-- **Data de registro:** 12/11/2026.
+- **Data de registro:** 12/11/2026; **atualização de escopo:** 16/11/2026.
 
 ## 1. Contexto
 
@@ -25,8 +25,8 @@ O MySQL já foi escolhido pela equipe e existe um esquema inicial reaproveitáve
 
 ## 5. Consequências
 
-Criar scripts de dados de teste e migração, conferir integridade referencial e assegurar que o backend consulta MySQL. A tabela `HISTORICO_PRECO` pode permanecer no esquema legado **sem implementar gráficos/histórico analítico** nesta entrega. Não expor dados fictícios como ofertas comerciais reais.
+Criar scripts de dados de teste e migração, conferir integridade referencial e assegurar que o backend consulta MySQL. O histórico de preços com gráfico foi incluído no planejamento em 16/11 (U09, Issue #19). A tabela `HISTORICO_PRECO` **já existe**, mas não há massa fictícia histórica, política de registros ou consultas implementadas. Sua migração/uso deve preservar vínculo com a oferta exata medicamento/farmácia, com datas e valores reproduzíveis. Não expor dados fictícios como ofertas comerciais reais.
 
 ## 6. Status da decisão
 
-**Aceita:** banco MySQL, base fictícia e atualização pela equipe. **Pendente:** detalhes da migração, campos de disponibilidade/atualização, conjunto de farmácias e medicamentos e aprovação de validações propostas na SPEC.
+**Aceita:** banco MySQL, base fictícia e atualização pela equipe. **Pendente:** detalhes da migração, campos de disponibilidade/atualização, conjunto de farmácias e medicamentos, política para histórico por dia ou por evento (o campo legado é `DATA_REGISTRO DATE`) e aprovação das validações propostas na SPEC v1.1.

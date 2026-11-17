@@ -4,6 +4,14 @@
 >
 > **Entrega final:** 30/11/2026. O guia foi preparado para permitir que a equipe comece sem exigir assinatura paga de IA. O detalhamento final dos comandos de React, Java e MySQL dependerá do código efetivamente entregue.
 
+## Como usar este manual
+
+**Para integrantes novos:** comece pela seção **8.1 (diagnóstico PowerShell)**; instale **somente** as ferramentas ausentes pela seção **8.2**; resolva problemas comuns nas seções **8.3–8.5**; depois siga a seção **3 (clonar e testar o agente)** e a seção **4 (fluxo por Issue)**. Por fim, execute as verificações da seção **8.6**.
+
+**Para o Scrum Master:** acompanhe o checklist da seção **6** e registre as evidências reais na [Issue U08 #17](https://github.com/PharmaFind/PharmaFind/issues/17).
+
+> Os comandos Windows/PowerShell abaixo foram **revisados e parcialmente testados em um computador**. Não se deve assumir que foram executados ou funcionam em todas as máquinas. A execução completa do React + Spring Boot + MySQL ainda depende das unidades de implementação.
+
 ## 1. Objetivo: preparar uma vez, desenvolver depois
 
 Cada integrante precisa conseguir (a) clonar o repositório, (b) abrir o projeto no VS Code, (c) utilizar um assistente de programação com sua própria conta, (d) consultar as instruções do projeto, (e) trabalhar em sua própria branch e (f) executar/verificar sua tarefa.
@@ -117,7 +125,7 @@ A etapa inicial acima prepara o processo, **mas não fecha a Issue #17**. Serão
 
 ## 8. Guia prático para Windows / PowerShell (teste real de 16/11/2026)
 
-O primeiro diagnóstico da equipe identificou: **Git funcionando**, **Java 24 instalado (projeto padronizado em JDK 21)**, **Node 22.13.1 presente**, **`npm.ps1` bloqueado pela política do PowerShell** e **comando `mysql` não encontrado (servidor/cliente possivelmente ausente ou fora do PATH)**. **Nenhuma instalação foi executada nem validada neste documento.**
+O primeiro diagnóstico em **um computador do projeto** identificou: **Git funcionando**, **Java 24 instalado (projeto padronizado em JDK 21)**, **Node 22.13.1 presente**, **`npm.ps1` bloqueado pela política do PowerShell** e **comando `mysql` não encontrado (servidor/cliente possivelmente ausente ou fora do PATH)**. **Os testes do piloto estão registrados nas seções 8.4 e 8.5; os demais computadores e a integração do projeto continuam pendentes.**
 
 ### 8.1 Diagnóstico que cada integrante deve executar
 
@@ -161,7 +169,7 @@ winget install --id Oracle.MySQL --exact --interactive
 
 **Atenção:** o pacote `OpenJS.NodeJS.LTS` acompanha a versão LTS mais recente no repositório WinGet, que **pode ser diferente de Node 22**. No primeiro diagnóstico, **Node 22.13.1 já é compatível com o Vite 8** e não precisa ser reinstalado só para ficar com a versão mais nova. A equipe fixará a versão efetivamente testada quando o frontend existir. Confira o pacote com `winget show --id <ID> --exact` antes de instalar; os instaladores podem solicitar permissão de administrador. Após instalar, **feche e reabra o terminal do VS Code**.
 
-**MySQL:** o pacote MSI oficial MySQL 8.4 instala também o **MySQL Configurator**; **execute o configurador** após a instalação para criar a instância local, configurar o serviço e cadastrar uma senha segura. Baixar o MSI não garante um servidor executando. Também é possível obter o instalador manualmente em <https://dev.mysql.com/downloads/mysql/>. Não envie a senha do MySQL no chat, no GitHub ou em capturas.
+**MySQL:** antes de instalar, confira se já existe uma instância configurada e funcionando. Se usar o pacote MSI oficial MySQL 8.4, será necessário **executar o MySQL Configurator** para preparar a instância local, configurar o serviço e definir uma senha segura. Baixar o MSI não garante um servidor executando. Também é possível obter o instalador manualmente em <https://dev.mysql.com/downloads/mysql/>. Não envie a senha do MySQL no chat, no GitHub ou em capturas.
 
 ### 8.3 Erro `npm.ps1` bloqueado no PowerShell
 
@@ -178,50 +186,71 @@ Alternativamente, use **Command Prompt (cmd.exe)** no VS Code. Somente se o usu�
 
 ### 8.4 Java 24 instalado, mas projeto Java 21
 
-Java 24 **não está necessariamente quebrado**; o grupo escolheu **Java 21** como base do backend, para manter builds e bibliotecas padronizados. É possível instalar JDK 21 **ao lado** do Java 24, sem desinstalar o anterior. Após instalar JDK 21, verifique:
+O grupo escolheu **JDK 21 LTS** para o backend. É possível manter outras versões de Java instaladas; **o que importa é a versão ativa de `java` e `javac`**. Ter JDK 21 instalado **não garante** que ele esteja primeiro no `PATH`.
+
+Feche/reabra o VS Code após instalar o JDK e rode:
 
 ```powershell
-Get-ChildItem "C:\Program Files\Eclipse Adoptium" -Directory -ErrorAction SilentlyContinue
-where.exe java
 java -version
 javac -version
+where.exe java
+Get-ChildItem -Path "$env:ProgramFiles\Eclipse Adoptium", "$env:LOCALAPPDATA\Programs\Eclipse Adoptium" -Directory -ErrorAction SilentlyContinue |
+  Where-Object { $_.Name -like "jdk-21*" }
 ```
 
-Se `java -version` ainda resolver Java 24, a opção **temporária para o terminal atual** é descobrir a pasta real instalada e usar:
+Se os dois comandos já mostram **21**, essa etapa está pronta **na sessão atual**. Se outro Java for selecionado, use temporariamente a instalação local encontrada, sem desinstalar o Java existente:
 
 ```powershell
-$jdk21 = Get-ChildItem "C:\Program Files\Eclipse Adoptium" -Directory -ErrorAction SilentlyContinue |
-  Where-Object { $_.Name -like "jdk-21*" } |
+$jdk21 = Get-ChildItem -Path "$env:ProgramFiles\Eclipse Adoptium", "$env:LOCALAPPDATA\Programs\Eclipse Adoptium" -Directory -ErrorAction SilentlyContinue |
+  Where-Object { $_.Name -like "jdk-21*" -and (Test-Path (Join-Path $_.FullName "bin\java.exe")) } |
+  Sort-Object LastWriteTime -Descending |
   Select-Object -First 1
+
 if ($null -eq $jdk21) {
-  Write-Host "JDK 21 nao encontrado nessa pasta. Confira a instalacao." -ForegroundColor Yellow
+  Write-Host "JDK 21 nao encontrado. Confira a instalacao." -ForegroundColor Yellow
 } else {
   $env:JAVA_HOME = $jdk21.FullName
   $env:Path = "$env:JAVA_HOME\bin;$env:Path"
+  Write-Host "Usando: $env:JAVA_HOME"
   java -version
   javac -version
 }
 ```
 
-Essas variáveis são aplicadas **apenas à sessão atual do PowerShell**; não alteram a configuração permanente do Windows. O projeto backend deverá incluir Maven Wrapper `mvnw.cmd` e configurar a versão de compilação Java 21 em U02. Não presumir o Wrapper existente agora.
+**Essa solução só altera o terminal atual.** Para uso persistente, configurar `JAVA_HOME` e o `PATH` de usuário no Windows e repetir a verificação após reabrir VS Code. Não alterar o PATH de outros softwares sem necessidade. O backend deverá usar Java 21 e Maven Wrapper `mvnw.cmd` quando a U02 fornecer esses arquivos.
 
-### 8.5 MySQL instalado, mas não aparece no terminal
+**Evidência do piloto (16/11):** `java -version` retornou **Temurin 21.0.13 LTS** e `javac -version` retornou **21.0.13** em um terminal do responsável. A persistência após reiniciar VS Code **não foi comprovada**.
 
-Depois de instalar e configurar o servidor, rode:
+### 8.5 MySQL existente, serviço parado ou cliente fora do PATH
+
+**Antes de instalar qualquer MySQL, verifique se já existe um servidor configurado.** Uma pasta ou MSI instalado não prova que o serviço está ativo, e versões 8.0 e 8.4 podem coexistir sem que ambas tenham instâncias configuradas.
 
 ```powershell
 Get-Service -Name "MySQL*" -ErrorAction SilentlyContinue
-Get-ChildItem "C:\Program Files\MySQL" -ErrorAction SilentlyContinue
+Get-ChildItem "C:\Program Files\MySQL" -Directory -ErrorAction SilentlyContinue
 ```
 
-Se existir o arquivo abaixo (instalação padrão do MySQL 8.4), execute **o caminho completo**:
+Se já houver o serviço `MySQL80` em `Stopped`, confirme que é uma instalação **sua**, com dados que deseja preservar, antes de mexer nela. Se precisar iniciar, abra PowerShell **como administrador** e execute:
 
 ```powershell
-& "C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe" --version
-& "C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe" -u root -p -e "SELECT VERSION();"
+Start-Service -Name MySQL80
+Get-Service -Name MySQL80
 ```
 
-O segundo comando pede a senha de forma interativa e testa a conexão **sem mostrar a senha no comando**. Se a pasta for diferente, adapte o caminho real da instalação. Não é necessário alterar o PATH para utilizar o cliente com caminho completo. O servidor pode exigir inicialização pelo MySQL Configurator/serviços do Windows.
+Se o serviço não iniciar, registre o erro; **não reinstale nem apague a pasta de dados como primeira medida**.
+
+Para testar o MySQL 8.0 instalado no caminho padrão:
+
+```powershell
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" --version
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -h 127.0.0.1 -P 3306 -u root -p -e "SELECT @@version AS versao, @@port AS porta, @@datadir AS pasta_dados;"
+```
+
+Se a máquina usar **somente MySQL 8.4**, substitua `MySQL Server 8.0` pelo diretório **real** `MySQL Server 8.4` do cliente. O `-p` pede a senha local interativamente; **não colocar a senha no comando, no chat, no README ou em capturas**. O cliente `mysql.exe` não precisa estar no PATH quando executado pelo caminho completo.
+
+**Caso não exista uma instalação configurada:** instale e configure **uma única instância** local de MySQL, definindo porta e senha no MySQL Configurator. Evite criar duas instâncias na mesma porta `3306`. Em caso de instalação antiga com dados, faça backup e combine com o responsável antes de qualquer migração, atualização ou desinstalação.
+
+**Evidência do piloto (16/11):** MySQL80 em **Running**, conexão TCP `127.0.0.1:3306` autenticada e `SELECT` retornando **MySQL 8.0.45** e a pasta de dados configurada. Isso confirma o servidor local de teste, **não a criação das tabelas PharmaFind**. A equipe deve definir e testar uma versão comum do banco antes de declarar o ambiente integrado aprovado.
 
 ### 8.6 Conferência final de versões
 

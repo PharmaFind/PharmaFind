@@ -117,3 +117,18 @@ Uma tarefa somente pode ser considerada **concluída** quando:
 - [ ] O código foi integrado à branch correta e a Issue/Project foi atualizado conforme o trabalho **real**.
 
 **Exigências adicionais da apostila:** o professor também descreve ambiente reproduzível, agente de IA e test harness com casos de borda. Como esses artefatos **ainda não constam** da versão inspecionada, precisam de Issues próprias e evidências de execução; não são substituídos por este guia.
+
+## 10. Desenvolvimento com agentes de IA
+
+As implementações podem ser produzidas com apoio de **agentes de IA orientados pelos desenvolvedores**, mas cada integrante continua responsável por executar, compreender, integrar e revisar o trabalho. Leia [AGENTS.md](AGENTS.md) antes de utilizar um agente. Agentes não substituem aprovações humanas.
+
+**Stack-alvo informada pela coordenação em 16/11, sob revisão da equipe:** frontend React + **JavaScript (sem TypeScript)** + Vite, aproveitando CSS existente; backend Java 21 + Spring Boot + Spring JDBC + Maven; MySQL. Chart.js será usado no histórico fictício de preços U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19). A auditoria visual/UX de todas as páginas será acompanhada em U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20), com observações exatas do professor a registrar.
+
+- **Não instalar tecnologias desnecessárias** nem presumir estrutura React/Java que ainda não existe. Exigências acadêmicas de JSP/Servlets e outras ferramentas devem ser verificadas antes de consolidar implementação.
+- **Coordenar interfaces e contratos** entre frontend/backend/banco conforme SPEC v1.1 e API; informar imediatamente alterações que afetem outros integrantes.
+- **Registrar feedback do professor** de forma verificável na Issue #20; não fabricar problemas ou evidências de correção.
+- **Testar de verdade e registrar os resultados:** JUnit/Spring Boot Test e Vitest são planejados, ainda não configurados. Testes não executados devem constar como pendentes.
+- **Separar o estado:** escolha da stack, implementação, execução de testes e aceite do PR são fatos diferentes. A publicação de documentos não significa que o sistema integrado funciona.
+- **Revisão cruzada:** mesmo que uma IA escreva o código, o autor humano do PR não pode ser seu único revisor; manter proteção `main`/`develop` e critérios de aceite.
+
+**Entrega final informada pela equipe: 30/11/2026.** A antiga previsão de 19/11 foi substituída, mas marcos anteriores do GitHub permanecem no histórico.

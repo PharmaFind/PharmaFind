@@ -1,34 +1,38 @@
-# ADR 001 — Organização arquitetural do PharmaFind
+# ADR 001 — Arquitetura em camadas do PharmaFind
 
-- **Status:** **Proposta** (organização das camadas ainda não aprovada).
-- **Data de elaboração:** 12/11/2026.
-- **Escopo:** arquitetura do MVP, sem decidir framework Java neste registro.
+- **Status:** **Escolha arquitetural informada pela coordenação, sujeita à revisão da equipe no PR da Issue #18.**
+- **Registro inicial:** 12/11/2026; **refinamento:** 16/11/2026.
 
 ## 1. Contexto
 
-O PharmaFind possui front-end HTML/CSS/JavaScript e esquema SQL MySQL, mas ainda não possui backend Java integrado. O Documento de Visão cita MVC e uma arquitetura em camadas, porém o `CONTEXTO.md` esclarece que essa seção era provisória. O sistema precisa separar consultas, regras de comparação e persistência para cumprir a SPEC e permitir testes objetivos.
+O repositório ainda contém páginas HTML/CSS/JavaScript tradicionais e esquema MySQL isolado, sem backend Java integrado. A entrega final informada é **30/11/2026**. O projeto deve implementar pesquisa, ofertas e processamento econômico, distância opcional, histórico fictício e correções de interface apontadas pelo professor.
 
-## 2. Decisão
+## 2. Escolha técnica para implementação
 
-**[PROPOSTA]** Manter a interface atual, criar uma API Java para o fluxo de busca/consulta e isolar: **requisições/validação HTTP**, **regras de preços/localização** e **consultas MySQL**. As unidades de cálculo devem ser testáveis sem renderizar HTML e, sempre que possível, sem exigir banco real. Os contratos previstos estão em [`../API.md`](../API.md), e a decomposição está em [`../SPEC.md`](../SPEC.md).
+Usar **frontend React + JavaScript + Vite**, com CSS/identidade visual reaproveitados, consumindo uma **API REST/JSON Java + Spring Boot**, que acessará **MySQL** por Spring JDBC. A arquitetura separa responsabilidades:
 
-**[CONFIRMADO, sem escolha de framework]** HTML, CSS, JavaScript, Java e MySQL fazem parte da base tecnológica. O visual existente deve ser mantido/adaptado.
+1. **Frontend:** rotas/telas, pesquisa, estado visual, validação de usabilidade, gráfico, erros e mensagens; sem cálculos monetários divergentes dos retornados pelo backend.
+2. **Controller/DTO:** entrada HTTP, validação, contratos JSON e tratamento uniforme de erros.
+3. **Service:** regras de ofertas elegíveis, comparações com precisão monetária, histórico e distância opcional.
+4. **Repository:** consultas SQL parametrizadas a medicamentos, farmácias, ofertas e histórico no MySQL.
+
+**O desenho é uma decisão-alvo, não evidência de componentes já implementados.** Detalhes em [ADR 004](004-backend-java.md), [ADR 006](006-frontend-react.md), [SPEC v1.1](../SPEC.md) e [API](../API.md).
 
 ## 3. Justificativa
 
-Separar responsabilidades reduz regras duplicadas entre front-end e backend, facilita testar valores monetários e evita tratar dados fixos no JavaScript como se fossem persistência real. O prazo acadêmico favorece estrutura simples, sem microsserviços.
+A separação de interface, HTTP, negócio e persistência facilita testar números e contratos, dividir Issues entre integrantes e agentes de IA e evitar código de banco dentro do frontend. React facilita componentes reutilizáveis para novas telas; Spring Boot simplifica API Java. Priorizar o fluxo funcional antes de otimizações e novas abstrações.
 
 ## 4. Alternativas consideradas
 
-- Regras inteiramente em JavaScript: rápido para prototipar, mas não integra a persistência Java/MySQL solicitada.
-- JSP/Servlets com lógica de consulta misturada às páginas: possível, mas tende a dificultar testes e contratos isolados.
-- API Java simples + front-end estático: **recomendada para avaliação**, preservando o código existente.
-- React, microsserviços e arquitetura distribuída: desnecessários ao prazo e escopo atuais.
+- JavaScript tradicional + API Java: menor migração inicial, mas menos padronização dos estados de interface definidos para esta versão.
+- Servlets/JSP: tecnicamente possível, mas menos alinhado à proposta frontend adotada; confirmar requisitos obrigatórios da disciplina.
+- React com TypeScript: capacidade adicional de tipos, mas custo não justificado para este time/prazo.
+- Microsserviços, infraestrutura distribuída, Next.js: complexidade desnecessária ao produto acadêmico.
 
 ## 5. Consequências
 
-Se a proposta for aprovada, surgirão classes/módulos para HTTP, serviço e persistência, testes para cálculos e uma migração para abandonar dados fixos como fonte principal. **Nenhum desses componentes existe ainda** na `develop` inspecionada. Antes de desenvolver, a equipe deve escolher a solução de build e framework no ADR 004.
+Exige configurar frontend React/Vite, backend Java/Maven e MySQL, tratamento CORS/proxy, dados de teste, migração do layout e validação de endpoints. A revisão do frontend deve incorporar problemas concretos registrados em U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20). A camada de histórico é U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19).
 
-## 6. Status da decisão
+## 6. Estado da decisão
 
-**Proposta.** A escolha de manter a stack e o visual é confirmada; **a divisão arquitetural específica ainda precisa de aprovação por PR**. Não citar este ADR como prova de arquitetura já implementada.
+**Arquitetura selecionada pelo responsável do projeto e submetida à revisão humana em PR.** Não declarar aceita coletivamente nem implementada antes das evidências correspondentes.

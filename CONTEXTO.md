@@ -1,6 +1,6 @@
 # PharmaFind — CONTEXTO DO PROJETO
 
-> **Base 1.0 (11/11/2026) | Atualização factual do GitHub: 12/11/2026 | Contexto consolidado**
+> **Base 1.0 (11/11/2026) | Atualizações factuais de 12 e 16/11/2026 | Contexto consolidado**
 > **Fontes:** Documento de Visão do PharmaFind (`DOC.PharmaFind.pdf`); materiais da disciplina (`DocumentoRomes.pdf` e `SDD.pdf`); estado do repositório observado em 11–12/11/2026; inspeção direta da organização `PharmaFind/PharmaFind` em 12/11/2026; decisões do grupo informadas à equipe.
 > **Legenda:** `[CONFIRMADO]` decisão aprovada pelo grupo; `[IMPLEMENTADO]` artefato ou comportamento identificável no código versionado, sem implicar teste de execução; `[VERIFICADO]` fato confirmado por inspeção do código ou do GitHub, com sua origem identificada; `[PROPOSTA]` definição ainda não aprovada; `[PENDENTE]` validação, decisão ou implementação não concluída. Rótulos legados preservados neste arquivo: `[DOCUMENTO]` indica origem no Documento de Visão; `[OBSERVADO]` corresponde a inspeção do repositório, **não** a teste executado; `[ATENÇÃO]` indica risco; `[AÇÃO]` indica providência. A combinação de rótulos não transforma uma proposta em decisão confirmada.
 >
@@ -11,14 +11,14 @@
 ## Resumo executivo das decisões
 
 - **Entrega de 12/11/2026:** GitHub organizado, governança, tarefas, colaboração real e documentação técnica; avaliação diretamente pelo repositório.
-- **Entrega de 19/11/2026:** versão funcional, com pesquisa, seleção do medicamento, ofertas, processamento de preços e localização opcional como alvo.
+- **Entrega final em 30/11/2026:** pesquisa e comparação, localização opcional, histórico fictício e revisão do frontend. A previsão anterior era 19/11, corrigida em 16/11.
 - **Tecnologias base:** HTML, CSS, JavaScript, Java e MySQL; bibliotecas/frameworks podem ser escolhidos para simplificar.
 - **Base de demonstração:** **farmácias fictícias e preços fictícios**, gravados em MySQL, representando a região do **Gama e arredores**.
 - **Fluxo de pesquisa:** primeiro selecionar o medicamento; depois consultar e comparar as ofertas daquele medicamento.
 - **Localização:** **opcional**; distância **aproximada em linha reta**, quando houver coordenadas. A primeira versão usará **CEPs de teste da região e coordenadas previamente cadastradas**. GPS do navegador depende de consentimento.
 - **Ofertas indisponíveis:** **aparecem identificadas como indisponíveis**, mas **não participam da média, menor preço, economia, ranking de ofertas disponíveis nem do destaque de melhor preço**.
-- **Processamento:** menor preço, média aritmética, economia em relação à oferta mais cara válida e ranking por preço. Sem score combinado preço/distância e sem histórico analítico nesta entrega.
-- **Interface:** **manter o visual existente e adaptar as páginas**, retirando login e cadastro do fluxo/MVP.
+- **Processamento:** menor preço, média, economia potencial e ranking das ofertas válidas; sem score composto preço/distância. Histórico de preços por oferta e gráfico entram como U09 (#19).
+- **Interface:** migrar/adaptar o visual existente para React + JavaScript + Vite, reutilizar CSS viável e corrigir observações reais do professor em U10 (#20); sem login/cadastro no fluxo do MVP.
 - **Equipe:** quatro desenvolvedores identificados, mas **apenas alguns podem colaborar em 11–12/11**. Não presumir disponibilidade de todos; revisões precisam ser verdadeiras.
 - **Modelo comercial futuro:** farmácias parceiras pagariam pelo serviço e manteriam ofertas atualizadas. **Sem painel de farmácias, cobrança nem autenticação nesta entrega.**
 
@@ -34,7 +34,7 @@
 ## 2. Prazos, critérios e finalidade das entregas
 
 - [CONFIRMADO] **12/11/2026 (quinta-feira):** entrega intermediária de **organização do GitHub e documentação**, avaliada diretamente no repositório pelo professor. A prioridade é demonstrar branches, proteção quando possível, Issues, Project, PRs com colaboração verdadeira, README e documentação de SDD.
-- [CONFIRMADO] **19/11/2026 (quinta-feira):** entrega final da etapa de desenvolvimento do sistema.
+- [CONFIRMADO EM 16/11] **30/11/2026 (segunda-feira):** entrega final; substitui o prazo antigo de 19/11. A entrega intermediária de 12/11 permanece histórica.
 - [DOCUMENTO/CHECKLIST INFORMADO] Critérios relevantes da entrega intermediária incluem `main`, `develop` e `feature/*` usadas em trabalho real; governança por PR e revisão; Issues e Project com movimento genuíno; README e ADRs; `docs/SPEC.md` com RFs, RNFs verificáveis e RNs numeradas; exemplos literais de contratos JSON/status/erro; decomposição por unidades ligada às Issues; refinamento real da SPEC, quando ocorrido, registrado por PR.
 - [ATENÇÃO] **Não é possível afirmar que nunca houve commit direto na `main` em todo o histórico:** já há commits antigos nessa branch. Preservar o histórico, documentar a data de adoção das novas regras e impedir novos pushes diretos após a proteção; **não reescrever commits para criar aparência de conformidade**.
 - [CONFIRMADO] Para 12/11, **não priorizar automações sofisticadas**; foco na organização, documentação e colaboração. Agente de IA, Docker e harness de testes podem ser tratados conforme exigências posteriores e viabilidade.
@@ -46,7 +46,7 @@
 - [VERIFICADO] A branch padrão é `main`. Existem `develop`, `feature/estrutura-documentacao` (histórica) e as branches de documentação `feature/2-readme-contexto`, `feature/3-spec-api` e `feature/4-adrs-colaboracao`.
 - [OBSERVADO] A ruleset ativa **“Protecao main e develop”** se aplica a `main` e `develop` e exige PR, **uma aprovação**, resolução das conversas de revisão, bloqueio de exclusão e de atualização não fast-forward. Sua presença foi verificada na API do GitHub; não se afirma que os testes automatizados já sejam exigidos por ela.
 - [OBSERVADO] O **PR #1**, “chore: estrutura inicial de documentação”, foi aprovado por `Lucasdsantosb` e integrado à `develop` em 12/11/2026. Ele criou **dez arquivos vazios intencionalmente**: `README.md`, `CONTEXTO.md`, `CONTRIBUTING.md`, `docs/SPEC.md`, `docs/API.md`, dois ADRs e três templates. Isso comprova somente a criação da estrutura, não a conclusão da documentação.
-- [VERIFICADO] A `main` conserva o código original; a `develop` contém esse código e a documentação criada inicialmente vazia no PR #1, **preenchida e integrada posteriormente pelos PRs #5, #6 e #7**, todos com destino `develop` e integrados em 12/11/2026. As **Issues #2, #3 e #4 continuam abertas**, apesar da integração dos respectivos PRs. O GitHub Project não foi auditado; não se infere sua existência, configuração ou movimentação.
+- [VERIFICADO EM 16/11] PRs #5–#8 integraram documentação à `develop`; PR [#9](https://github.com/PharmaFind/PharmaFind/pull/9) aprovado por `@tainayyxy` e integrado à `main` em 16/11. `main` não é mais apenas código original. Issues #2–#4 ainda estavam abertas na última consulta. O Kanban foi criado e demonstrado por captura do usuário; movimentos não verificados por API.
 - [IMPLEMENTADO/VERIFICADO POR CÓDIGO] Pastas de implementação na `develop`: `frontend/` (HTML/CSS/JavaScript) e `database/PharmaFindDB.sql` (script de criação de tabelas MySQL), além de `.vscode/settings.json`. Esta constatação decorre da inspeção de arquivos e não comprova execução do banco.
 - [IMPLEMENTADO/VERIFICADO POR CÓDIGO] `frontend/consulta.js` contém **dez medicamentos demonstrativos fixados no próprio JavaScript**; a página possui busca textual, filtros de tipo e farmácia, ordenação local por preço e cartões com botão demonstrativo que abre um `alert`, **sem consulta HTTP ao backend**. Não há seleção seguida de comparação de várias ofertas de um mesmo medicamento. `frontend/index.html` ainda inclui links de login e cadastro. A presença dos scripts não equivale à validação funcional no navegador.
 - [VERIFICADO POR INSPEÇÃO] Não há backend Java, configuração de execução Java, dados iniciais SQL, testes automatizados ou integração efetiva do front-end ao MySQL na árvore inspecionada da `develop`; **não foram executados testes de funcionamento nesta auditoria**. O JavaScript `frontend/script.js` obtém coordenadas pelo navegador e as registra em `console.log`, mas **não calcula distâncias de ofertas nem integra o GPS ao MySQL**; CEP e autenticação demonstrativa usam `localStorage` no front-end. O registro de coordenadas no console deve ser revisto antes da entrega integrada.
@@ -59,8 +59,8 @@
 - [CONFIRMADO] **Núcleo tecnológico:** HTML, CSS, JavaScript, Java e MySQL.
 - [CONFIRMADO] **Frameworks e bibliotecas são permitidos e bem-vindos** quando simplificarem o desenvolvimento. As tecnologias não precisam ser usadas de forma “pura”.
 - [CONFIRMADO] A seção de stack/arquitetura do Documento de Visão foi preenchida provisoriamente; **não é uma decisão técnica vinculante**.
-- [PROPOSTA] Manter o front-end atual HTML/CSS/JS, usar um backend Java simples de consumir pela interface, Maven para dependências, MySQL para persistência e JUnit para testes. Avaliar Spring Boot como opção de agilidade, sem fixar framework/versões até validação prática da equipe. O PDF que cita Spring Boot/MVC não obriga essa implementação.
-- [DIRETRIZ] Não adotar React, microsserviços ou outras tecnologias complexas apenas por parecerem mais profissionais. Minimizar retrabalho e otimizar o que a equipe consegue configurar, entender, executar e testar até 19/11.
+- [ESCOLHA DE IMPLEMENTAÇÃO, SOB REVISÃO] React + JavaScript + Vite, preservando CSS; Java 21 + Spring Boot (Spring Web) + Spring JDBC + Maven; MySQL; Chart.js para histórico. JUnit e Vitest são planejados. **Sem TypeScript**. ADRs 001/004/006 aguardam revisão; nada disso é declarado implementado.
+- [DIRETRIZ] React foi selecionado para estruturação de componentes, não por aparência profissional. Evitar TypeScript, Next.js, microsserviços e ferramentas sem necessidade; priorizar integração executável e U06/U10.
 
 ## 5. Fluxo principal do usuário
 
@@ -91,7 +91,7 @@
 - [CONFIRMADO] Quando não houver ofertas disponíveis para o medicamento, não calcular média/economia fictícias; mostrar estado vazio/aviso claro, podendo listar ofertas indisponíveis separadamente.
 - [DOCUMENTO] Informar nome, endereço e horário da farmácia quando cadastrados, além de aviso de que valores podem mudar.
 - [AÇÃO] O script SQL atual (`database/PharmaFindDB.sql`) contém medicamentos, farmácias, associação de ofertas e histórico, mas **precisa ser revisado** para acomodar disponibilidade e data de atualização coerentes com o escopo; não afirmar que isso já está implementado.
-- [CONFIRMADO] **Modelo de negócio futuro:** farmácias pagariam para participar e seriam responsáveis pelo cadastro e pela atualização de suas ofertas. Não implementar login/painel de farmácias, cobranças ou integração de preços reais até 19/11.
+- [CONFIRMADO] **Modelo de negócio futuro:** farmácias pagariam para participar e seriam responsáveis pelo cadastro e pela atualização de suas ofertas. Não implementar login/painel de farmácias, cobranças ou integração de preços reais até 30/11.
 - [PENDENTE] Definir na SPEC valores e validações dos campos de disponibilidade/data de atualização (ex.: booleano, data e regras de ausência), com migração SQL compatível.
 
 ## 8. Processamento e critérios de comparação
@@ -100,10 +100,10 @@
 - [CONFIRMADO] Exibir **menor preço disponível**, **média aritmética** dos preços válidos, **economia potencial** comparando a menor e a maior oferta válida e **ranking de ofertas/farmácias do menor para o maior preço**.
 - [PROPOSTA] `media = soma(precos_validos) / quantidade_de_ofertas_validas`; `economia_potencial = maior_preco_valido - menor_preco_valido`. Para uma única oferta válida, economia = R$ 0,00; para nenhuma, não apresentar números calculados sem base.
 - [CONFIRMADO] **Não adicionar score que combine preço e distância** nesta etapa. Distância pode ser ordenada separadamente quando disponível.
-- [CONFIRMADO] Histórico de preços, gráficos, variações ao longo do tempo e integrações reais ficam fora do foco até 19/11; podem ser melhorias posteriores.
+- [CONFIRMADO, ALTERAÇÃO EM 16/11] Histórico fictício por medicamento e farmácia, gráfico de linha e variações temporais entram no escopo de U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), após estabilizar a comparação. Previsão e integração de preços reais continuam fora.
 - [PENDENTE] Especificar desempate de preços, precisão/arredondamento de valores monetários e formato de números nos testes da `docs/SPEC.md`.
 
-## 9. Escopo do MVP (entrega até 19/11)
+## 9. Escopo do MVP (entrega até 30/11)
 
 ### Incluído / alvo de implementação
 
@@ -122,7 +122,7 @@
 - Login/painel de farmácias, cobrança, assinaturas ou pagamentos de medicamentos.
 - Preços reais capturados automaticamente; as ofertas demonstrativas serão atualizadas pela equipe via banco.
 - Favoritos, alertas, histórico de pesquisas, modo escuro, comparador lateral de vários medicamentos.
-- Histórico analítico de preços, gráficos de evolução e score composto preço + distância.
+- Score composto preço + distância, previsões, scraping de valores reais e gráficos históricos avançados com várias séries.
 - Rotas pelas ruas ou cobertura automática de todos os CEPs do Brasil.
 
 **Princípio de priorização:** deixar o fluxo **pesquisar → selecionar → comparar → visualizar distância opcional** demonstrável de ponta a ponta antes de ampliar o escopo.
@@ -132,14 +132,14 @@
 - [CONFIRMADO] A divisão geral do Documento de Visão permanece:
   - **Lucas Marques (`@lucasmarques07`)** — Scrum Master; organização/governança do GitHub e apoio ao banco de dados.
   - **Tainá do Amaral (`@tainayyxy`)** — desenvolvimento; antiga proprietária na conta pessoal. O repositório agora é da organização `PharmaFind`.
-  - **Everton Gabriel (`@MrEve3`, a confirmar)** — desenvolvimento.
+  - **Everton Gabriel (`@MrEve3`, confirmado em 16/11)** — desenvolvimento.
   - **Lucas dos Santos Bezerra (`@Lucasdsantosb`)** — desenvolvimento.
   - **Júlia Gabrielle** — analista/engenheira de requisitos; validação de requisitos e documentação.
   - **Roberto Carlos** — Product Owner; prioridades, esclarecimentos e aceite do produto.
 - [CONFIRMADO, CONFORME CONTEXTO DA EQUIPE] Os **quatro primeiros** participam do desenvolvimento no GitHub; conferir o acesso individual atual à organização antes de atribuir tarefas. **Júlia e Roberto não atuam no desenvolvimento via GitHub nesta etapa**, embora continuem com responsabilidades de requisitos/produto fora do repositório.
 - [CONFIRMADO] **Apenas alguns desenvolvedores conseguem colaborar no período imediato 11–12/11**. **Ainda não foi informado quais**, nem seus horários. Não planejar quatro PRs simultâneos ou aprovações de pessoas indisponíveis como condição para a entrega.
 - [CONFIRMADO] Lucas Marques atua na governança do GitHub como Scrum Master. [OBSERVADO] O repositório já está na organização `PharmaFind`, com regras ativas sobre as branches principais; a antiga pendência de transferir o repositório pessoal foi superada. As permissões de cada membro e a administração organizacional ainda devem ser geridas pela equipe.
-- [PENDENTE] Confirmar se o username do Everton é **`@MrEve3`** (esse autor aparece em commits; a mensagem combinou `MrEve3Everton`) e **quais integrantes estarão disponíveis para PR/revisão até 12/11**.
+- [CONFIRMADO EM 16/11] O GitHub correto do Everton é `@MrEve3`. [PENDENTE] Confirmar responsáveis e revisores disponíveis antes de atribuir as Issues #10–#17, #19 e #20.
 - [CONFIRMADO, INFORMADO PELA EQUIPE] O professor verificará o repositório. [DOCUMENTO] A apostila `DocumentoRomes.pdf`, p. 25–26, **também descreve uma submissão em PDF único no Moodle** e evidências de ambiente, agente e testes. [PENDENTE] Confirmar se essa orientação integral se aplica à data e turma atuais; não ignorar a divergência.
 
 ## 11. Governança GitHub e documentação SDD
@@ -148,14 +148,14 @@
 
 - [CONFIRMADO/OBSERVADO] **Branches:** `main` como versão estável, `develop` como integração e `feature/<id-issue>-<descricao>` para novos trabalhos. PRs de `feature/*` para `develop`; PR de integração `develop` para `main` quando houver entrega estável. Já existe `feature/estrutura-documentacao` como branch histórica sem ID de Issue.
 - [OBSERVADO] **Proteção ativa:** uma ruleset cobre `main` e `develop`, exige PR com pelo menos **uma aprovação**, resolve conversas de revisão e impede exclusões e atualizações não fast-forward. Manter a configuração e não adulterar os commits antigos de `main`.
-- [VERIFICADO] **Rastreabilidade inicial:** as Issues #2 (README/contexto), #3 (SPEC/API) e #4 (ADRs/governança) permanecem abertas; os PRs associados #5, #6 e #7 foram integrados à `develop` em 12/11/2026. [PENDENTE] Conferir critérios de aceite e encerramento dessas Issues, responsáveis disponíveis e Project. As colunas `Backlog`, `Em andamento`, `Em revisão` e `Concluído` continuam uma **[PROPOSTA]** de organização, não configuração confirmada.
+- [VERIFICADO] **Rastreabilidade:** Issues documentais #2–#4 abertas na última consulta; PRs #5–#8 integrados à `develop`, PR #9 integrado à `main` em 16/11. U01–U08 são Issues #10–#17; atualização documental [#18](https://github.com/PharmaFind/PharmaFind/issues/18), U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19) e U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20). Project Kanban criado pelo usuário, movimentação não verificada diretamente.
 - [OBSERVADO/DIRETRIZ] O PR #1 foi aprovado e integrado à `develop` com uma aprovação real. Novos PRs devem trazer mudanças legítimas e revisão de outro integrante; não inventar comentários, commits, aprovadores, refinamentos ou atividade.
 - [IMPLEMENTADO/VERIFICADO POR ARQUIVO] **README e CONTEXTO:** `README.md` e `CONTEXTO.md` foram preenchidos na branch `feature/2-readme-contexto` e **integrados à `develop` pelo PR #5** (relacionado à Issue #2). O README distingue a demonstração estática da integração futura, com instruções para os componentes versionados; conteúdo documental não comprova execução do MVP.
 - [IMPLEMENTADO/VERIFICADO POR ARQUIVO] **SPEC e API:** `docs/SPEC.md` e `docs/API.md` foram preenchidos na branch `feature/3-spec-api` e **integrados à `develop` pelo PR #6** (relacionado à Issue #3), com requisitos, regras, cenários e **contratos HTTP/JSON propostos**. A publicação desses contratos **não equivale à aprovação das propostas técnicas nem à implementação de endpoints**.
 - [IMPLEMENTADO/VERIFICADO POR ARQUIVO] **ADRs e colaboração:** `docs/ADR/001` a `005`, `CONTRIBUTING.md` e templates foram preenchidos na branch `feature/4-adrs-colaboracao` e **integrados à `develop` pelo PR #7** (relacionado à Issue #4). Os ADRs distinguem decisões de produto confirmadas de propostas técnicas; o framework Java no ADR004 continua **[PROPOSTA]**. Uma revisão `v1.0 → v1.1` só conta como evolução quando houver **mudança substantiva justificada** e PR que a registre; não criar diferença cosmética para fabricar evidência.
 - [ATENÇÃO] `main` tem commits diretos históricos, anteriores à governança atual; o requisito de “nenhum commit direto em todo o histórico” não é recuperável sem manipular o histórico. Reconhecer a transição e preservar os registros.
 
-### Desenvolvimento — até 19/11/2026
+### Desenvolvimento — até 30/11/2026
 
 - [CONFIRMADO/ALVO] Integração do front-end atual com backend Java/MySQL, busca e seleção de medicamento, ofertas válidas/indisponíveis, comparação e métricas definidas, CEPs de teste/GPS opcional e distância em linha reta.
 - [PROPOSTA] Testes automatizados de regras de negócio e casos de borda; ambiente de execução reproduzível quando viável (Docker se exigido); documentação técnica e PRs de revisão.
@@ -174,7 +174,7 @@
 
 ## 13. Plano de trabalho imediato (referência, não execução registrada)
 
-### 11–12/11: organizar o GitHub sem pressupor disponibilidade de todos
+### Histórico de 11–12/11: organização do GitHub
 
 1. Confirmar **quem está disponível de fato** e quem pode fazer a revisão de ao menos um PR. Se só uma pessoa estiver online, não fingir uma revisão; antecipar documentação/Issues e registrar o trabalho real.
 2. Repositório já transferido à organização; Lucas coordena a governança e os administradores mantêm as regras. Não reabrir como tarefa uma migração que já aconteceu.
@@ -184,7 +184,7 @@
 6. Para novas alterações, abrir PRs reais e cumprir a revisão independente prevista na ruleset. Refinamentos substantivos da SPEC exigem justificativa e rastreabilidade, não retoques de fachada.
 7. Conferir tudo pelo link do próprio repositório que será avaliado: branches, proteção, Project, Issues, PRs, README, SPEC e ADRs.
 
-### 13–19/11: construir o fluxo central
+### 16–30/11: construir, integrar e validar o MVP
 
 1. Selecionar a variante mais simples de backend Java compatível com a equipe; registrar a decisão com motivo e instruções de execução.
 2. Ajustar SQL para preço, disponibilidade e datas quando necessário; cadastrar farmácias fictícias, medicamentos e ofertas de demonstração, incluindo **ofertas indisponíveis** e coordenadas de farmácias.
@@ -195,13 +195,13 @@
 
 ## 14. Pendências reais para a SPEC e execução (não bloqueiam este contexto)
 
-1. **Disponibilidade da equipe:** identificar quais membros podem trabalhar e revisar PRs em **12/11** e até 19/11, sem assumir que todos participarão; confirmar o username exato do Everton (`@MrEve3`, provável).
+1. **Disponibilidade da equipe:** confirmar integrantes responsáveis pelas Issues e revisões até 30/11, sem presumir participação; GitHub de Everton é `@MrEve3`.
 2. **Permissões e revisões:** a organização GitHub e a ruleset já existem; conferir administração delegada por integrante, quem pode revisar, e se a ruleset permanece ativa após ajustes futuros.
 3. **Base de testes geográfica:** escolher os **CEPs concretos do Gama/arredores** e suas coordenadas; documentar a origem dos pontos e criar uma resposta clara a CEP não mapeado. A abordagem (mapeamento local) já está decidida.
 4. **Detalhes de persistência:** especificar disponibilidade, data de atualização e regras de validação no SQL, incluindo como uma oferta indisponível será distinguida visualmente.
-5. **Regras técnicas:** revisar e aprovar (ou ajustar justificadamente) as propostas já escritas em `docs/SPEC.md` e `docs/API.md` na branch `feature/3-spec-api`, incluindo empate, arredondamento, ausência de ofertas elegíveis, endpoints e erros. Documentá-las não equivale a implementá-las.
-6. **Escolha da implementação Java:** avaliar alternativa simples e documentar decisão (Spring Boot/Maven/JUnit são proposta, não requisitos confirmados).
-7. **Evidência de colaboração:** os PRs #1, #5, #6 e #7 foram integrados à `develop`; as Issues #2, #3 e #4 permanecem abertas nesta verificação. Conferir critérios de aceite e registros reais de revisão antes de declarar o trabalho concluído. Evolução `SPEC v1.0 → v1.1` exige refinamento verdadeiro, motivo e PR.
+5. **Regras técnicas:** aprovar/revisar propostas efetivas da SPEC v1.1 e API, em especial regras de preço, histórico, desempate e persistência. Documentar não equivale a implementar.
+6. **Escolha da stack:** React + JavaScript + Vite, Java 21 + Spring Boot + Spring JDBC + Maven + MySQL, com Chart.js e testes planejados; aceitação coletiva via PR dos ADRs 001/004/006.
+7. **Evidência de colaboração:** PR #9 revisado por `@tainayyxy` e integrado à `main` em 16/11. Issues #2–#4 ainda precisam de validação/encerramento; novas Issues não são prova de código concluído.
 
 8. **Apostila e submissão:** conferir com o professor as exigências do documento `DocumentoRomes.pdf` sobre agente configurado, Docker, harness, evidências e PDF único de submissão. Esses artefatos não foram implementados na etapa de produção dos Markdown.
 
@@ -211,13 +211,22 @@
 - Docs GitHub (papéis em repositórios de organização): https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization
 - Issue de 2026 relatando comportamento divergente da API sobre admin em repositórios pessoais: https://github.com/github/docs/issues/45537
 
-## Observação editorial de 12/11/2026
+## Observação editorial histórica de 12/11/2026
 
 Esta atualização **não altera decisões de produto**. Corrige informações factuais sobre proprietário, branches, proteção, **Issues #2–#4, PRs #5–#7**, estrutura documental, SQL e implementação. Em 12/11/2026, os PRs #5–#7 já foram integrados à `develop`, mas as Issues correspondentes ainda estavam abertas. Publicar documentação não demonstra execução de funcionalidades nem aprovação automática de propostas técnicas. As datas de entrega são as relatadas pela equipe, não certificações de aceite.
+
+## Atualização de decisões e riscos — 16/11/2026
+
+- **Entrega final confirmada:** 30/11/2026; a antiga previsão de 19/11 foi corrigida. A etapa documental de 12/11 permanece histórico real.
+- **Equipe:** Everton usa `@MrEve3`. A atribuição de Issues depende de conversa com a equipe.
+- **Arquitetura-alvo:** React + JavaScript + Vite, reaproveitando CSS; Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven; MySQL; Chart.js para gráfico histórico e JUnit/Vitest planejados. Escolha da coordenação submetida à equipe em PR; **não implementada**.
+- **Novo escopo:** histórico fictício por oferta U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19); auditoria e correção do frontend U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20), dependendo de registrar as observações **exatas** do professor. As decisões estão refinadas em SPEC v1.1/ADRs, mas a implementação exige código e testes.
+- **GitHub:** PR #9 integrado à `main`, Issues U01–U08 = #10–#17, atualização documental #18. Não atribuir trabalho nem alegar testes inexistentes.
 
 ## 16. Materiais de referência
 
 - `DOC.PharmaFind.pdf`: Documento de Visão do Produto (38 páginas), especialmente seções 4, 10, 14, 16, 17, 19, 22, 26 e 27.
 - `DocumentoRomes.pdf`: roteiro de entrega e governança por Issue, PR, SPEC, agente e testes.
 - `SDD.pdf`: visão geral da abordagem Spec-Driven Development.
+- [ADR 006](docs/ADR/006-frontend-react.md): estratégia React sem TypeScript. [AGENTS.md](AGENTS.md): orientações para agentes de IA.
 - GitHub: https://github.com/PharmaFind/PharmaFind (repositório atual, observado em 12/11/2026; acesso anterior `tainayyxy/PharmaFind`).

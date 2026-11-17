@@ -1,7 +1,7 @@
-# PharmaFind — Especificação Técnica (SPEC v1.0)
+# PharmaFind — Especificação Técnica (SPEC v1.1)
 
-**Estado:** proposta inicial para revisão e publicação em PR; **não é aceite formal da equipe**.  
-**Data de elaboração:** 12/11/2026. **Entrega funcional prevista pela equipe:** 19/11/2026.  
+**Estado:** refinamento substantivo v1.1, proposto na Issue [#18](https://github.com/PharmaFind/PharmaFind/issues/18) para revisão da equipe; **não representa implementação ou aceite coletivo antes do PR**.  
+**Data de elaboração da v1.0:** 12/11/2026. **Refinamento v1.1:** 16/11/2026. **Entrega final informada:** 30/11/2026.  
 **Fontes:** [`CONTEXTO.md`](../CONTEXTO.md) (prioridade para decisões recentes), Documento de Visão do Produto (RF01–RF30, RNF01–RNF42, RN01–RN05) e apostilas de SDD do professor Romes.  
 **Contratos detalhados:** [`docs/API.md`](API.md). **Decisões técnicas:** [`docs/ADR/`](ADR/).
 
@@ -25,11 +25,13 @@ Permitir que uma pessoa **pesquise medicamentos por nome, selecione um registro 
 - Ofertas indisponíveis visíveis e sinalizadas, mas excluídas dos indicadores econômicos.
 - Menor preço, média aritmética, economia potencial (`maior preço válido − menor preço válido`) e ranking crescente das ofertas disponíveis.
 - Localização **optativa**: coordenadas fornecidas pelo navegador com permissão ou **CEPs de teste do Gama/região previamente mapeados**, com distância em linha reta calculável.
-- Interface existente reutilizada e adaptada, com mensagens de erro e estados vazios; sem necessidade de conta.
+- Interface existente reutilizada/adaptada em React + JavaScript + Vite, com mensagens de erro e estados vazios; sem necessidade de conta.
+- Histórico temporal **fictício** por medicamento **e farmácia**, com gráfico de linha e variações calculáveis (U09, #19).
+- Auditoria e correções do frontend conforme observações **reais** do professor, ainda a registrar e validar (U10, #20).
 
-### Fora do escopo até 19/11/2026
+### Fora do escopo até 30/11/2026
 
-Autenticação/cadastro (inclusive telas legadas como parte do fluxo ativo), painel de farmácias, pagamentos, reservas/pedidos, recomendação clínica, integração automática de preços reais, histórico analítico de preços, gráficos, alertas, favoritos, histórico de pesquisa, modo escuro, comparação entre múltiplos medicamentos, score preço/distância, rotas e geocodificação universal de CEP. A tabela SQL de histórico existente não autoriza implementar gráficos/histórico no MVP.
+Autenticação/cadastro (inclusive telas legadas como parte do fluxo ativo), painel de farmácias, pagamentos, reservas/pedidos, recomendação clínica, integração automática de preços reais, previsões de preços, alertas, favoritos, histórico de pesquisa, modo escuro, comparação entre múltiplos medicamentos, score preço/distância, rotas e geocodificação universal de CEP. O **histórico analítico com gráfico** foi acrescentado ao planejamento pela decisão de 16/11/2026 (U09, Issue #19); a existência de tabela SQL não demonstra que a funcionalidade já funciona. A revisão integral do frontend e das observações do professor é U10 (Issue #20).
 
 ### Premissas e estado atual
 
@@ -38,10 +40,10 @@ Autenticação/cadastro (inclusive telas legadas como parte do fluxo ativo), pai
 | HTML, CSS, JavaScript; Java e MySQL | **[CONFIRMADO]** | Linguagens e base persistente definidas pela equipe. |
 | Dados de farmácias e preços fictícios, região Gama e arredores | **[CONFIRMADO]** | Não alegar farmácias ou preços comerciais reais. |
 | Layout do front-end existente | **[CONFIRMADO]** | Manter identidade e adaptar navegação/consulta. |
-| Framework Java, biblioteca de teste, build, estrutura de pacotes | **[PROPOSTA]** | Decisão arquitetural ainda aberta; conferir ADR 001/004. |
+| Stack-alvo | **[DEFINIDA PARA IMPLEMENTAÇÃO / EM REVISÃO]** | React + JavaScript + Vite, CSS reaproveitado; Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven; MySQL; Chart.js planejado. ADR 001/004/006. **Não implementada.** |
 | Dados de disponibilidade e data da oferta | **[PENDENTE]** | SQL atual não tem campos, migração e semeadura ainda não existem. |
 | CEPs e respectivas coordenadas | **[PENDENTE]** | A escolha concreta e a origem dos dados não foram informadas. |
-| API HTTP v1 documentada aqui | **[PROPOSTA]** | Não há endpoints implementados nem chamados no front-end atual. |
+| API HTTP v1 documentada aqui | **[PROPOSTA]** | Os três contratos existentes e o novo contrato de leitura de histórico U09 aguardam validação; não há endpoints implementados. |
 
 ## 2. Requisitos funcionais (RF)
 
@@ -90,6 +92,10 @@ Autenticação/cadastro (inclusive telas legadas como parte do fluxo ativo), pai
 | **RF32** | Calcular e exibir **menor preço**, **média**, **economia potencial** e **ranking** usando apenas ofertas disponíveis válidas do ID selecionado. | CONTEXTO §8. | **[CONFIRMADO]** |
 | **RF33** | Aceitar CEP de teste mapeado para coordenadas e continuar comparando preços quando o CEP não estiver contemplado. | CONTEXTO §§6 e 9. | **[CONFIRMADO]** comportamento; formato de retorno é **[PROPOSTA]**. |
 | **RF34** | Quando nenhuma oferta elegível existir, mostrar ausência de preços comparáveis sem apresentar médias ou economia inventadas. | CONTEXTO §§7–9. | **[CONFIRMADO]** |
+| **RF35** | Consultar histórico de preços fictícios de uma oferta específica (medicamento + farmácia). | U09; usar IDs exatos e registros persistidos, sem misturar ofertas. |
+| **RF36** | Exibir evolução dos preços em gráfico de linha com data e valor. | U09; Chart.js planejado; não gerar pontos artificiais durante cada consulta. |
+| **RF37** | Mostrar variação nominal e percentual entre primeiro e último registro cronológico quando possível. | U09; requer dois registros de datas distintas e primeiro preço positivo. |
+| **RF38** | Exibir estado de histórico insuficiente/ausente sem inventar tendência ou percentual. | U09; retorno com lista vazia ou dados insuficientes e métricas `null`. |
 
 ## 3. Requisitos não funcionais (RNF)
 
@@ -136,6 +142,8 @@ IDs seguem o Documento de Visão. O documento original **salta RNF15**; **não e
 | **RN10** | O usuário pode consultar e comparar preços **sem fornecer localização**; GPS exige consentimento. | CONTEXTO §§5–6, confirmada. |
 | **RN11** | Dados demonstrativos são fictícios e alterados pela equipe **diretamente no MySQL**; não existe painel de farmácias no MVP. | CONTEXTO §§7,9, confirmada. |
 | **RN12** | A economia potencial é a diferença entre **maior e menor preço válido disponível** do medicamento exato, não um desconto comercial garantido. | CONTEXTO §8, confirmada no conceito; tratamento de uma oferta é [PROPOSTA] na seção 6. |
+| **RN13** | O histórico é exclusivo de uma mesma oferta (medicamento + farmácia) e composto por registros fictícios persistidos em ordem cronológica. | Decisão de escopo 16/11/2026; U09 (#19). |
+| **RN14** | Variação absoluta = último preço − primeiro preço; variação percentual = (variação absoluta ÷ primeiro preço) × 100, somente com **duas datas distintas** e primeiro preço positivo. Caso contrário, métricas `null`. | Decisão de escopo 16/11/2026; regras técnicas de arredondamento continuam submetidas à revisão. |
 
 ## 5. Critérios de aceite e cenários
 
@@ -163,6 +171,11 @@ Cada teste a seguir é um **caso especificado, não executado**. A identificaç�
 | **CT18** | Pedido de ordenação por distância sem localização válida. | Resposta informativa com ordenação por preço [PROPOSTA]; interface não falha. | RF18, RN10 |
 | **CT19** | Duas farmácias equidistantes / uma coordenada ausente. | Empate determinístico [PROPOSTA] e distância ausente posicionada após distâncias conhecidas. | RF18/RF19, RN09 |
 | **CT20** | Busca por termo inexistente. | Lista de medicamentos vazia com orientação ao usuário; não equivale a medicamento sem ofertas. | RF01–RF03, RF23 |
+| **CT21** | Histórico de uma oferta com 01/11 R$ 9,90, 04/11 R$ 10,50 e 12/11 R$ 8,99 (dados fictícios). | Lista/linha ordenada por data, diferença de **−R$ 0,91** e variação de **−9,19%** com duas casas; sem dados de outra farmácia. | RF35–RF37, RN13/RN14 |
+| **CT22** | Histórico vazio ou com apenas um ponto válido. | Sem linha/tendência fabricada; sem variação percentual/nominal calculada (`null`). | RF38, RN14 |
+| **CT23** | Histórico solicitado para medicamento e farmácia cujo par não possui oferta ou ID é inválido. | Não mostrar histórico de outra oferta; contrato distingue identificador inválido de oferta não encontrada. | RF35, RN13 |
+| **CT24** | Atualização de preços e histórico com datas fictícias reproduzíveis. | Registros permanecem persistidos, com critério documentado de criação/atualização, sem duplicações indevidas ou valores diferentes a cada consulta. | RF35–RF37, RN13 |
+| **CT25** | Auditoria de telas após recebimento das observações do professor. | Cada problema efetivamente informado tem evidência anterior, correção rastreável, verificação em mobile/desktop/teclado e resultado documentado; sem inventar feedback. | RNF01–RNF18, U10 |
 
 **Fixtures para CT02–CT06:** os preços e estabelecimentos dos cenários são **exemplos de teste**, não dados comprovadamente inseridos no MySQL. O PR da base deverá criar uma massa pequena reproduzível.
 
@@ -205,6 +218,15 @@ Se |P| >= 1:
 - Enviar coordenadas para comparação somente quando fornecidas/autorizadas; não persistir a localização do usuário no MySQL.
 - Contratos HTTP propostos: `GET /api/v1/medicamentos?termo=`, `GET /api/v1/medicamentos/{id}` e `POST /api/v1/medicamentos/{id}/comparacao`. O último `POST` **consulta** sem alterar dados, escolhido provisoriamente para não pôr coordenadas de GPS em uma URL de consulta. Confira exemplos, validações, estados vazios e erros em [`API.md`](API.md).
 
+### 6.4 Histórico de preços (U09 — decisão de escopo e detalhes a implementar)
+
+- O histórico pertence **à mesma oferta**, identificada pelo medicamento exato e pela farmácia; não combinar preços de apresentações ou estabelecimentos diferentes (RN13).
+- Utilizar registros **fictícios persistidos em MySQL**. A tabela `HISTORICO_PRECO` existe no SQL legado (`DATA_REGISTRO DATE`), mas ainda não tem dados nem regra de gravação automatizada. A U09 deve definir, testar e documentar se a granularidade será **um ponto por dia** ou registros por evento com migração a `DATETIME` antes de criar dados.
+- Gráfico de linha com datas cronológicas e preços em reais; o navegador apresenta valores recebidos da API, não séries simuladas a cada carregamento.
+- Exibir `variacaoAbsoluta` e `variacaoPercentual` só com pelo menos **dois registros de datas distintas** e primeiro preço maior que zero. Valor negativo significa queda. Com série insuficiente, métricas `null` (RN14).
+- O endpoint adicional **proposto** de leitura é `GET /api/v1/medicamentos/{id}/historico?farmaciaId={id}`, detalhado em [API.md](API.md). Não altera a rota de comparação das ofertas atuais.
+- Escopo mínimo: **um medicamento + uma farmácia por gráfico**. Previsões, scraping e séries avançadas não fazem parte desta entrega.
+
 ## 7. Contrato de resposta — síntese
 
 > **Toda a seção é PROPOSTA, não endpoint implementado.** O JSON abaixo mostra o formato mínimo da comparação detalhada em `docs/API.md`.
@@ -234,9 +256,9 @@ Se |P| >= 1:
 
 Campos completos de farmácia, atualização e apresentação são obrigatórios na resposta definida em `API.md`; o exemplo acima é **reduzido**. Nas respostas vazias, arrays serão `[]`, e métricas não calculáveis serão `null`, **nunca preço zero fabricado**.
 
-## 8. Decomposição em unidades testáveis (para futuras Issues)
+## 8. Decomposição em unidades testáveis e Issues reais
 
-**Não existem números de Issue atribuídos a estas unidades.** São títulos sugeridos para criação **real** de Issues na ordem indicada; cada unidade deve ter responsável disponível, critérios de aceite e PR próprios, quando a divisão for viável.
+As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em 12–13/11; U09/U10 em 16/11). **Existir uma Issue não significa tarefa concluída ou responsável designado.** Cada unidade deve ter responsável confirmado, critérios de aceite e PR próprio quando viável.
 
 | Unidade | Escopo permitido (E) | Verificação (V) | Restrições (R) | Dependências |
 |---|---|---|---|---|
@@ -248,8 +270,20 @@ Campos completos de farmácia, atualização e apresentação são obrigatórios
 | **U06 — Adaptar interface ao fluxo** | Reaproveitar layout, pesquisa, seleção, ofertas, métricas, localização e remoção de login/cadastro da navegação. | CT01/CT02/CT06/CT08/CT12/CT14/CT16/CT20 manual e/ou automatizado. | RN05/RN06/RN07; identidade visual atual. | U03, U04; U05 para proximidade. |
 | **U07 — Testes, harness e evidências** | Testes automatizados de negócio/API e casos de borda; registrar comandos e saídas reais. | Reexecutar CT02–CT15 com dados fixos; resultados verificáveis. | Não fabricar testes/logs; a tecnologia deve corresponder à arquitetura aprovada. | Paralela a U02–U06, consolidada ao final. |
 | **U08 — Ambiente e instruções de agente** | Decidir/integrar ambiente reprodutível, Docker quando exigido, regras do agente e README de execução. | Clone limpo, comandos reproduzidos por segundo integrante, evidências reais. | Não alegar Docker, agente ou CI existentes antes do PR. | U02 e decisão das ferramentas. |
+| **U09 — Histórico de preços e gráfico** | Registros temporais fictícios por oferta, contrato JSON proposto, gráfico de linha e variações nominal/percentual calculáveis. | CT21–CT24 e teste de persistência por oferta. | RF35–RF38/RN13–RN14; não fabricar histórico nem previsão. | U01–U04, U06; integração com U07/U08. |
+| **U10 — Auditoria e correções do frontend** | Inventariar feedback real do professor, analisar e corrigir páginas, acessibilidade, navegação, responsividade e integração com React. | CT25 e evidências antes/depois dos pontos efetivamente reportados. | Não inventar crítica do professor nem duplicar trabalho U06. | U06, coordenação com U03/U04/U05/U09. |
 
 **Critério de separação:** API depende das regras de negócio e da persistência, mas **não deve conter fórmulas de preço embutidas**. A decomposição acima é o plano de implementação, não declaração de camadas/pacotes já existentes.
+
+### Correspondência entre unidades e Issues
+
+| Unidade | Issue | Unidade | Issue |
+|---|---|---|---|
+| U01 | [#10](https://github.com/PharmaFind/PharmaFind/issues/10) | U06 | [#15](https://github.com/PharmaFind/PharmaFind/issues/15) |
+| U02 | [#11](https://github.com/PharmaFind/PharmaFind/issues/11) | U07 | [#16](https://github.com/PharmaFind/PharmaFind/issues/16) |
+| U03 | [#12](https://github.com/PharmaFind/PharmaFind/issues/12) | U08 | [#17](https://github.com/PharmaFind/PharmaFind/issues/17) |
+| U04 | [#13](https://github.com/PharmaFind/PharmaFind/issues/13) | U09 | [#19](https://github.com/PharmaFind/PharmaFind/issues/19) |
+| U05 | [#14](https://github.com/PharmaFind/PharmaFind/issues/14) | U10 | [#20](https://github.com/PharmaFind/PharmaFind/issues/20) |
 
 ## 9. Matriz de rastreabilidade mínima
 
@@ -262,19 +296,23 @@ Campos completos de farmácia, atualização e apresentação são obrigatórios
 | RNF01–RNF18, RNF34–RNF35 | U06/U07 | CT16 | Interface/acessibilidade |
 | RNF19–RNF33, RNF38–RNF42 | U01/U02/U05/U07/U08 | CT10–CT15/CT17 | Erros JSON, parâmetros, banco e execução |
 | RN01–RN12 | U01/U03/U04/U05/U07 | CT01–CT19 | Contrato e cálculo central |
+| RF35–RF38, RN13–RN14 | U01/U09/U06/U07 | CT21–CT24 | `GET /api/v1/medicamentos/{id}/historico?farmaciaId={id}` (proposto) |
+| RNF01–RNF18 e feedback real do professor | U06/U10/U07 | CT16, CT25 | Revisão visual/UX e acessibilidade |
 
-**Vinculação futura:** em cada Issue usar `SPEC: U0X, RFxx, RNxx, CTxx`; a branch deve incluir o **número verdadeiro da Issue**; o PR referencia a Issue com `Refs #...` ou `Closes #...` **somente quando adequado**. Uma alteração substantiva nas regras deve resultar em PR com justificativa e atualização de documentos/testes. **Não há histórico fictício de v1.1.**
+**Vinculação operacional:** em cada Issue usar `SPEC: U0X, RFxx, RNxx, CTxx`; a branch deve incluir o **número verdadeiro da Issue**; o PR referencia a Issue com `Refs #...` ou `Closes #...` **somente quando adequado**. Uma alteração substantiva nas regras deve resultar em PR com justificativa e atualização de documentos/testes. **A v1.1 documenta mudança real de prazo, stack, histórico e escopo de revisão do frontend; a aprovação depende do PR da Issue #18.**
 
 ## 10. Pendências que precisam de decisão ou execução
 
-1. **[DECISÃO]** Escolher implementação de backend Java, framework/build/testes e separar interface, regras de negócio e persistência com um arranjo viável (ADR001/ADR004).
-2. **[DECISÃO]** Aprovar/revisar preço válido (`> 0`), booleano de disponibilidade, obrigatoriedade/fuso de atualização e forma de migrar registros existentes sem adivinhar valores (U01).
-3. **[DECISÃO]** Aprovar/revisar arredondamento `HALF_UP`, desempate e ordenação por distância quando parte das ofertas não possui coordenadas (U04/U05).
-4. **[DADOS]** Escolher CEPs concretos da região e suas coordenadas com fonte documentada, além da massa fictícia de demonstração (U01).
-5. **[VALIDAÇÃO]** Aprovar o desenho de rotas/JSON da `API.md` ou registrar alternativa antes de codificar (U02–U05).
-6. **[EVIDÊNCIA]** Criar Issues reais, registrar responsáveis disponíveis, implementar testes/ambiente do professor e executar CTs; não chamar esta matriz de teste executado.
-7. **[ACADEMIA]** Conferir exigência da apostila sobre agente, Docker, harness, PDF Moodle e evidências. Estes arquivos Markdown **não cobrem sozinhos** esses artefatos.
+1. **[REVISÃO DE EQUIPE]** Formalizar, pelo PR da [Issue #18](https://github.com/PharmaFind/PharmaFind/issues/18), a escolha de React + JavaScript + Vite, Java 21 + Spring Boot + Spring JDBC + Maven, MySQL e ferramentas complementares. A implementação **não existe ainda**; conferir exigência do professor sobre JSP/Servlets.
+2. **[PERSISTÊNCIA]** Aprovar campos `DISPONIVEL`, `DATA_ATUALIZACAO`, preço positivo, migração e fuso, preservando integridade da U01.
+3. **[CÁLCULOS]** Revisar/aceitar arredondamento monetário, empate por preço e ordenação por distância sem coordenadas; não prometer testes concluídos.
+4. **[GEOLOCALIZAÇÃO]** Selecionar CEPs mapeados e coordenadas com fonte documentada. GPS continua opcional e depende de consentimento.
+5. **[API]** Validar contratos/erros de [API.md](API.md) antes da implementação, inclusive a nova consulta de histórico U09 sem alterar indevidamente os três contratos existentes.
+6. **[HISTÓRICO — U09]** Definir a gravação/atualização de pontos históricos (por dia ou por evento), massa fictícia cronológica, contrato JSON e testes CT21–CT24. A tabela SQL legada não comprova implementação.
+7. **[FRONTEND — U10]** Registrar as **observações exatas do professor** na [Issue #20](https://github.com/PharmaFind/PharmaFind/issues/20), corrigir telas e comprovar avaliações de UX/responsividade/teclado, sem presumir problemas específicos.
+8. **[COLABORAÇÃO]** Confirmar responsáveis das Issues #10–#17, #19 e #20; conduzir PRs por desenvolvedores diferentes e revisões cruzadas reais. `AGENTS.md` contém instruções, não comprova configuração operacional de agentes.
+9. **[ACADEMIA]** Confirmar com o professor exigências efetivas de agente, Docker, harness, PDF e evidências. Executar os CTs relevantes; nenhum teste é considerado aprovado apenas por estar descrito.
 
 ---
 
-**Aprovação:** ainda não registrada. A revisão deste arquivo deve acontecer por PR real para `develop`; os itens marcados **[PROPOSTA]** não se tornam decisões confirmadas simplesmente por estarem escritos aqui.
+**Aprovação desta versão:** SPEC v1.1 proposta e submetida à revisão humana na Issue #18. A revisão do PR poderá aceitar ou solicitar ajustes; decisões técnicas pendentes devem permanecer identificadas, nunca presumidas.

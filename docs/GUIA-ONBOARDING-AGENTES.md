@@ -367,3 +367,347 @@ Preencha uma linha **por integrante**, somente com resultados realmente observad
 - PowerShell Execution Policies: https://learn.microsoft.com/pt-br/powershell/module/microsoft.powershell.core/about/about_execution_policies
 - [AGENTS.md](../AGENTS.md), [CONTEXTO.md](../CONTEXTO.md), [SPEC.md](SPEC.md), [API.md](API.md), [ADRs](ADR/), [CONTRIBUTING.md](../CONTRIBUTING.md)
 - [Issue da U08 #17](https://github.com/PharmaFind/PharmaFind/issues/17)
+
+## 9. Fluxos de exceção: instalação, terminal, Git e Codex
+
+> **Use esta seção quando algum passo anterior falhar.** Cada fluxo segue **erro → diagnóstico → correção segura → teste de validação**. Não assuma que os caminhos, versões ou serviços são iguais em todos os PCs.
+>
+> **Nunca use `git reset --hard`, `git clean -fd`, `git push --force`, exclua bancos ou diretórios de dados, desative antivírus ou altere a política do PowerShell para `Bypass` como solução padrão.** Não compartilhe tokens, senhas nem arquivos `.env`. Em computadores corporativos, respeite as regras da organização.
+
+### 9.0 Procedimento geral para qualquer erro
+
+1. **Pare onde deu erro.** Não execute as próximas instruções automaticamente.
+2. Descubra **a pasta e o terminal** em que está:
+
+   ```powershell
+   Get-Location
+   $PSVersionTable.PSVersion
+   Get-Command git -ErrorAction SilentlyContinue
+   ```
+
+3. Se estiver no repositório, confira também:
+
+   ```powershell
+   git status --short
+   git branch --show-current
+   git remote -v
+   ```
+
+4. Compare a mensagem com um dos cenários abaixo. Execute apenas o diagnóstico e a correção correspondente. **Repita o teste de validação**.
+5. Se persistir, solicite ajuda informando o **comando**, o **erro completo**, a **ferramenta e versão**, a **branch** e o que já tentou. Remova informações privadas. Se `git status` indicar "not a git repository" fora da pasta do projeto, esse diagnóstico simplesmente não se aplica naquele local.
+
+### 9.1 `winget` não reconhecido / pacote não encontrado / instalação bloqueada
+
+**Erro A:** `winget : O termo 'winget' não é reconhecido`.
+
+- Diagnóstico: `Get-Command winget -ErrorAction SilentlyContinue`.
+- Correção: verifique se o **App Installer (Instalador de Aplicativo)** está disponível/atualizado pela Microsoft Store. Se a máquina não permite WinGet, use os **instaladores oficiais da seção 8**; não altere políticas de TI.
+- **Validação:** `winget --version`, se optar pelo WinGet, e o comando de versão **da ferramenta instalada**.
+
+**Erro B:** fonte indisponível, erro de download, pacote não encontrado:
+
+```powershell
+winget source list
+winget source update
+# Substitua o ID pelo pacote que realmente precisa instalar
+winget show --id EclipseAdoptium.Temurin.21.JDK --exact
+```
+
+- Confira conexão, proxy/VPN e **o ID correto do pacote**. Se continuar falhando, prefira o instalador oficial ou suporte técnico.
+- **Não desative firewall/antivírus para forçar o download.**
+- **Validação:** versão disponível no `winget show` e comando da ferramenta após instalação.
+
+**Erro C:** `Foi encontrado um pacote existente já instalado. Tentando atualizar...`.
+
+- **Pare antes de instalar outra versão.** Consulte `java -version`, `git --version`, `node --version` ou o comando correspondente.
+- Se a versão instalada já atende ao projeto, **não precisa atualizar**. O piloto já demonstrou por que reinstalar MySQL às cegas cria mais trabalho.
+
+### 9.2 `git`, `node`, `java` ou `code` não reconhecido depois de instalar
+
+```powershell
+Get-Command git -ErrorAction SilentlyContinue
+Get-Command node -ErrorAction SilentlyContinue
+Get-Command java -ErrorAction SilentlyContinue
+Get-Command code -ErrorAction SilentlyContinue
+where.exe java
+```
+
+1. Feche **todas** as janelas do VS Code e abra novamente; use **Terminal → New Terminal**.
+2. Confira o programa em **Configurações → Aplicativos**; o executável pode estar instalado, mas ausente do `PATH`.
+3. Repare/reinstale **somente a ferramenta ausente**, se necessário, a partir da fonte oficial.
+4. `code --version` falhar não significa que o VS Code não existe: tente abri-lo pelo menu Iniciar.
+5. **Validação:** comandos de versão funcionam num terminal novo. Para Java, confira também `javac -version`.
+
+### 9.3 `git clone` falhou porque a pasta já existe
+
+**Sintoma:** `fatal: destination path 'PharmaFind' already exists and is not an empty directory`.
+
+```powershell
+Get-Location
+Get-ChildItem -Name
+git rev-parse --show-toplevel
+git status --short
+```
+
+- Se `git rev-parse` identificar um repositório, **não clone novamente**; atualize a cópia pela seção 1.2.
+- Se você estiver **dentro da pasta PharmaFind**, não execute `git clone` nela. Execute o clone na **pasta-pai**, apenas caso precise de uma cópia nova.
+- Se for uma pasta comum com arquivos, **não exclua nem sobrescreva**. Combine como renomear/mover sem perder trabalho.
+- **Validação:** `git rev-parse --show-toplevel` aponta para a raiz correta.
+
+### 9.4 `git remote -v` mostra o repositório errado
+
+**Sintoma:** `origin` está em `tainayyxy/PharmaFind` ou outro repositório, embora a equipe contribua diretamente na organização.
+
+```powershell
+git remote -v
+git branch -vv
+git status --short
+```
+
+1. Confirme se a equipe usa **acesso direto à organização** ou **forks**. Os dois fluxos têm remotos diferentes.
+2. **Somente se o fluxo for acesso direto à organização**, corrija:
+
+   ```powershell
+   git remote set-url origin https://github.com/PharmaFind/PharmaFind.git
+   git remote -v
+   git fetch origin
+   ```
+
+3. Se estiver usando fork deliberadamente, **não sobrescreva o remoto**; confirme a configuração `origin/upstream` com o Scrum Master.
+4. **Validação:** `git remote -v` correto e `git fetch origin` bem-sucedido.
+
+### 9.5 `git switch develop` falha ou a branch não existe localmente
+
+```powershell
+git fetch origin
+git branch -a
+```
+
+- Se aparecer `remotes/origin/develop`, mas não a branch local:
+
+  ```powershell
+  git switch --track origin/develop
+  git branch --show-current
+  ```
+
+- Se **não** aparecer `origin/develop`, verifique `git remote -v`, conexão/permissões e se clonou o repo oficial.
+- Se o Git recusar trocar de branch devido a **arquivos modificados**, **pare e preserve o trabalho**. Primeiro consulte `git status`; combine commit na branch apropriada ou salvamento consciente das mudanças.
+- **Validação:** `git branch --show-current` retorna `develop`.
+
+### 9.6 `git pull --ff-only origin develop` falha
+
+**Sintoma A:** `Your local changes would be overwritten` / alterações não comitadas.
+
+```powershell
+git status
+git diff
+```
+
+- **Não descarte alterações automaticamente.** Confira se o trabalho pertence a uma `feature/*` e salve com commit na branch correta antes de atualizar `develop`.
+- Se estiver em dúvida sobre onde essas mudanças pertencem, peça revisão. Não use `reset --hard` ou `stash` sem entender como recuperar os dados.
+- **Validação:** com a árvore limpa, execute o `pull` novamente.
+
+**Sintoma B:** `Not possible to fast-forward, aborting`.
+
+```powershell
+git fetch origin
+git status
+git log --oneline --decorate --graph -12
+git branch -vv
+```
+
+- Isso significa que os históricos divergiram; **não force rebase/merge na `develop`** e não apague commits. Peça ajuda para reconciliar a branch local.
+- **Validação:** `git pull --ff-only origin develop` só deve prosseguir quando a atualização puder ser feita sem conflito de histórico.
+
+**Sintoma C:** `Already up to date`.
+
+- Não é erro. Sua branch local já contém a atualização disponível **naquele remoto**. Confira `git remote -v` para garantir que é a origem correta.
+
+### 9.7 `git fetch`/`git push` pede senha, retorna 403 ou "Permission denied"
+
+1. Verifique o remoto com `git remote -v` e teste se consegue abrir o repositório no navegador com a **própria conta**.
+2. Confirme se é colaborador da organização, se a branch existe e se o método de autenticação é o configurado pelo Git Credential Manager (HTTPS) ou chave SSH.
+3. **Não coloque senha ou token em URL de remoto**, no terminal compartilhado, no prompt do Codex ou em prints.
+4. Se `push` para `main`/`develop` foi bloqueado, isso é **esperado**: a equipe utiliza `feature/*` e PR. Não tente contornar branch protection.
+5. **Validação:** `git fetch origin` funciona e, após autorização e commit correto, `git push -u origin feature/NUMERO-descricao` funciona para a sua branch.
+
+### 9.8 `npm.ps1` bloqueado pelo PowerShell
+
+**Sintoma:** `npm.ps1 não pode ser carregado porque a execução de scripts foi desabilitada`.
+
+```powershell
+node --version
+npm.cmd --version
+npx.cmd --version
+```
+
+- Se `npm.cmd` retornar versão, **o npm funciona**; use `npm.cmd` e `npx.cmd` nos comandos do projeto.
+- Também pode abrir o terminal **Command Prompt / cmd.exe** no VS Code.
+- **Não precisa alterar `ExecutionPolicy`**, nem executar PowerShell como administrador para "desbloquear npm".
+- **Validação:** `npm.cmd --version` exibe a versão; no piloto foi **10.9.2**.
+
+### 9.9 Node/npm instalados, mas React/Vite não executa
+
+**Sintoma A:** `npm ERR! enoent package.json` / `Missing script: dev`.
+
+```powershell
+Get-Location
+Test-Path package.json
+Get-ChildItem -Name
+```
+
+- Você provavelmente está na **pasta errada** ou a U06 ainda não criou o projeto React. Consulte o README e localize **o `package.json` real**.
+- **Não rode `npm create vite` nem instale React globalmente** para "reparar" o repositório. A criação do frontend pertence à U06.
+- **Validação:** dentro da pasta correta, `npm.cmd run` lista scripts existentes; execute `npm.cmd run dev` **somente se o script `dev` existir**.
+
+**Sintoma B:** erro de engine/versão Node não suportada.
+
+- Execute `node --version` e verifique `engines`/README do `package.json` **real**.
+- Atualize Node apenas conforme a versão exigida e aprovada pelo time; reabra o terminal.
+- **Validação:** a versão do Node atende ao requisito e os comandos definidos no projeto executam.
+
+**Sintoma C:** falha ao baixar dependências.
+
+- Confira internet/proxy, status de registries e a mensagem exata. Não delete lockfiles nem desative verificações de segurança sem orientação.
+- **Validação:** instalação compatível com o lockfile funciona (preferir `npm.cmd ci` se o projeto tiver `package-lock.json` e a equipe definir esse fluxo).
+
+### 9.10 `java -version` mostra Java 24 mesmo após instalar JDK 21
+
+```powershell
+java -version
+javac -version
+$env:JAVA_HOME
+where.exe java
+Get-ChildItem -Path "$env:ProgramFiles\Eclipse Adoptium", "$env:LOCALAPPDATA\Programs\Eclipse Adoptium" -Directory -ErrorAction SilentlyContinue |
+  Where-Object { $_.Name -like "jdk-21*" }
+```
+
+- O Windows escolhe o **primeiro `java.exe` do PATH**. No piloto, o atalho da Oracle foi escolhido antes do Temurin.
+- Se o JDK 21 estiver instalado, siga o bloco **temporário** da seção 2.3 que configura `JAVA_HOME` e coloca `bin` primeiro no PATH.
+- Para configuração **persistente**, abra no Windows **Editar as variáveis de ambiente da sua conta**, configure `JAVA_HOME` para **a pasta real do JDK 21** e ajuste o `Path` do usuário para priorizar `%JAVA_HOME%\bin` quando possível, respeitando entradas de sistema. Se uma entrada de sistema continuar tendo precedência, solicite orientação antes de modificar o PATH do sistema.
+- Feche/reabra o VS Code.
+- **Validação:** `java -version` e `javac -version` ambos mostram **21** e `$env:JAVA_HOME` aponta ao JDK 21. O piloto confirmou **Temurin 21.0.13** após reiniciar.
+
+### 9.11 `mysql` não reconhecido / MySQL já instalado em outra versão
+
+```powershell
+Get-Service -Name "MySQL*" -ErrorAction SilentlyContinue
+Get-ChildItem "C:\Program Files\MySQL" -Directory -ErrorAction SilentlyContinue
+```
+
+- `mysql` não reconhecido **não prova ausência do servidor**; significa que o cliente não está disponível pelo nome no PATH.
+- Se estiver instalado o MySQL 8.0 no caminho padrão, use:
+
+  ```powershell
+  & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" --version
+  ```
+
+- Para 8.4 ou diretório personalizado, descubra o caminho **real** do `mysql.exe`; não assuma que instalar 8.4 substituiu a instância 8.0.
+- **Não instale uma segunda instância antes de conferir a existente.**
+- **Validação:** o cliente retorna versão e o teste de conexão da seção 2.5 funciona.
+
+### 9.12 MySQL parado, conexão recusada ou porta 3306 ocupada
+
+**Sintoma A:** serviço `MySQL80` aparece em `Stopped`.
+
+```powershell
+Get-Service -Name "MySQL*" -ErrorAction SilentlyContinue
+sc.exe qc MySQL80
+```
+
+- Se for **sua instalação** e não houver impacto em outros aplicativos, abra PowerShell **como administrador**:
+
+  ```powershell
+  Start-Service -Name MySQL80
+  Get-Service -Name MySQL80
+  ```
+
+- Se o serviço falhar, **registre o erro e consulte o log/configuração MySQL**. Não apague `Data`, não reinicialize o servidor e não reinstale como primeira ação.
+- **Validação:** `Get-Service MySQL80` retorna `Running`.
+
+**Sintoma B:** `ERROR 2003 (HY000): Can't connect to MySQL server on '127.0.0.1'`.
+
+```powershell
+Get-Service -Name "MySQL*" -ErrorAction SilentlyContinue
+Test-NetConnection 127.0.0.1 -Port 3306
+```
+
+- Verifique se o serviço está ativo, em **qual porta** está configurado e se a instância já passou pela configuração inicial. Se não estiver `Running`, use o fluxo A.
+- Se a porta não aceitar conexão mesmo com o serviço ativo, investigue o `my.ini` e o log da instância; não altere firewall à força.
+- **Validação:** `TcpTestSucceeded : True` e consulta autenticada ao servidor.
+
+**Sintoma C:** MySQL 8.0 e 8.4 instalados; `3306` já está em uso.
+
+```powershell
+Get-NetTCPConnection -LocalPort 3306 -State Listen -ErrorAction SilentlyContinue |
+  Select-Object LocalAddress,LocalPort,OwningProcess
+```
+
+- Descubra **qual instância** está usando a porta antes de configurar outra. Não mate processos, mude portas aleatoriamente ou desinstale versão que contém dados.
+- **Validação:** apenas a instância escolhida pela equipe atende na porta definida. No piloto, **MySQL80 (8.0.45)** funcionou em `127.0.0.1:3306`.
+
+### 9.13 MySQL solicita senha desconhecida ou retorna `ERROR 1045 Access denied`
+
+**Lembrete:** `-u root -p` pede **a senha do usuário MySQL `root`**, não a senha do Windows ou GitHub. Ao digitar, **não aparece texto nem asteriscos**, e isso é normal.
+
+```powershell
+& "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -h 127.0.0.1 -P 3306 -u root -p -e "SELECT VERSION();"
+```
+
+- Confira usuário, host/porta e se está usando a **instância** que configurou. Senhas de duas instalações podem ser diferentes.
+- Se não souber a senha, procure no **gerenciador de credenciais pessoal** ou na conexão do Workbench, se autorizada e disponível. **Não tente senhas aleatórias repetidamente nem cole a senha no chat.**
+- Se perdeu a senha de uma instância sua, peça um procedimento específico de **recuperação do root que preserve o diretório de dados**. Não use inicialização insegura por conta própria e não recrie a instância.
+- **Validação:** conexão autenticada e `SELECT VERSION()` retorna resultado. Para a aplicação, a U01 deverá definir um usuário próprio com privilégios mínimos, em vez de usar `root`.
+
+### 9.14 Spring Boot, Maven ou conexão HTTP ainda não funcionam
+
+- Antes de executar qualquer comando, confirme que U02 já entregou um projeto backend real (`pom.xml`, arquivos Java, possivelmente `mvnw.cmd`) e que está no **diretório correto**.
+- Se `.\mvnw.cmd` não existir, **não crie um novo projeto Java só para fazer o comando funcionar**; consulte a Issue U02 e os arquivos do repositório.
+- Se o backend iniciar mas não alcançar o MySQL, teste **primeiro a conexão MySQL local** pelos fluxos 9.11–9.13. Depois confira variáveis de ambiente, host e porta da configuração **sem expor credenciais**.
+- Se frontend não comunicar com API, confira as **URLs/portas realmente adotadas**, proxy Vite/CORS e o servidor Java ativo. Não suponha que Java usa 8080 nem que React usa 5173 até o código definir isso.
+- **Validação:** só declarar integração pronta quando houver requisição real frontend → API → MySQL e teste registrado. Antes disso, marcar **dependente de U02/U06/U01**.
+
+### 9.15 Codex não aparece, login falha ou agente ignora os Markdown
+
+**Sintoma A:** extensão não aparece ou não autentica.
+
+1. Confirme que a extensão é **Codex**, publicada pela **OpenAI** na área Extensions do VS Code.
+2. Reinicie o VS Code, verifique conexão e entre com a **conta própria**. Disponibilidade e limites podem variar pelo plano.
+3. Se a conta/ambiente não permitir Codex, registre o impedimento e use alternativa **aceita pela equipe**, sem compartilhar assinaturas ou credenciais.
+4. **Validação:** painel do agente aberto e capaz de responder numa conversa nova.
+
+**Sintoma B:** Codex fala em entrega 19/11, diz que U09 não existe ou não encontra `AGENTS.md`.
+
+```powershell
+git branch --show-current
+git remote -v
+Test-Path AGENTS.md
+Test-Path docs/SPEC.md
+Test-Path docs/GUIA-ONBOARDING-AGENTES.md
+```
+
+- A causa provável é branch `main` antiga, pasta errada ou `develop` não atualizada. Com a árvore limpa, siga a seção **1.2** para atualizar `develop` da organização.
+- Abra **uma conversa nova**, cole o **prompt padrão da seção 4** e solicite que cite os arquivos realmente lidos.
+- **Validação:** o agente identifica as unidades U09/U10, a entrega 30/11 e **pergunta qual task** deve fazer **antes de modificar arquivos**.
+
+**Sintoma C:** agente começou a criar/editar arquivos sem saber a Issue ou sem aprovação do plano.
+
+- **Interrompa a ação e não aprove permissões adicionais.**
+- Rode `git status --short` e `git diff` para identificar o que ele alterou; preserve qualquer alteração anterior do usuário. **Não descarte arquivos automaticamente**.
+- Reforce o `AGENTS.md` e a seção 4; use modo leitura/planejamento quando disponível e inicie nova conversa se necessário.
+- **Validação:** agente produz síntese, pergunta a Issue e aguarda autorização; o `git status --short` fica inalterado ao final dessa fase.
+
+### 9.16 Quando pedir ajuda e como registrar a evidência
+
+Se nenhuma correção segura resolver, **pare** e envie ao responsável pela U08:
+
+- Ferramenta, etapa do guia (`9.1`, `9.10` etc.) e objetivo da ação.
+- Comando que falhou e **mensagem exata do erro** (mas nunca inclua senhas ou tokens em texto/print).
+- Resultado dos comandos de diagnóstico relevantes, **sem dados pessoais ou credenciais**.
+- Qual etapa de correção tentou e **qual foi o resultado da validação**.
+- Se o erro bloqueia a task ou tem alternativa temporária segura.
+
+O Scrum Master registra o **problema e a solução que realmente funcionou** na [Issue #17](https://github.com/PharmaFind/PharmaFind/issues/17) ou em PR documental para este guia, e só depois marca o item como concluído.
+
+**Fontes oficiais para diagnóstico:** [WinGet e suas fontes](https://learn.microsoft.com/en-us/windows/package-manager/winget/troubleshooting), [Git pull e `--ff-only`](https://git-scm.com/docs/git-pull), [MySQL: conexão recusada](https://dev.mysql.com/doc/refman/8.0/en/can-not-connect-to-server.html), [MySQL: problemas de autenticação](https://dev.mysql.com/doc/refman/8.0/en/problems-connecting.html), [PowerShell: política de execução](https://learn.microsoft.com/pt-br/powershell/module/microsoft.powershell.core/about/about_execution_policies).
+

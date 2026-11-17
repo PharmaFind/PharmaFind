@@ -2,6 +2,14 @@
 
 > Instruções de colaboração para agentes de codificação. **Documento não comprova a instalação/configuração de qualquer agente.** Leia também [CONTRIBUTING.md](CONTRIBUTING.md), [CONTEXTO.md](CONTEXTO.md), [docs/SPEC.md](docs/SPEC.md), [docs/API.md](docs/API.md) e os [ADRs](docs/ADR/).
 
+## Protocolo de início para agentes de programação
+
+- **Antes de qualquer edição**, confirme a pasta e branch local, leia `AGENTS.md`, `README.md`, `CONTEXTO.md`, `CONTRIBUTING.md`, `docs/SPEC.md`, `docs/API.md`, `docs/GUIA-ONBOARDING-AGENTES.md` e ADRs pertinentes. Se faltar um arquivo ou acesso, reporte a limitação; não invente conteúdo.
+- **Não escolha tarefas por conta própria.** Se o usuário ainda não informou qual Issue/unidade está trabalhando, **pergunte explicitamente: "Qual tarefa/Issue do PharmaFind você quer fazer agora?"** e aguarde a resposta. Não comece código, instalação ou Git write nessa fase.
+- Com a task definida, consulte a Issue real (ou solicite o texto ao usuário se não tiver acesso), seus critérios de aceite, dependências e trabalho simultâneo. **Apresente um plano e peça autorização antes de alterar arquivos**. Atribuição, revisão e merge continuam sob controle humano.
+- Distinga o que existe no código do que está apenas descrito na SPEC; valide o estado da branch. Nunca presuma que um recurso foi implementado só porque o MD menciona o recurso.
+- Siga o [manual da equipe](docs/GUIA-ONBOARDING-AGENTES.md), especialmente o **prompt-padrão de primeira conversa** da seção 4.
+
 ## Fonte de verdade e status
 
 1. Consulte a Issue atribuída, critérios de aceite, SPEC e ADRs **antes** de alterar o código. Respeite regras aprovadas; alterações propostas na API não são endpoints já existentes.

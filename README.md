@@ -6,6 +6,12 @@ Projeto acadêmico de Programação Web — Análise e Desenvolvimento de Sistem
 Professor: **Romes Heriberto Araújo**.  
 Repositório: <https://github.com/PharmaFind/PharmaFind>.
 
+## Como começar a desenvolver (U08)
+
+**Primeira vez no projeto?** Leia o [Manual de instalação, Git e agentes](docs/GUIA-ONBOARDING-AGENTES.md). Ele explica: **clone/pull da `develop` do repositório oficial**, ferramentas Windows/PowerShell (Git, Java 21, Node/npm, MySQL e VS Code), instalação do **Codex** e o **prompt-padrão** que lê os arquivos MD e pergunta a Issue antes de programar.
+
+Não comece pela `main`; atualize a `develop` e crie uma branch `feature/<numero-da-issue>-descricao` apenas depois de escolher a tarefa. O agente deve **mostrar o plano e aguardar aprovação** antes de editar arquivos.
+
 ## 1. Visão do produto
 
 O **PharmaFind** é uma aplicação web de pesquisa de medicamentos e comparação de ofertas de farmácias **fictícias**. Nesta etapa, os dados representam o **Gama (DF) e arredores**. O visitante pesquisa, seleciona um medicamento/apresentação específica, consulta suas ofertas e compara preços. Se optar por informar localização, pode visualizar a distância **aproximada em linha reta**.
@@ -97,6 +103,7 @@ PharmaFind/
 ├── database/
 │   └── PharmaFindDB.sql    # Esquema inicial sem seed
 ├── docs/
+│   ├── GUIA-ONBOARDING-AGENTES.md  # Preparação da equipe e prompt Codex
 │   ├── API.md              # Contratos HTTP/JSON propostos
 │   ├── SPEC.md             # SPEC v1.1, refinamento documental
 │   └── ADR/                # Decisões 001 a 006 (ver status de cada ADR)
@@ -126,7 +133,7 @@ Papéis não equivalem a atribuição automática das Issues. Cada responsável 
 - [Issues de implementação #10–#17](https://github.com/PharmaFind/PharmaFind/issues), U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e atualização da SPEC v1.1 [#18](https://github.com/PharmaFind/PharmaFind/issues/18).
 - [CONTEXTO.md](CONTEXTO.md): situação e decisões; [SPEC.md](docs/SPEC.md): requisitos e testes; [API.md](docs/API.md): contratos propostos.
 - [ADRs](docs/ADR/): escolhas e suas justificativas; [AGENTS.md](AGENTS.md): instruções para agentes; [CONTRIBUTING.md](CONTRIBUTING.md): contribuição e revisão.
-- [Guia de instalação e preparação dos agentes (U08)](docs/GUIA-ONBOARDING-AGENTES.md): manual Windows/PowerShell, versões, solução de problemas, teste do Codex e fluxo para os integrantes. **Arquivo em revisão no [PR #23](https://github.com/PharmaFind/PharmaFind/pull/23); integrar esse PR para o link funcionar na `develop`.**
+- [Guia de instalação e preparação dos agentes (U08)](docs/GUIA-ONBOARDING-AGENTES.md): manual Windows/PowerShell, versões, solução de problemas, teste do Codex e fluxo para os integrantes. **Guia publicado na `develop` pelo [PR #23](https://github.com/PharmaFind/PharmaFind/pull/23) e aprimorado na U08.**
 - Fluxo de entrega: **Issue → feature/* → PR para develop → revisão humana → merge**; entregas estáveis vão à `main` por PR revisado.
 
 A documentação será atualizada conforme mudanças efetivamente implementadas. **Nenhuma aprovação de PR demonstra, por si só, que a aplicação ou testes integrados funcionam.**

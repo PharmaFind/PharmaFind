@@ -401,7 +401,7 @@ O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito 
 - Selecionar CEPs mapeados e coordenadas e indicar sua procedência; nenhuma cobertura geográfica universal é prometida.
 - Definir eventual política de cache/logs que evite retenção indevida de GPS; exigir HTTPS se houver publicação em produção.
 
-**Não há endpoint `/login`, `/farmacias/atualizar`, `/pagamentos`, `/historico`, `/alertas` ou similar neste MVP.** Estes casos não devem ser implementados só porque tabelas antigas ou a visão preliminar citaram recursos futuros.
+**Não há endpoints de autenticação (`/login`), administração de farmácias (`/farmacias/atualizar`), pagamentos (`/pagamentos`) ou alertas (`/alertas`) neste MVP.** Também **não há um endpoint genérico `/historico`**: a única rota de histórico prevista é a **consulta de leitura específica** `GET /api/v1/medicamentos/{id}/historico?farmaciaId={id}`, descrita nas seções 2 e 11 para a U09. Não criar endpoints administrativos ou funcionalidades além da SPEC por inferência de tabelas legadas.
 
 ## 11. Histórico demonstrativo de preços — U09 (contrato novo proposto)
 

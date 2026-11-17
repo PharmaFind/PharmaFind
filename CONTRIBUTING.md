@@ -19,7 +19,7 @@ Este guia padroniza contribuições dos integrantes do PharmaFind. Seu objetivo 
 
 Uma branch histórica chamada `feature/estrutura-documentacao` foi criada antes da convenção com número. Ela não precisa ser renomeada para fabricar rastreabilidade retroativa.
 
-**Exemplos de novas branches:** `feature/12-busca-medicamentos`, `feature/15-motor-precos`, `feature/18-documentacao-api`, `fix/23-erro-cep` (o prefixo `fix/` é **recomendação**, a combinar com o grupo). O número deve corresponder a uma **Issue existente**, não a um número inventado.
+**Exemplos de nomes para futuras branches:** `feature/12-busca-medicamentos` (U03, Issue #12), `feature/13-motor-precos` (U04, Issue #13), `feature/15-interface-react` (U06, Issue #15) e `feature/17-ambiente-agentes` (U08, Issue #17). São **exemplos de nomenclatura, não declaração de branches existentes**. O número deve corresponder à **Issue real da tarefa**, nunca ao número da unidade ou de um PR. O prefixo `fix/`, se usado, depende de acordo da equipe.
 
 **Não faça push direto em `main` ou `develop`.** A ruleset ativa exige PR e uma aprovação em ambas.
 

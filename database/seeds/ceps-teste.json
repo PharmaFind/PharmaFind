@@ -1,0 +1,44 @@
+{
+  "versao": 1,
+  "demonstrativo": true,
+  "sistemaCoordenadas": "latitude/longitude em graus decimais, convencao WGS84",
+  "aviso": "Base local de demonstracao. Pontos representativos de teste; nao sao centroides postais, GPS de visitantes ou geocodificacao de enderecos.",
+  "ceps": [
+    {
+      "cep": "72429005",
+      "regiao": "Gama - Ponte Alta",
+      "referenciaCep": "IFB Campus Gama",
+      "latitude": -15.9932,
+      "longitude": -48.0534,
+      "naturezaCoordenadas": "ponto_representativo_de_teste",
+      "origemCoordenadas": "Definicao manual de fixture para a demonstracao regional, sem levantamento de campo ou certificacao postal.",
+      "fonteCep": "https://www.ifb.edu.br/gama/contato",
+      "fonteCoordenadas": null,
+      "consultadoEm": "2026-11-17"
+    },
+    {
+      "cep": "72444240",
+      "regiao": "Gama - Setor Leste",
+      "referenciaCep": "Campus UnB Gama - referencia publica do CPL",
+      "latitude": -15.9893,
+      "longitude": -48.0425,
+      "naturezaCoordenadas": "ponto_representativo_de_teste",
+      "origemCoordenadas": "Arredondamento a quatro casas do ponto de referencia publicado pelo CPL/UnB; nao representa o centro nem toda a area do CEP.",
+      "fonteCep": "https://cpl.unb.br/contato/",
+      "fonteCoordenadas": "https://cpl.unb.br/contato/",
+      "consultadoEm": "2026-11-17"
+    },
+    {
+      "cep": "72620100",
+      "regiao": "Recanto das Emas - Monjolo",
+      "referenciaCep": "IFB Campus Recanto das Emas",
+      "latitude": -15.9150,
+      "longitude": -48.0850,
+      "naturezaCoordenadas": "ponto_representativo_de_teste",
+      "origemCoordenadas": "Definicao manual de fixture para a demonstracao regional, sem levantamento de campo ou certificacao postal.",
+      "fonteCep": "https://www.ifb.edu.br/reitori/30807-localizacao-e-contatos-das-unidades-do-ifb",
+      "fonteCoordenadas": null,
+      "consultadoEm": "2026-11-17"
+    }
+  ]
+}

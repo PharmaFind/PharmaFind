@@ -15,7 +15,7 @@
 4. **Cole o prompt padrão** da seção 4 na conversa do Codex. O agente deve **ler os arquivos `.md` primeiro**.
 5. **O agente deve perguntar qual task/Issue você quer realizar e aguardar sua resposta**, sem criar arquivos.
 6. Com a Issue definida, **analise o plano antes de autorizar código**; trabalhe em uma branch `feature/*` criada da `develop` (seção 5).
-7. **Execute e verifique** o resultado; envie PR para `develop` e solicite revisão humana (seção 5).
+7. **Execute e verifique** o resultado; siga a [seção 10 — do VS Code ao Pull Request](#10-do-vs-code-ao-pull-request-guia-completo-de-desenvolvimento-e-entrega) para publicar a feature, obter revisão e iniciar a próxima Issue.
 
 > **Não entregue acesso à sua conta ChatGPT, GitHub ou senha MySQL para outro integrante.** Cada um usa suas próprias credenciais. O Scrum Master centraliza o processo, mas cada dev verifica seu próprio código.
 
@@ -317,6 +317,8 @@ git push -u origin feature/11-backend-inicial
 Os últimos três comandos são um **exemplo**, não devem ser colados sem revisar quais arquivos efetivamente pertencem à task e sem autorização do responsável. Não use `git add .` sem inspecionar alterações. Depois abra um **PR com base em `develop`**, referencie a Issue, descreva testes reais e solicite revisão de **outra pessoa**.
 
 **Não misture alterações de U06 e U10 na mesma branch sem coordenação.** Mudanças nos contratos API/esquema SQL devem ser alinhadas antes de alterar backend e frontend.
+
+**Precisa do procedimento completo, inclusive cliques no GitHub, revisão e pós-merge?** Siga a [seção 10 — Do VS Code ao Pull Request](#10-do-vs-code-ao-pull-request-guia-completo-de-desenvolvimento-e-entrega).
 
 ## 6. Como saber se o onboarding do integrante funcionou
 
@@ -711,3 +713,275 @@ O Scrum Master registra o **problema e a solução que realmente funcionou** na 
 
 **Fontes oficiais para diagnóstico:** [WinGet e suas fontes](https://learn.microsoft.com/en-us/windows/package-manager/winget/troubleshooting), [Git pull e `--ff-only`](https://git-scm.com/docs/git-pull), [MySQL: conexão recusada](https://dev.mysql.com/doc/refman/8.0/en/can-not-connect-to-server.html), [MySQL: problemas de autenticação](https://dev.mysql.com/doc/refman/8.0/en/problems-connecting.html), [PowerShell: política de execução](https://learn.microsoft.com/pt-br/powershell/module/microsoft.powershell.core/about/about_execution_policies).
 
+## 10. Do VS Code ao Pull Request: guia completo de desenvolvimento e entrega
+
+> **Tudo instalado, e agora?** Siga este roteiro **depois** de preparar o ambiente (seções 1–4). Ele ensina o ciclo completo, desde a Issue até o merge e a próxima tarefa, no **Windows + PowerShell**. Exemplo: **U02 = Issue #11**, branch ilustrativa `feature/11-backend-inicial`. **Troque sempre o número e o nome pela sua tarefa real; não execute o exemplo se a branch já existir ou a tarefa pertencer a outra pessoa.** Os comandos de Git abaixo são operacionais; comandos de build e testes de React/Java dependem dos arquivos efetivamente implementados.
+>
+> **Fluxo:** Issue → atualizar `develop` → criar `feature/*` → planejar com Codex → desenvolver e testar → selecionar arquivos → commit → push → PR para `develop` → revisão humana → merge autorizado → atualizar `develop`.
+
+### 10.1 Abrir o projeto e verificar onde você está
+
+1. No VS Code, clique em **File → Open Folder** e selecione a pasta **PharmaFind** (a raiz com `README.md`, `AGENTS.md` e `docs/`).
+2. Abra **Terminal → New Terminal** e confirme que usa PowerShell.
+3. Execute os comandos **um de cada vez**:
+
+```powershell
+Get-Location
+git rev-parse --show-toplevel
+git remote -v
+git branch --show-current
+git status --short
+```
+
+| Comando | O que verificar |
+|---|---|
+| `Get-Location` e `git rev-parse --show-toplevel` | A pasta aberta é a raiz do repositório PharmaFind. |
+| `git remote -v` | Se a equipe contribui diretamente na organização, o `origin` aponta para `https://github.com/PharmaFind/PharmaFind.git`. Quem usa fork precisa conferir a configuração com a equipe. |
+| `git branch --show-current` | **Qual branch está ativa no VS Code**. A branch no navegador GitHub não muda a local. |
+| `git status --short` | Sem saída indica ausência de mudanças locais. Com saída, **investigue antes de trocar de branch**. |
+
+Se receber `fatal: not a git repository`, abra a pasta correta. Se o remoto estiver incorreto, consulte a **seção 9.4**; não substitua um fork legítimo sem combinar. Se a pasta ainda não existe, siga a **seção 1.1**; se já existe, **não faça outro clone** (seção 1.2).
+
+**Como interpretar o status:**
+
+| Exemplo | Significado |
+|---|---|
+| ` M README.md` | Arquivo modificado, mas **não preparado** para commit. |
+| `M  README.md` | Modificação **preparada** para commit. |
+| `A  arquivo.sql` | Arquivo novo **preparado** para commit. |
+| `?? arquivo-temporario` | Arquivo novo **não rastreado**: confira seu conteúdo antes de adicionar ou apagar. |
+| `MM arquivo.md` | Há alterações preparadas e outras ainda não preparadas no mesmo arquivo. |
+
+Em `git status --short`, a **primeira coluna** representa alterações preparadas para commit; a **segunda**, alterações na árvore de trabalho. Nunca apague automaticamente arquivos `??`.
+
+### 10.2 Entender as três branches
+
+| Branch | Uso | Regra |
+|---|---|---|
+| `main` | Referência estável do projeto | Não trabalhar nem fazer push direto. |
+| `develop` | Integração do código da equipe | Recebe PRs revisados; não fazer push direto. |
+| `feature/<numero-real-da-issue>-<descricao>` | Trabalho isolado de uma Issue | Pode receber commits do autor e depois é integrada por PR à `develop`. |
+
+O número da **Issue** não é o número da unidade: a **U02 é #11**, a **U06 é #15** e a **U08 é #17**. Consulte a [lista real de Issues](https://github.com/PharmaFind/PharmaFind/issues). Não invente nomes de branches nem assuma que uma feature ainda não existe.
+
+### 10.3 Atualizar a `develop` sem perder modificações
+
+**Primeiro, verifique:** `git status --short`. Se houver mudanças, **pare**; confira a branch, o diff e salve o trabalho na feature correta antes de trocar. Não use `git reset --hard`, `git clean -fd` ou `git stash` automaticamente.
+
+Com a árvore limpa e o `origin` correto:
+
+```powershell
+git fetch origin
+git switch develop
+git pull --ff-only origin develop
+git branch --show-current
+git status --short
+```
+
+- `fetch` consulta as atualizações remotas sem mesclá-las automaticamente.
+- `switch develop` seleciona a branch local de integração.
+- `pull --ff-only` atualiza a `develop` quando não é necessário criar merge.
+- Resultado esperado: `git branch --show-current` mostra `develop` e `git status --short` não mostra alterações.
+
+Se a branch não existir localmente, veja a **seção 9.5**. Se o pull falhar, veja a **seção 9.6**; não force. **Atualizar a `develop` não atualiza automaticamente uma feature existente.**
+
+### 10.4 Selecionar uma Issue e criar a feature correta
+
+1. No site, abra [Issues](https://github.com/PharmaFind/PharmaFind/issues), leia a tarefa, requisitos, critérios de aceite e dependências.
+2. Confirme quem é o responsável e se outra pessoa já modifica os mesmos arquivos.
+3. Partindo da **`develop` atualizada**, crie uma feature. **Exemplo, apenas se sua Issue for a #11 e não existir branch com esse nome:**
+
+```powershell
+git switch -c feature/11-backend-inicial
+git branch --show-current
+git status --short
+```
+
+O resultado de `branch --show-current` deve ser `feature/11-backend-inicial`. Criar essa branch **não publica** nada remotamente.
+
+**Se ela já existir localmente:**
+
+```powershell
+git switch feature/11-backend-inicial
+git branch --show-current
+```
+
+**Pelo VS Code:** clique no nome da branch no canto inferior esquerdo ou abra `Ctrl + Shift + P` e procure **Git: Checkout to...** para trocar, ou **Git: Create Branch...** para criar. Confirme no terminal; os rótulos podem variar conforme a versão. A branch selecionada no **site** GitHub não é a mesma ação.
+
+### 10.5 Iniciar o Codex e aprovar o plano
+
+1. Com a feature correta selecionada, abra o Codex no VS Code (seção 3).
+2. Abra uma conversa nova e cole o **prompt completo da seção 4**.
+3. Confirme que o agente leu `AGENTS.md`, `README.md`, `CONTEXTO.md`, `CONTRIBUTING.md`, `docs/SPEC.md`, `docs/API.md`, o manual e os ADRs pertinentes.
+4. Responda à pergunta com o **número real da Issue**, como `#11 — U02`. Se ele não conseguir consultar a Issue, forneça seu conteúdo.
+5. Leia o plano: arquivos a alterar, impacto em outras unidades, dependências, riscos e **testes previstos**.
+6. **Autorize explicitamente o plano antes de editar**. Interrompa se o Codex começar a programar antes dessa aprovação ou se tentar trabalhar em `main`/`develop`.
+
+O desenvolvedor é responsável por **entender, testar e revisar** tudo, mesmo que o agente tenha escrito o código. O agente não substitui a revisão humana.
+
+### 10.6 Desenvolver e validar antes de enviar
+
+- Implemente apenas o escopo acordado da Issue, sem invadir arquivos de outras tarefas. Alinhe mudanças de frontend entre U06 e U10.
+- Compare o resultado com os critérios de aceite da Issue, SPEC, contratos de API e casos `CT` aplicáveis.
+- **Execute os testes reais disponíveis** e registre comandos, resultados, falhas e limitações. Não marque como executado um teste que o ambiente não permitiu rodar.
+- Para Java, React ou npm, consulte primeiro o `pom.xml`, `mvnw.cmd`, `package.json` e scripts **realmente presentes** na branch. Não rode comandos hipotéticos do backend/frontend como se já estivessem implementados.
+- Confirme que não há senhas, tokens, arquivos `.env` reais, dados locais ou arquivos temporários indo para o Git.
+
+Comandos de inspeção:
+
+```powershell
+git branch --show-current
+git status
+git diff
+git diff --stat
+git diff --check
+```
+
+`git diff` mostra alterações ainda não preparadas; depois de preparar, use `git diff --cached`. `git diff --check` ajuda a achar problemas de espaços, **não substitui testes da aplicação**. Se uma visualização do Git terminar em `(END)`, pressione **q** para voltar ao terminal.
+
+### 10.7 Preparar apenas os arquivos certos e fazer commit
+
+Depois de revisar e testar, confira `git status`. Adicione **somente arquivos relacionados à Issue**. **Exemplo para uma alteração real no manual da U08**, e não para a U02:
+
+```powershell
+git add docs/GUIA-ONBOARDING-AGENTES.md
+git diff --cached --stat
+git diff --cached --check
+git status --short
+```
+
+Se estiver trabalhando na **U02**, selecione apenas os arquivos de backend efetivamente modificados. Evite `git add .` sem inspeção: ele pode incluir dados sensíveis ou arquivos de outra tarefa.
+
+Após revisar também `git diff --cached`, faça commit **na feature correta**. Exemplo de mensagem para a U02:
+
+```powershell
+git branch --show-current
+git commit -m "feat(u02): iniciar estrutura do backend Java"
+git status
+```
+
+**O que significa:**
+
+- `git add` escolhe o conteúdo do próximo commit.
+- `git commit` salva esse conteúdo no histórico **local**.
+- `git status` informa o que ainda ficou pendente. `nothing to commit, working tree clean` significa que não há alterações locais restantes.
+- Se aparecer `nothing added to commit`, confira `status` e o que foi preparado, em vez de repetir comandos às cegas.
+
+### 10.8 Publicar a feature com push
+
+O commit **não** vai sozinho para o GitHub. Envie **a sua feature**, não a `develop`/`main`. Exemplo U02:
+
+```powershell
+git branch --show-current
+git push -u origin feature/11-backend-inicial
+```
+
+Na primeira publicação, a saída costuma incluir `[new branch] feature/11-backend-inicial -> feature/11-backend-inicial` e informar que o rastreamento remoto foi configurado. Isso confirma o **push**, não o merge.
+
+Nos commits seguintes da mesma branch, com o upstream já configurado:
+
+```powershell
+git push
+```
+
+Se aparecer `403`, `Permission denied` ou erro de autenticação, consulte a **seção 9.7**. Nunca coloque token em URL, print ou conversa de agente.
+
+### 10.9 Abrir o Pull Request pelo site, passo a passo
+
+1. Entre em [PharmaFind → Pull requests](https://github.com/PharmaFind/PharmaFind/pulls).
+2. Clique em **New pull request**. Se aparecer **Compare & pull request** para sua feature recém-publicada, também pode usar esse atalho.
+3. Na comparação, selecione:
+   - **base: `develop`** = branch de destino, que **receberá** a mudança;
+   - **compare: `feature/11-backend-inicial`** = branch da sua Issue, que **contém** os commits (exemplo).
+4. Revise as abas **Commits** e **Files changed**. Se aparecerem arquivos de outra tarefa, volte ao Git e investigue.
+5. Preencha o formulário do PR usando o [template oficial](https://github.com/PharmaFind/PharmaFind/blob/develop/.github/PULL_REQUEST_TEMPLATE.md). Clique em **Create pull request** para publicar. A disposição dos botões varia conforme a tela.
+6. Confira o link do PR criado e envie ao responsável pela revisão.
+
+**Exemplo de título:** `feat(U02): iniciar backend Java e persistência`. **Informações obrigatórias na descrição:**
+
+- O que mudou e **por quê**, arquivos alterados e impacto no projeto.
+- **Issue / SPEC:** use `Refs #11` em contribuição **parcial** e `Closes #11` **somente** se todos os critérios de aceite estiverem atendidos. Como a base é `develop` e não a branch padrão (normalmente `main`), **confira o fechamento efetivo da Issue** após o merge; não assuma que a palavra-chave vai fechá-la automaticamente.
+- Como validar: comandos, entradas, **resultado efetivamente observado** e testes não executados.
+- Riscos, limitações, dependências e pontos em aberto.
+- Checklist de segurança, regras de negócio e revisão humana.
+
+Se a feature não aparecer em **compare**, verifique se o push realmente terminou, se escolheu a organização e se a branch existe remotamente. **Não use `main` só porque o site a sugeriu como base.**
+
+### 10.10 Solicitar review e responder às correções
+
+1. No PR, procure **Reviewers** na lateral e peça revisão a **outro integrante disponível**. Se não tiver permissão, solicite ajuda ao Scrum Master.
+2. Marque a Issue como **In Review** (ou coluna equivalente do GitHub Projects) quando houver PR para analisar.
+3. O revisor confere **Files changed**, critérios de aceite, casos de borda e evidências; pode comentar, aprovar (**Approve**) ou solicitar mudanças (**Request changes**).
+4. Se forem pedidas correções, volte à **mesma feature local**, ajuste, execute os testes, adicione os arquivos pertinentes, faça **outro commit** e use `git push`. **O PR existente é atualizado automaticamente**; não é preciso abrir outro para cada correção.
+5. Responda aos comentários e resolva conversas somente depois de tratar os pontos. Novos commits podem exigir nova aprovação conforme as regras do repositório.
+
+**Diferença entre ações:** `commit` salva localmente → `push` publica a feature → **PR** propõe integração → **Approve** registra revisão → **merge** integra as mudanças à base.
+
+### 10.11 Resolver conflitos com cuidado
+
+Um conflito indica que branches fizeram mudanças incompatíveis em algum trecho. **Não use force push, exclusões em massa ou atalhos destrutivos** só para o aviso desaparecer.
+
+1. Converse com quem modificou o mesmo arquivo e confirme o que precisa permanecer.
+2. Verifique `git status` e confirme que o trabalho local está commitado na feature correta.
+3. Se a equipe concordar em integrar a `develop` recente na sua feature, por exemplo na U02:
+
+```powershell
+git fetch origin
+git switch feature/11-backend-inicial
+git merge origin/develop
+git status
+```
+
+4. Em caso de conflito, confira os arquivos indicados, use o editor de merge do VS Code, preserve as mudanças necessárias de ambos, **reteste**, prepare os arquivos resolvidos e faça commit quando necessário.
+5. Publique com `git push` e confira novamente o PR.
+
+Se não conseguir entender o conflito, **pare e peça ajuda**. Não use `git push --force`, `git reset --hard` nem altere diretamente `develop` para contorná-lo.
+
+### 10.12 Aprovação, merge e estado da Issue
+
+O PR **não está finalizado por ter sido criado**. Antes do merge, verifique critérios de aceite, testes aplicáveis, conversas resolvidas, **revisor humano diferente do autor**, aprovações exigidas e base `develop`.
+
+O merge deve ser realizado **somente por pessoa autorizada**, usando a opção permitida pelo GitHub e pelas proteções da equipe. Não burle bloqueios de revisão. Depois, confira se o PR aparece como **Merged** (e não apenas **Closed**) e se as alterações estão na `develop`.
+
+**Atualize a Issue e o Kanban conforme o estado real:**
+
+| Situação | Status recomendado |
+|---|---|
+| Ainda está programando | **In Progress** |
+| PR aberto e em revisão | **In Review** |
+| Todo o escopo concluído, aprovado e integrado | **Done** |
+| PR parcial integrado, mas ainda há entregas | **Mantenha a Issue aberta** e documente pendências |
+
+**Exemplo:** este manual é parte da **U08 (#17)**. Mesmo com um PR documental integrado, **não se encerra U08** sem onboarding reproduzido por outro integrante e execução integrada conforme os critérios da Issue. Use `Refs #17`, **não `Closes #17`**, numa atualização parcial como esta.
+
+### 10.13 Depois do merge: atualizar a `develop` e começar a próxima Issue
+
+Depois de confirmar o merge, com trabalho local salvo e a árvore limpa:
+
+```powershell
+git status --short
+git fetch origin
+git switch develop
+git pull --ff-only origin develop
+git branch --show-current
+git status --short
+```
+
+O esperado é estar na `develop` atualizada e sem mudanças locais. Para a **próxima Issue**, crie **outra** `feature/<numero-da-issue>-<descricao>` a partir dessa `develop`. **Não reutilize a feature anterior** para trabalho novo. Excluir a branch antiga é opcional e só deve ocorrer depois de confirmar a integração; não apague por impulso.
+
+Se já existe uma feature em andamento, consulte as regras de atualização e conflitos de [CONTRIBUTING.md](../CONTRIBUTING.md) em vez de recriá-la.
+
+### 10.14 Checklist para não se perder
+
+- [ ] Escolhi uma Issue real e confirmei seu responsável e critérios de aceite.
+- [ ] Abri a pasta raiz no VS Code, conferi `origin`, status e branch.
+- [ ] Atualizei `develop` antes de criar minha feature.
+- [ ] Estou na `feature/<numero-real>-<descricao>` correta.
+- [ ] Codex leu os documentos, propôs plano e recebeu aprovação antes de editar.
+- [ ] Revisei os arquivos, executei testes possíveis e registrei resultados reais/limitações.
+- [ ] Preparei apenas os arquivos pertinentes e conferi o conteúdo do commit.
+- [ ] Fiz commit local, push da feature e PR **base `develop` ← compare feature**.
+- [ ] Pedi revisão independente, corrigi comentários e aguardei aprovação.
+- [ ] Confirmei merge, estado da Issue/Project e atualizei `develop` para a próxima tarefa.
+
+**Se houver erro:** consulte as **seções 7 e 9**. Ao pedir ajuda, informe comando, mensagem de erro **sem segredos**, branch e `git status --short`. Não execute correções destrutivas sem entender o impacto.

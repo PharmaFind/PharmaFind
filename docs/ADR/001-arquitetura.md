@@ -1,38 +1,49 @@
 # ADR 001 — Arquitetura em camadas do PharmaFind
 
-- **Status:** **Escolha arquitetural informada pela coordenação, sujeita à revisão da equipe no PR da Issue #18.**
-- **Registro inicial:** 12/11/2026; **refinamento:** 16/11/2026.
+- **Status:** **Aceita para a implementação do MVP pela coordenação em 23/11/2026; revisão humana do PR pendente.**
+- **Registro inicial:** 12/11/2026; refinamento: 16/11/2026; decisão atual: 23/11/2026.
+- **Referência:** [avaliação do professor em 23/11/2026](https://github.com/PharmaFind/PharmaFind/issues/30), ADR 004, ADR 006 e Documento de Visão.
 
 ## 1. Contexto
 
-O repositório ainda contém páginas HTML/CSS/JavaScript tradicionais e esquema MySQL isolado, sem backend Java integrado. A entrega final informada é **30/11/2026**. O projeto deve implementar pesquisa, ofertas e processamento econômico, distância opcional, histórico fictício e correções de interface apontadas pelo professor.
+O PharmaFind tem frontend estático HTML/CSS/JavaScript e scripts MySQL, mas ainda não dispõe de backend/API integrada na versão inspecionada em 23/11. A proposta anterior de reescrever o frontend em React + Vite foi registrada em 16/11, sem implementação. O relatório do professor recomendou preservar HTML/CSS/JavaScript para concentrar o esforço na funcionalidade principal antes da entrega de **30/11/2026**.
 
-## 2. Escolha técnica para implementação
+## 2. Decisão
 
-Usar **frontend React + JavaScript + Vite**, com CSS/identidade visual reaproveitados, consumindo uma **API REST/JSON Java + Spring Boot**, que acessará **MySQL** por Spring JDBC. A arquitetura separa responsabilidades:
+Adotar **arquitetura em camadas**, com:
 
-1. **Frontend:** rotas/telas, pesquisa, estado visual, validação de usabilidade, gráfico, erros e mensagens; sem cálculos monetários divergentes dos retornados pelo backend.
-2. **Controller/DTO:** entrada HTTP, validação, contratos JSON e tratamento uniforme de erros.
-3. **Service:** regras de ofertas elegíveis, comparações com precisão monetária, histórico e distância opcional.
-4. **Repository:** consultas SQL parametrizadas a medicamentos, farmácias, ofertas e histórico no MySQL.
+1. **Apresentação:** HTML, CSS e JavaScript existentes, refatorados para consumir a API REST/JSON; busca, seleção, listagem, estados de carregamento/erro, responsividade, acessibilidade, CEP/GPS opcional e gráfico de histórico (quando implementado).
+2. **Controller/DTO:** Java 21 + Spring Boot / Spring Web para endpoints, validação HTTP e contratos JSON.
+3. **Service:** regras de negócio, preço válido, média, economia, ranking, histórico e distância opcional; aritmética monetária com `BigDecimal`.
+4. **Repository:** Spring JDBC (`JdbcTemplate`) para consultas SQL **parametrizadas** e persistência em MySQL.
 
-**O desenho é uma decisão-alvo, não evidência de componentes já implementados.** Detalhes em [ADR 004](004-backend-java.md), [ADR 006](006-frontend-react.md), [SPEC v1.1](../SPEC.md) e [API](../API.md).
+**Build:** Maven no backend; frontend estático sem obrigatoriedade de Node, npm ou Vite. Uma biblioteca JS para gráfico, como Chart.js, pode ser usada na U09 sem React. Não adotar TypeScript, Next.js, microsserviços ou troca de framework sem nova decisão registrada.
+
+Detalhes: [ADR 004](004-backend-java.md), [ADR 006](006-frontend-react.md), [SPEC](../SPEC.md) e [API](../API.md).
 
 ## 3. Justificativa
 
-A separação de interface, HTTP, negócio e persistência facilita testar números e contratos, dividir Issues entre integrantes e agentes de IA e evitar código de banco dentro do frontend. React facilita componentes reutilizáveis para novas telas; Spring Boot simplifica API Java. Priorizar o fluxo funcional antes de otimizações e novas abstrações.
+Reutilizar o frontend reduz retrabalho, respeita a tecnologia descrita no Documento de Visão e concentra o esforço em uma aplicação de ponta a ponta, que hoje não existe. Java/Spring Boot/Spring JDBC mantém separação entre HTTP, regras e dados. A resposta do professor na avaliação de 23/11 confirmou que Spring Boot é aceito, sem obrigatoriedade de JSP/Servlets.
 
 ## 4. Alternativas consideradas
 
-- JavaScript tradicional + API Java: menor migração inicial, mas menos padronização dos estados de interface definidos para esta versão.
-- Servlets/JSP: tecnicamente possível, mas menos alinhado à proposta frontend adotada; confirmar requisitos obrigatórios da disciplina.
-- React com TypeScript: capacidade adicional de tipos, mas custo não justificado para este time/prazo.
-- Microsserviços, infraestrutura distribuída, Next.js: complexidade desnecessária ao produto acadêmico.
+- **React + Vite:** proposto em 16/11; não adotado para o MVP atual pelo custo da migração, sem descartar possível evolução futura (ver ADR 006).
+- **Servlets/JSP + JDBC:** permitido, mas exige mais configuração manual para rotas JSON.
+- **Spring JPA/Hibernate:** possível, sem necessidade para o escopo das consultas propostas.
+- **Microsserviços/Next.js/TypeScript:** custo desproporcional.
 
-## 5. Consequências
+## 5. Consequências e escopo
 
-Exige configurar frontend React/Vite, backend Java/Maven e MySQL, tratamento CORS/proxy, dados de teste, migração do layout e validação de endpoints. A revisão do frontend deve incorporar problemas concretos registrados em U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20). A camada de histórico é U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19).
+- **U02–U04:** implementar e integrar API, MySQL, busca e comparação antes de alegar aplicação funcional.
+- **U05:** distância opcional; consulta por preço não depende de localização.
+- **U06/U10:** adaptar páginas atuais, corrigir menu, foco, contraste, navegação e comunicação com API sem migração React.
+- **U07:** registrar execução de testes integrados; scripts SQL da U01 não comprovam API funcional.
+- **U09:** histórico/gráfico **permanece no planejamento** da entrega, após estabilizar o fluxo central, sem adiamento automático para versão futura.
+- **Escopo:** não foi congelado. Propostas de ampliação precisam de Issue, avaliação de dependências e decisão rastreável com o Product Owner/equipe, sem substituir o fluxo central por extras.
+- **Responsáveis U02–U07:** aguardam validação; não atribuir automaticamente.
+
+Nenhum componente, teste ou endpoint é considerado implementado apenas pela aprovação desta arquitetura.
 
 ## 6. Estado da decisão
 
-**Arquitetura selecionada pelo responsável do projeto e submetida à revisão humana em PR.** Não declarar aceita coletivamente nem implementada antes das evidências correspondentes.
+Decisão **aprovada pela coordenação do projeto em 23/11/2026**, sujeita à revisão humana na integração deste documento. A decisão arquitetural não equivale à aceitação coletiva, à execução do código nem a mudanças já aprovadas no Documento de Visão.

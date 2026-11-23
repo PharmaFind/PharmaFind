@@ -1,42 +1,39 @@
-# ADR 006 — Frontend com React e JavaScript (Vite)
+# ADR 006 — React/Vite no frontend: proposta não adotada para o MVP atual
 
-- **Status:** **Escolha técnica informada pela coordenação em 16/11/2026; submetida à revisão da equipe neste PR.**
-- **Data:** 16/11/2026.
-- **Relacionamento:** ADR 001 (arquitetura), ADR 004 (backend), U06 [#15](https://github.com/PharmaFind/PharmaFind/issues/15), U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20).
+- **Status:** **Não adotada no MVP de 30/11/2026** (opção de evolução futura), conforme decisão da coordenação em **23/11/2026**; revisão humana do PR pendente.
+- **Data da proposta original:** 16/11/2026.
+- **Decisão relacionada:** [ADR 001](001-arquitetura.md), [ADR 004](004-backend-java.md), U06 [#15](https://github.com/PharmaFind/PharmaFind/issues/15), U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20).
 
 ## 1. Contexto
 
-O frontend existente consiste em páginas HTML, CSS próprio, JavaScript e Pico CSS via CDN, com busca demonstrativa baseada em dados fixos. O fluxo final exigirá componentes reutilizáveis para resultados, detalhes, ofertas, filtros, estados vazios, localização e histórico com gráfico. A entrega final foi corrigida para **30/11/2026**. A equipe pretende utilizar agentes de IA como apoio à implementação, mantendo revisão humana.
+Em 16/11 foi proposta migração do frontend HTML/CSS/JavaScript para **React + JavaScript + Vite**, visando componentes reutilizáveis, estados de interface e gráficos. A proposta foi documentada, mas **não foi implementada** no repositório avaliado em 23/11. O professor recomendou manter HTML, CSS e JavaScript para evitar ampliação desnecessária do esforço de migração pouco antes da entrega.
 
-## 2. Escolha técnica para implementação
+## 2. Decisão vigente
 
-Adotar **React com JavaScript (sem TypeScript)**, inicializado pelo **Vite**, para o frontend do MVP. Preservar a linguagem visual e aproveitar o CSS existente, refatorando apenas o necessário. Usar **Chart.js** para o gráfico de histórico de preços; uma integração React pode utilizar `react-chartjs-2` se facilitar o trabalho.
+**Manter HTML, CSS e JavaScript no MVP** e fazer essas páginas consumirem a API Java/Spring Boot. Centralizar recursos comuns e corrigir problemas observados de menu mobile, contraste, semântica, acessibilidade e segurança. Não exigir `npm`, `package.json`, Node ou Vite para rodar o frontend estático.
 
-O backend será uma API Java separada, documentada no ADR 004. O frontend deve consumir JSON de endpoints documentados em `docs/API.md`; não manter listas fixas como fonte principal após a integração. Não introduzir Next.js, Redux, bibliotecas extensas de UI ou TypeScript sem nova justificativa e aceite.
+**Chart.js permanece uma alternativa de biblioteca JavaScript para o gráfico da U09**, sem dependência de React ou `react-chartjs-2`; a biblioteca e o modo de distribuição devem ser definidos e testados na própria U09.
 
-**Distinção obrigatória:** esta é uma decisão de tecnologia **para desenvolver**, não evidência de que React, Vite ou Chart.js já estejam instalados. A aceitação arquitetural pela equipe ocorrerá pela revisão do PR; a implementação depende das Issues próprias.
+React + Vite não foi proibido para sempre; qualquer adoção posterior requer nova decisão e justificativa registrada em ADR, Issue e PR. Não fazer migração implícita em U06/U10.
 
 ## 3. Justificativa
 
-Componentes ajudam a centralizar padrões visuais, reutilizar cartões e formulários e controlar estados de consulta. JavaScript sem TypeScript evita ampliar a curva de aprendizado do grupo. Vite simplifica ambiente e build. O uso de agentes de IA exige contratos e organização claros, não dispensa revisão, testes nem entendimento básico da aplicação.
+A prioridade é integrar o que já existe com banco e API, evitando uma segunda frente de arquitetura sem benefício demonstrado para os requisitos centrais. A recomendação do professor e a data de entrega favorecem essa escolha.
 
-## 4. Alternativas consideradas
+## 4. Alternativas e consequências
 
-- **HTML/CSS/JavaScript tradicionais:** menor migração, mas maior risco de duplicação e dificuldade para coordenar vários estados e páginas na proposta atual.
-- **React + TypeScript:** tipos estáticos seriam úteis, mas adicionam complexidade de aprendizagem considerada desnecessária nesta entrega.
-- **JSP/Servlets renderizando interface:** possível, mas não é a abordagem frontend escolhida; verificar exigências obrigatórias da disciplina antes de eliminar alternativa acadêmica.
-- **Next.js/SPA complexa e bibliotecas de UI extensas:** não justificadas pelo MVP e pelo prazo.
+- **React + Vite:** facilitaria componentes reutilizáveis, mas exigiria configuração, migração e novos testes. Mantido apenas como opção para outra etapa.
+- **HTML/CSS/JS modular:** escolhido para o MVP; pode usar módulos/funções compartilhadas e carregamento de dados por `fetch`.
+- **JSP/Servlets renderizando HTML:** opção acadêmica, mas o backend foi definido como API REST.
 
-## 5. Plano de migração e validação
+## 5. Plano vigente para U06/U10
 
-1. Criar o projeto Vite/React com dependências versionadas e instruções de execução em U06/U08; não apagar o legado antes da migração funcional.
-2. Criar componentes para navegação, pesquisa, seleção, ofertas, métricas, localização e gráfico (U09), preservando elementos de identidade visual viáveis.
-3. Coordenar a auditoria do professor (U10): registrar problemas reais, telas afetadas e critérios de correção antes de tratá-los como aceitos.
-4. Usar o contrato JSON documentado, com estados de carregamento, falha, ausência de resultados e indisponibilidade.
-5. Validar desktop/mobile/teclado, fluxos reais com backend/MySQL e testes aplicáveis, com evidências em PRs.
+1. Reaproveitar páginas e visual existentes, sem reiniciar o frontend em React.
+2. Buscar e selecionar um ID exato; recuperar ofertas e indicadores da API, eliminando a lista fixa como fonte final.
+3. Corrigir menu mobile, links, `innerHTML` inseguro, alertas, contraste, rótulos e navegação por teclado conforme evidências reais.
+4. Validar HTML/JS em desktop e mobile, com e sem rede, registrando dependências externas.
+5. Somente considerar a interface concluída após teste integrado com Java/MySQL e revisão humana.
 
-## 6. Consequências e status
+## 6. Registro da decisão
 
-O repositório passará a ter processo de build do frontend, dependências npm e uma etapa explícita de migração. A estrutura final de diretórios, portas, proxy/CORS e scripts deve ser documentada **após existir e ser testada**, sem inventar comandos. O frontend original permanece referência visual, não se pressupõe que React já esteja implementado.
-
-**Status final deste ADR:** escolha informada pela coordenação e sujeita à revisão humana do PR; registrar eventuais ajustes de equipe antes de tratá-la como aceita coletivamente.
+A proposta React foi **substituída** pela escolha HTML/CSS/JS para esta entrega. O histórico de 16/11 permanece preservado por este ADR; a revisão e merge do PR serão as evidências formais da atualização documental.

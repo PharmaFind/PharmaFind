@@ -1,6 +1,7 @@
 # PharmaFind — CONTEXTO DO PROJETO
 
-> **Base 1.0 (11/11/2026) | Atualizações factuais de 12 e 16/11/2026 | Contexto consolidado**
+> **Base 1.0 (11/11/2026) | Histórico factual de 12 e 16/11 | Decisão de stack atualizada em 23/11/2026**
+> **Precedência temporal:** decisões atuais da seção 4 e do registro de 23/11 prevalecem sobre descrições históricas de React/stack em registros datados anteriores. Não confundir documentos com código executado.
 > **Fontes:** Documento de Visão do PharmaFind (`DOC.PharmaFind.pdf`); materiais da disciplina (`DocumentoRomes.pdf` e `SDD.pdf`); estado do repositório observado em 11–12/11/2026; inspeção direta da organização `PharmaFind/PharmaFind` em 12/11/2026; decisões do grupo informadas à equipe.
 > **Legenda:** `[CONFIRMADO]` decisão aprovada pelo grupo; `[IMPLEMENTADO]` artefato ou comportamento identificável no código versionado, sem implicar teste de execução; `[VERIFICADO]` fato confirmado por inspeção do código ou do GitHub, com sua origem identificada; `[PROPOSTA]` definição ainda não aprovada; `[PENDENTE]` validação, decisão ou implementação não concluída. Rótulos legados preservados neste arquivo: `[DOCUMENTO]` indica origem no Documento de Visão; `[OBSERVADO]` corresponde a inspeção do repositório, **não** a teste executado; `[ATENÇÃO]` indica risco; `[AÇÃO]` indica providência. A combinação de rótulos não transforma uma proposta em decisão confirmada.
 >
@@ -18,7 +19,7 @@
 - **Localização:** **opcional**; distância **aproximada em linha reta**, quando houver coordenadas. A primeira versão usará **CEPs de teste da região e coordenadas previamente cadastradas**. GPS do navegador depende de consentimento.
 - **Ofertas indisponíveis:** **aparecem identificadas como indisponíveis**, mas **não participam da média, menor preço, economia, ranking de ofertas disponíveis nem do destaque de melhor preço**.
 - **Processamento:** menor preço, média, economia potencial e ranking das ofertas válidas; sem score composto preço/distância. Histórico de preços por oferta e gráfico entram como U09 (#19).
-- **Interface:** migrar/adaptar o visual existente para React + JavaScript + Vite, reutilizar CSS viável e corrigir observações reais do professor em U10 (#20); sem login/cadastro no fluxo do MVP.
+- **Interface:** manter e adaptar HTML/CSS/JavaScript existentes, integrando à API Java e corrigindo observações reais do professor em U10 (#20); React/Vite não serão usados neste MVP, conforme ADR 006.
 - **Equipe:** quatro desenvolvedores identificados, mas **apenas alguns podem colaborar em 11–12/11**. Não presumir disponibilidade de todos; revisões precisam ser verdadeiras.
 - **Modelo comercial futuro:** farmácias parceiras pagariam pelo serviço e manteriam ofertas atualizadas. **Sem painel de farmácias, cobrança nem autenticação nesta entrega.**
 
@@ -59,8 +60,8 @@
 - [CONFIRMADO] **Núcleo tecnológico:** HTML, CSS, JavaScript, Java e MySQL.
 - [CONFIRMADO] **Frameworks e bibliotecas são permitidos e bem-vindos** quando simplificarem o desenvolvimento. As tecnologias não precisam ser usadas de forma “pura”.
 - [CONFIRMADO] A seção de stack/arquitetura do Documento de Visão foi preenchida provisoriamente; **não é uma decisão técnica vinculante**.
-- [ESCOLHA DE IMPLEMENTAÇÃO, SOB REVISÃO] React + JavaScript + Vite, preservando CSS; Java 21 + Spring Boot (Spring Web) + Spring JDBC + Maven; MySQL; Chart.js para histórico. JUnit e Vitest são planejados. **Sem TypeScript**. ADRs 001/004/006 aguardam revisão; nada disso é declarado implementado.
-- [DIRETRIZ] React foi selecionado para estruturação de componentes, não por aparência profissional. Evitar TypeScript, Next.js, microsserviços e ferramentas sem necessidade; priorizar integração executável e U06/U10.
+- [APROVADA PELA COORDENAÇÃO EM 23/11; PR EM REVISÃO] Frontend **HTML/CSS/JavaScript**, com backend **Java 21 + Spring Boot (Spring Web) + Spring JDBC + Maven** e **MySQL**. Chart.js pode ser utilizado no histórico U09 sem React. ADR 001/004 vigentes; ADR 006 registra React/Vite não adotados no MVP. Nada disso comprova integração implementada.
+- [DIRETRIZ ATUAL] Reutilizar páginas existentes e simplificar componentes em JS; não criar estrutura React/Vite nesta entrega. Evitar TypeScript, Next.js e microsserviços. A prioridade funcional é U02–U04, seguida de interface, testes e U09 planejada.
 
 ## 5. Fluxo principal do usuário
 
@@ -79,7 +80,7 @@
 - [CONFIRMADO] Farmácias demonstrativas terão coordenadas **cadastradas na base de teste**, mesmo sendo estabelecimentos fictícios; dados e endereços devem ser marcados como demonstrativos.
 - [DOCUMENTO/CONFIRMADO] Geolocalização do navegador só será consultada mediante autorização do usuário; se recusada/indisponível, o visitante pode usar um CEP de teste ou continuar sem distância.
 - [PROPOSTA] Quando a localização não estiver disponível: não exibir distâncias inventadas, indicar que a ordenação por proximidade depende da localização e manter normalmente a comparação por preços.
-- [PENDENTE] Selecionar os CEPs de teste concretos e suas coordenadas, definir a origem/documentação dos valores e descrever a mensagem para CEPs fora da base; incluir casos de teste de autorização negada e coordenadas ausentes.
+- [U01 VERIFICADA NA MAIN] Três CEPs de teste com coordenadas documentadas em `database/seeds/ceps-teste.json`; ainda falta integrar cálculo/resposta na U05 e testar CEP não mapeado, permissão negada e coordenadas ausentes.
 - [ATENÇÃO] **ViaCEP não fornece latitude e longitude**; uma consulta de CEP não produz automaticamente distância. Serviço externo de geocodificação para todos os CEPs pertence a evolução futura, se necessário.
 
 ## 7. Base de dados, ofertas e disponibilidade
@@ -90,9 +91,9 @@
 - [CONFIRMADO] **Ofertas indisponíveis devem permanecer visíveis**, com identificação explícita como “Indisponível”, para dar transparência ao usuário. Elas **não são elegíveis para menor preço, média, economia potencial, ranking de preços disponíveis nem indicação de melhor oferta**.
 - [CONFIRMADO] Quando não houver ofertas disponíveis para o medicamento, não calcular média/economia fictícias; mostrar estado vazio/aviso claro, podendo listar ofertas indisponíveis separadamente.
 - [DOCUMENTO] Informar nome, endereço e horário da farmácia quando cadastrados, além de aviso de que valores podem mudar.
-- [AÇÃO] O script SQL atual (`database/PharmaFindDB.sql`) contém medicamentos, farmácias, associação de ofertas e histórico, mas **precisa ser revisado** para acomodar disponibilidade e data de atualização coerentes com o escopo; não afirmar que isso já está implementado.
+- [ATUALIZAÇÃO 23/11] A U01 foi integrada à `main` no PR #27: oferta tem disponibilidade e data de atualização, migrações e seed com 6 medicamentos, 4 farmácias e 12 ofertas. O PR #29 propõe sincronizar essas mudanças à `develop` (ainda requer revisão/merge). O professor testou as restrições existentes, apontando ajustes adicionais em HISTORICO_PRECO, FARMACIA e MEDICAMENTO; **API/Java/frontend integrados ainda não existem**.
 - [CONFIRMADO] **Modelo de negócio futuro:** farmácias pagariam para participar e seriam responsáveis pelo cadastro e pela atualização de suas ofertas. Não implementar login/painel de farmácias, cobranças ou integração de preços reais até 30/11.
-- [PENDENTE] Definir na SPEC valores e validações dos campos de disponibilidade/data de atualização (ex.: booleano, data e regras de ausência), com migração SQL compatível.
+- [U01 ATUALIZADA] Disponibilidade e data de atualização estão definidas no banco de `main`; os detalhes constam em `database/README.md` e `docs/SPEC.md`. Pendentes as restrições adicionais indicadas pelo professor (histórico, CEP/coordenadas e unicidade da apresentação).
 
 ## 8. Processamento e critérios de comparação
 
@@ -200,7 +201,7 @@
 3. **Base de testes geográfica:** escolher os **CEPs concretos do Gama/arredores** e suas coordenadas; documentar a origem dos pontos e criar uma resposta clara a CEP não mapeado. A abordagem (mapeamento local) já está decidida.
 4. **Detalhes de persistência:** especificar disponibilidade, data de atualização e regras de validação no SQL, incluindo como uma oferta indisponível será distinguida visualmente.
 5. **Regras técnicas:** aprovar/revisar propostas efetivas da SPEC v1.1 e API, em especial regras de preço, histórico, desempate e persistência. Documentar não equivale a implementar.
-6. **Escolha da stack:** React + JavaScript + Vite, Java 21 + Spring Boot + Spring JDBC + Maven + MySQL, com Chart.js e testes planejados; aceitação coletiva via PR dos ADRs 001/004/006.
+6. **Stack decidida em 23/11:** HTML/CSS/JavaScript + Java 21 + Spring Boot + Spring JDBC + Maven + MySQL; Chart.js poderá atender a U09 em JS puro. ADRs 001/004 refletem a escolha, ADR 006 registra a não adoção de React no MVP. Revisão humana dos PRs pendente.
 7. **Evidência de colaboração:** PR #9 revisado por `@tainayyxy` e integrado à `main` em 16/11. Issues #2–#4 ainda precisam de validação/encerramento; novas Issues não são prova de código concluído.
 
 8. **Apostila e submissão:** conferir com o professor as exigências do documento `DocumentoRomes.pdf` sobre agente configurado, Docker, harness, evidências e PDF único de submissão. Esses artefatos não foram implementados na etapa de produção dos Markdown.
@@ -215,7 +216,7 @@
 
 Esta atualização **não altera decisões de produto**. Corrige informações factuais sobre proprietário, branches, proteção, **Issues #2–#4, PRs #5–#7**, estrutura documental, SQL e implementação. Em 12/11/2026, os PRs #5–#7 já foram integrados à `develop`, mas as Issues correspondentes ainda estavam abertas. Publicar documentação não demonstra execução de funcionalidades nem aprovação automática de propostas técnicas. As datas de entrega são as relatadas pela equipe, não certificações de aceite.
 
-## Atualização de decisões e riscos — 16/11/2026
+## Atualização de decisões e riscos — 16/11/2026 (registro histórico, superado onde houver decisões de 23/11)
 
 - **Entrega final confirmada:** 30/11/2026; a antiga previsão de 19/11 foi corrigida. A etapa documental de 12/11 permanece histórico real.
 - **Equipe:** Everton usa `@MrEve3`. A atribuição de Issues depende de conversa com a equipe.
@@ -228,5 +229,13 @@ Esta atualização **não altera decisões de produto**. Corrige informações f
 - `DOC.PharmaFind.pdf`: Documento de Visão do Produto (38 páginas), especialmente seções 4, 10, 14, 16, 17, 19, 22, 26 e 27.
 - `DocumentoRomes.pdf`: roteiro de entrega e governança por Issue, PR, SPEC, agente e testes.
 - `SDD.pdf`: visão geral da abordagem Spec-Driven Development.
-- [ADR 006](docs/ADR/006-frontend-react.md): estratégia React sem TypeScript. [AGENTS.md](AGENTS.md): orientações para agentes de IA.
+- [ADR 006](docs/ADR/006-frontend-react.md): registro histórico da proposta React/Vite, não adotada no MVP em 23/11. [AGENTS.md](AGENTS.md): orientações para agentes de IA.
 - GitHub: https://github.com/PharmaFind/PharmaFind (repositório atual, observado em 12/11/2026; acesso anterior `tainayyxy/PharmaFind`).
+
+## Decisões e acompanhamento — 23/11/2026
+
+- **Stack aprovada pela coordenação:** HTML/CSS/JavaScript no frontend; Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven no backend; MySQL. React/Vite não faz parte desta entrega; ver ADRs 001, 004 e 006. A revisão humana do PR formalizará a alteração no repositório.
+- **Escopo não congelado:** U09 (histórico/gráfico) e U10 permanecem no planejamento; a coordenação autorizou considerar ampliação, mas toda nova funcionalidade exige Issue, análise de impacto em prazo/dependências e alinhamento com PO/equipe. A busca/seleção/comparação integrada continua sendo critério central.
+- **Distribuição de trabalho:** responsáveis das U02–U07 aguardam validação; não atribuir tarefas por inferência. U08/U10 têm assignees já registrados no GitHub.
+- **Governança:** PR #29 aberto para sincronização excepcional `main` → `develop`; PR #31 propõe checagem de origem/destino e somente bloqueará merge após a checagem ser exigida na ruleset. Issue #30 acompanha prioridades. Não declarar merges ou aprovações antes de ocorrerem.
+- **Correções da avaliação do professor:** banco da U01 atende com ressalvas e requer restrições adicionais; front-end não está integrado à API. O relatório não atribuiu nota. Os registros anteriores datados neste arquivo são históricos, não uma descrição do estado técnico em 23/11.

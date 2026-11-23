@@ -1,6 +1,6 @@
 # PharmaFind — Especificação Técnica (SPEC v1.1)
 
-**Estado:** refinamento substantivo v1.1, proposto na Issue [#18](https://github.com/PharmaFind/PharmaFind/issues/18) para revisão da equipe; **não representa implementação ou aceite coletivo antes do PR**.  
+**Estado:** SPEC v1.1 anterior consolidada na Issue [#18](https://github.com/PharmaFind/PharmaFind/issues/18); **atualização de 23/11/2026** registra a stack aceita pela coordenação e a não adoção de React no MVP, sob revisão humana da [Issue #30](https://github.com/PharmaFind/PharmaFind/issues/30). Nenhum contrato proposto ou código é automaticamente implementado.  
 **Data de elaboração da v1.0:** 12/11/2026. **Refinamento v1.1:** 16/11/2026. **Entrega final informada:** 30/11/2026.  
 **Fontes:** [`CONTEXTO.md`](../CONTEXTO.md) (prioridade para decisões recentes), Documento de Visão do Produto (RF01–RF30, RNF01–RNF42, RN01–RN05) e apostilas de SDD do professor Romes.  
 **Contratos detalhados:** [`docs/API.md`](API.md). **Decisões técnicas:** [`docs/ADR/`](ADR/).
@@ -25,7 +25,7 @@ Permitir que uma pessoa **pesquise medicamentos por nome, selecione um registro 
 - Ofertas indisponíveis visíveis e sinalizadas, mas excluídas dos indicadores econômicos.
 - Menor preço, média aritmética, economia potencial (`maior preço válido − menor preço válido`) e ranking crescente das ofertas disponíveis.
 - Localização **optativa**: coordenadas fornecidas pelo navegador com permissão ou **CEPs de teste do Gama/região previamente mapeados**, com distância em linha reta calculável.
-- Interface existente reutilizada/adaptada em React + JavaScript + Vite, com mensagens de erro e estados vazios; sem necessidade de conta.
+- Interface HTML/CSS/JavaScript existente reutilizada/adaptada, consumindo a API Java sem migração React/Vite; estados de erro e vazios, sem necessidade de conta.
 - Histórico temporal **fictício** por medicamento **e farmácia**, com gráfico de linha e variações calculáveis (U09, #19).
 - Auditoria e correções do frontend conforme observações **reais** do professor, ainda a registrar e validar (U10, #20).
 
@@ -40,7 +40,7 @@ Autenticação/cadastro (inclusive telas legadas como parte do fluxo ativo), pai
 | HTML, CSS, JavaScript; Java e MySQL | **[CONFIRMADO]** | Linguagens e base persistente definidas pela equipe. |
 | Dados de farmácias e preços fictícios, região Gama e arredores | **[CONFIRMADO]** | Não alegar farmácias ou preços comerciais reais. |
 | Layout do front-end existente | **[CONFIRMADO]** | Manter identidade e adaptar navegação/consulta. |
-| Stack-alvo | **[DEFINIDA PARA IMPLEMENTAÇÃO / EM REVISÃO]** | React + JavaScript + Vite, CSS reaproveitado; Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven; MySQL; Chart.js planejado. ADR 001/004/006. **Não implementada.** |
+| Stack-alvo | **[APROVADA PELA COORDENAÇÃO EM 23/11 / PR EM REVISÃO]** | HTML + CSS + JavaScript; Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven; MySQL. Chart.js pode atender a U09 em JS puro. ADR 001/004 aceitos para implementação; ADR 006 registra React não adotado no MVP. **Não implementada de ponta a ponta.** |
 | Dados de disponibilidade e data da oferta | **[IMPLEMENTADO NESTA BRANCH]** | Campos, validações, migração em duas etapas e seed de 6 medicamentos/4 farmácias/12 ofertas. Suíte ampliada, limpeza protegida e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); revisão humana pendente. |
 | CEPs e respectivas coordenadas | **[MAPA DE TESTE VERSIONADO]** | Três CEPs reais em `database/seeds/ceps-teste.json`, com pontos representativos e origem documentada. Dados não certificam geocodificação postal; integração depende da U05/U02. |
 | API HTTP v1 documentada aqui | **[PROPOSTA]** | Os três contratos existentes e o novo contrato de leitura de histórico U09 aguardam validação; não há endpoints implementados. |
@@ -118,7 +118,7 @@ IDs seguem o Documento de Visão. O documento original **salta RNF15**; **não e
 | **RNF31** | CEP brasileiro com oito dígitos. | Testar oito dígitos, pontuação opcional normalizada [PROPOSTA], incompleto e inválido. |
 | **RNF32–RNF33** | Coordenadas com precisão adequada; data de atualização válida quando adotada. | Inspecionar `DECIMAL(10,7)` atual; executar os testes da migração de `TIMESTAMP`/UTC (U01). |
 | **RNF34–RNF35** | Compatibilidade com navegadores modernos e uso móvel em conexão comum. | Testar Chrome/Edge/Firefox/Safari onde disponíveis; registrar cobertura real. |
-| **RNF36** | Separação MVC entre interface, controle, negócio e persistência. | **[PROPOSTA DE ARQUITETURA]** O Documento de Visão indicou MVC, mas a equipe definiu a stack/arquitetura do PDF como provisória; validar antes de tratar como decisão fechada. |
+| **RNF36** | Separação MVC entre interface, controle, negócio e persistência. | **[DECISÃO TÉCNICA DA COORDENAÇÃO EM 23/11]** Frontend HTML/CSS/JS → Controller/Service/Repository Java Spring Boot → MySQL; validar na implementação. |
 | **RNF37** | Código versionado, alterações relevantes registradas. | Conferir branch/PR/commits no GitHub. |
 | **RNF38–RNF40** | Erros tratados, estados vazios, busca continua sem GPS. | Testar falha de banco, nenhuma oferta e GPS negado. |
 | **RNF41** | Aviso de possíveis mudanças em preço/disponibilidade. | Inspecionar aviso e exibição da atualização existente. |
@@ -284,7 +284,7 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 | Unidade | Escopo permitido (E) | Verificação (V) | Restrições (R) | Dependências |
 |---|---|---|---|---|
 | **U01 — Ajustar esquema e massa demonstrativa** | SQL de medicamento/farmácia/oferta, disponibilidade, atualização, CEPs de teste mapeados e inserts fictícios. | CT03/CT05/CT06/CT09/CT17 e testes SQL de FKs, `UNIQUE`, preço inválido. | RN01/RN06/RN07/RN11; não trazer cadastro real nem painel. | Nenhuma; esquema, migração, seed/mapa e inicializador passaram na validação SQL; revisão humana pendente. |
-| **U02 — Inicializar backend Java e persistência** | Build e acesso controlado ao MySQL, sem interface administrativa. | Iniciar aplicação, conectar localmente, erro de conexão tratado, consultas parametrizadas. | RNF23–RNF25; framework pendente; nunca versionar senhas. | Decisão ADR004, U01 (para integração). |
+| **U02 — Inicializar backend Java e persistência** | Build e acesso controlado ao MySQL, sem interface administrativa. | Iniciar aplicação, conectar localmente, erro de conexão tratado, consultas parametrizadas. | RNF23–RNF25; Spring Boot/Spring JDBC aceitos pela coordenação; nunca versionar senhas. | Decisão ADR004, U01 (para integração). |
 | **U03 — Busca/seleção exata** | Consulta e identificação de medicamentos por nome/ID. | CT01/CT03/CT20, validação HTTP/JSON da API. | RN06; não retornar ofertas de vários medicamentos juntas. | U01, U02. |
 | **U04 — Ofertas e motor de preços** | Consultar ofertas e produzir números/ranking em função testável isolada. | CT02–CT07; incluir todos-indisponíveis e empate. | RN01/RN02/RN07/RN08/RN12; não score composto. | U01–U03. |
 | **U05 — Localização/distância opcional** | CEPs mapeados, GPS autorizado e Haversine, sem rota. | CT08–CT13/CT18/CT19, GPS negado e coordenada ausente. | RN03/RN09/RN10; não tornar localização obrigatória. | U01, U02 e contrato da API. |
@@ -292,7 +292,7 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 | **U07 — Testes, harness e evidências** | Testes automatizados de negócio/API e casos de borda; registrar comandos e saídas reais. | Reexecutar CT02–CT15 com dados fixos; resultados verificáveis. | Não fabricar testes/logs; a tecnologia deve corresponder à arquitetura aprovada. | Paralela a U02–U06, consolidada ao final. |
 | **U08 — Ambiente e instruções de agente** | Decidir/integrar ambiente reprodutível, Docker quando exigido, regras do agente e README de execução. | Clone limpo, comandos reproduzidos por segundo integrante, evidências reais. | Não alegar Docker, agente ou CI existentes antes do PR. | U02 e decisão das ferramentas. |
 | **U09 — Histórico de preços e gráfico** | Registros temporais fictícios por oferta, contrato JSON proposto, gráfico de linha e variações nominal/percentual calculáveis. | CT21–CT24 e teste de persistência por oferta. | RF35–RF38/RN13–RN14; não fabricar histórico nem previsão. | U01–U04, U06; integração com U07/U08. |
-| **U10 — Auditoria e correções do frontend** | Inventariar feedback real do professor, analisar e corrigir páginas, acessibilidade, navegação, responsividade e integração com React. | CT25 e evidências antes/depois dos pontos efetivamente reportados. | Não inventar crítica do professor nem duplicar trabalho U06. | U06, coordenação com U03/U04/U05/U09. |
+| **U10 — Auditoria e correções do frontend** | Inventariar feedback real do professor, analisar e corrigir páginas, acessibilidade, navegação, responsividade e integração com JavaScript. | CT25 e evidências antes/depois dos pontos efetivamente reportados. | Não inventar crítica do professor nem duplicar trabalho U06. | U06, coordenação com U03/U04/U05/U09. |
 
 **Critério de separação:** API depende das regras de negócio e da persistência, mas **não deve conter fórmulas de preço embutidas**. A decomposição acima é o plano de implementação, não declaração de camadas/pacotes já existentes.
 
@@ -324,16 +324,16 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 
 ## 10. Pendências que precisam de decisão ou execução
 
-1. **[REVISÃO DE EQUIPE]** Formalizar, pelo PR da [Issue #18](https://github.com/PharmaFind/PharmaFind/issues/18), a escolha de React + JavaScript + Vite, Java 21 + Spring Boot + Spring JDBC + Maven, MySQL e ferramentas complementares. A implementação **não existe ainda**; conferir exigência do professor sobre JSP/Servlets.
+1. **[DECIDIDO PELA COORDENAÇÃO EM 23/11]** Stack HTML/CSS/JavaScript (sem React/Vite), Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven e MySQL. ADR 001/004 registram decisão e ADR 006 descarta a migração React no MVP. O professor confirmou liberdade para escolher Spring Boot; validar versões e execução real.
 2. **[PERSISTÊNCIA — U01]** Esquema, migração, seed e mapa de CEPs implementados nesta branch (§6.1). Suíte ampliada, limpeza protegida e inicialização/reaplicação passaram no MySQL 8.0.45, com [evidência](../database/tests/RESULTADOS.md). Obter revisão humana e atualizar Issue/Project conforme o trabalho real; os testes SQL não substituem integração ou revisão.
 3. **[CÁLCULOS]** Revisar/aceitar arredondamento monetário, empate por preço e ordenação por distância sem coordenadas; não prometer testes concluídos.
 4. **[GEOLOCALIZAÇÃO]** Integrar na U05/U02 o mapa JSON de três CEPs/pontos de teste já documentado na U01; testar o fluxo de distância. GPS continua opcional e depende de consentimento.
 5. **[API]** Validar contratos/erros de [API.md](API.md) antes da implementação, inclusive a nova consulta de histórico U09 sem alterar indevidamente os três contratos existentes.
 6. **[HISTÓRICO — U09]** Definir a gravação/atualização de pontos históricos (por dia ou por evento), massa fictícia cronológica, contrato JSON e testes CT21–CT24. A tabela SQL legada não comprova implementação.
 7. **[FRONTEND — U10]** Registrar as **observações exatas do professor** na [Issue #20](https://github.com/PharmaFind/PharmaFind/issues/20), corrigir telas e comprovar avaliações de UX/responsividade/teclado, sem presumir problemas específicos.
-8. **[COLABORAÇÃO]** Confirmar responsáveis das Issues #10–#17, #19 e #20; conduzir PRs por desenvolvedores diferentes e revisões cruzadas reais. `AGENTS.md` contém instruções, não comprova configuração operacional de agentes.
-9. **[ACADEMIA]** Confirmar com o professor exigências efetivas de agente, Docker, harness, PDF e evidências. Executar os CTs relevantes; nenhum teste é considerado aprovado apenas por estar descrito.
+8. **[COLABORAÇÃO — ATRIBUIÇÕES EM ESPERA]** Confirmar responsáveis das Issues #11–#16 após validação da coordenação; manter atribuições existentes de U08/U10 sem inventar novos responsáveis; conduzir PRs por desenvolvedores diferentes e revisões cruzadas reais. `AGENTS.md` contém instruções, não comprova configuração operacional de agentes.
+9. **[ACADEMIA]** O professor confirmou que Spring Boot é permitido e PDF único de links/evidências deve ir ao AVA; confirmar apenas eventuais detalhes adicionais de agente, Docker e harness. Executar os CTs relevantes; nenhum teste é considerado aprovado apenas por estar descrito.
 
 ---
 
-**Aprovação desta versão:** SPEC v1.1 proposta e submetida à revisão humana na Issue #18. A revisão do PR poderá aceitar ou solicitar ajustes; decisões técnicas pendentes devem permanecer identificadas, nunca presumidas.
+**Revisão de 23/11/2026:** a coordenação aprovou a stack simplificada, **sem congelar o escopo**. Histórico U09 continua planejado; expansão de funcionalidades exige Issue/avaliação de impacto e validação do PO/equipe. Responsáveis U02–U07 aguardam confirmação. Esta atualização documental depende de PR revisado e não comprova implementação.

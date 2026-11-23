@@ -2,7 +2,7 @@
 
 **Status de toda esta API: PROPOSTA, NÃO IMPLEMENTADA.**  
 **Documento de referência:** [SPEC v1.1](SPEC.md). **Registro inicial:** 12/11/2026. **Refinamento:** 16/11/2026.  
-**Arquitetura-alvo:** Java 21 + Spring Boot / Spring Web + Spring JDBC, API consumida por React + JavaScript + Vite, conforme ADRs 001/004/006 **submetidos à revisão da equipe**. A árvore atualmente inspecionada **não contém servidor nem rotas HTTP**.
+**Arquitetura-alvo aprovada pela coordenação em 23/11/2026:** Java 21 + Spring Boot / Spring Web + Spring JDBC + Maven + MySQL; API consumida por **HTML/CSS/JavaScript sem React/Vite**, conforme ADRs 001/004 e a não adoção de React registrada no ADR 006. A implementação e os contratos HTTP continuam pendentes. A árvore atualmente inspecionada **não contém servidor nem rotas HTTP**.
 
 ## 1. Princípios
 
@@ -395,7 +395,7 @@ O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito 
 ## 10. Decisões em aberto
 
 - Aprovar rotas, nomes de campos, limites de busca e formato de erros deste contrato.
-- A escolha-alvo Java 21 + Spring Boot + Spring JDBC + Maven e frontend React + JavaScript + Vite foi informada pela coordenação em 16/11; confirmar aceite coletivo via PR e compatibilidade com as exigências do professor, além das versões/testes/harness.
+- Stack aprovada pela coordenação em 23/11: Java 21 + Spring Boot + Spring JDBC + Maven + MySQL e frontend HTML/CSS/JavaScript. A decisão será revisada por PR, e versões/testes/harness continuam pendentes. O professor informou que Spring Boot é permitido.
 - Fixar regras de preço válido, empate, arredondamento da média e da distância com atualização explícita da SPEC.
 - Integrar o backend à massa fictícia; a suíte SQL ampliada e o inicializador/reaplicação da U01 passaram ([evidência](../database/tests/RESULTADOS.md)). O contrato HTTP e o mapeamento SQL/JSON ainda não foram implementados ou testados.
 - Integrar o mapa local de CEPs/pontos de teste já versionado e documentado; nenhuma cobertura geográfica universal é prometida.
@@ -441,7 +441,7 @@ Accept: application/json
 }
 ```
 
-O gráfico React/Chart.js exibe pontos em ordem cronológica crescente, com preço em reais. **Variação absoluta = último − primeiro**; **percentual = (variação absoluta / primeiro) × 100**. Neste exemplo, de R$ 9,90 para R$ 8,99: **−R$ 0,91** e **−9,19%** (arredondamento a duas casas, regra final ainda sujeita à aprovação). `BigDecimal` é a escolha para cálculo monetário no backend, sem confiar no número formatado do frontend.
+O gráfico Chart.js integrado ao JavaScript existente deverá exibir pontos em ordem cronológica crescente, com preço em reais. **Variação absoluta = último − primeiro**; **percentual = (variação absoluta / primeiro) × 100**. Neste exemplo, de R$ 9,90 para R$ 8,99: **−R$ 0,91** e **−9,19%** (arredondamento a duas casas, regra final ainda sujeita à aprovação). `BigDecimal` é a escolha para cálculo monetário no backend, sem confiar no número formatado do frontend.
 
 ### 11.3 Histórico insuficiente
 

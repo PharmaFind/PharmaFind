@@ -1,40 +1,40 @@
 # ADR 004 — Backend Java com Spring Boot, Spring JDBC e Maven
 
-- **Status:** **Escolha técnica informada pela coordenação em 16/11/2026; sujeita à revisão da equipe no PR da Issue #18.**
-- **Registro original:** 12/11/2026; **refinamento:** 16/11/2026.
+- **Status:** **Aceita para implementação pela coordenação em 23/11/2026; PR de documentação sujeito a revisão humana.**
+- **Registro inicial:** 12/11/2026; refinamento em 16/11/2026; confirmação em 23/11/2026.
 
 ## 1. Contexto
 
-O projeto exige backend Java e MySQL com API JSON, regras de preço testáveis e localização opcional. Em 16/11/2026, a inspeção encontrou apenas frontend demonstrativo e SQL inicial, sem backend Java. A entrega final foi confirmada pela equipe para **30/11/2026**. Será necessário integrar também um histórico temporal de preços (U09), sem comprometer o fluxo central.
+A funcionalidade central exige API Java que consulte ofertas reais da massa **fictícia** no MySQL. Na avaliação de 23/11/2026 ainda não existiam arquivos Java, `pom.xml` ou endpoints integrados. O professor esclareceu na seção 14 do relatório que **JSP/Servlets não são obrigatórios**: o grupo pode escolher a tecnologia, desde que justifique.
 
-## 2. Escolha técnica para implementação
+## 2. Decisão técnica
 
-Adotar **Java 21 + Spring Boot + Spring Web + Spring JDBC (`JdbcTemplate`) + Maven + MySQL**. Usar **JUnit / Spring Boot Test** para testes automatizados quando configurados. As versões concretas de Spring Boot, Maven/driver e demais dependências devem ser fixadas no projeto e registradas após validação. Uma linha compatível com Java 21 deve ser escolhida, sem pressupor versão já instalada.
+Adotar **Java 21 + Spring Boot + Spring Web + Spring JDBC (`JdbcTemplate`) + Maven + MySQL**. Persistir ofertas e consultar dados demonstrativos por SQL parametrizado; não adicionar ORM apenas por preferência. Versões concretas de Spring Boot, driver MySQL e dependências devem ser fixadas **após teste de compilação/execução** e registradas no README.
 
-- **Controller:** receber requisições, validar entrada e devolver HTTP/JSON e erros padronizados.
-- **Service:** aplicar regras de comparação, disponibilidade, economia e histórico; cálculo monetário com `BigDecimal`.
-- **Repository:** consultar MySQL por SQL parametrizado, sem concatenação de dados do usuário.
-- **DTO:** expor campos correspondentes à `docs/API.md`, desacoplados de tabelas SQL.
+- **Controller:** receber entradas HTTP, validar e responder JSON/erros.
+- **Service:** aplicar regras de preço e disponibilidade, usar `BigDecimal` nas operações monetárias e calcular histórico/distância quando cabível.
+- **Repository:** consultar tabelas MySQL por comandos SQL parametrizados.
+- **DTOs:** contratos de saída independentes da estrutura interna do banco, conforme [API](../API.md).
 
-API atual proposta inclui pesquisa, detalhe e comparação; a U09 justifica um contrato adicional de **leitura do histórico por medicamento e farmácia** (documentado como proposto, não implementado). Não adicionar autenticação, painel ou APIs de atualização de farmácias nesta etapa.
+As rotas de pesquisa, detalhes, comparação e histórico da [API](../API.md) ainda são **propostas**, não endpoints já implementados. Não adicionar autenticação, painel de farmácias ou processamento de compras por causa desta decisão.
 
 ## 3. Justificativa
 
-Spring Boot facilita inicialização de API REST, configuração e testes; Spring JDBC permite consultas claras e controladas para o domínio relacional de farmácias e ofertas, sem introduzir um ORM por obrigação. Maven torna a construção reproduzível. Uma aplicação monolítica simples é suficiente para o prazo acadêmico.
+Spring Boot simplifica a publicação de endpoints REST e os testes. Spring JDBC facilita SQL explícito sobre o esquema existente. Maven proporciona build reproduzível. O professor autorizou a escolha da tecnologia no relatório de 23/11, reduzindo a dúvida anterior sobre Servlets/JSP.
 
-## 4. Alternativas consideradas
+## 4. Alternativas avaliadas
 
-- **Servlets + Tomcat + JDBC:** atende à linguagem Java e a conteúdos tradicionais da disciplina, mas exigiria mais configuração manual para JSON, dependências e roteamento.
-- **Spring Boot + JPA/Hibernate:** viável, mas adiciona abstrações cujo custo não se justifica para as consultas planejadas.
-- **JavaScript/Node no backend:** não atenderia à escolha de Java feita no projeto.
-- **Microsserviços:** complexidade operacional desnecessária.
-
-Confirmar se existe exigência obrigatória de JSP/Servlets/Tomcat nas instruções do professor. Caso exista, registrar e aprovar a adaptação arquitetural antes da implementação final.
+- **Servlets/JSP + JDBC:** academicamente possível, porém mais configuração manual.
+- **Spring Boot com JPA/Hibernate:** possível, mas custo de abstração dispensável no momento.
+- **Node.js no backend:** diverge da escolha de Java do grupo.
+- **Microsserviços:** fora da arquitetura prevista.
 
 ## 5. Consequências
 
-A U02 [#11](https://github.com/PharmaFind/PharmaFind/issues/11) deve criar projeto executável e acesso MySQL; a U01 [#10](https://github.com/PharmaFind/PharmaFind/issues/10) prepara schema e dados; U03/U04/U05 implementam domínio e contratos; U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19) trata histórico. U07 cria testes e U08 documenta ambiente. Nunca versionar senhas; registrar comandos, logs e resultados reais nos PRs.
+A U02 [#11](https://github.com/PharmaFind/PharmaFind/issues/11) deve produzir o `pom.xml`, estrutura executável e acesso ao MySQL; U03/U04 entregam o fluxo de busca e comparação, U05 localiza opcionalmente, U09 implementa histórico planejado e U07 registra testes. O frontend permanece **HTML/CSS/JavaScript** conforme ADR 001; React/Vite não é requisito.
+
+Usar segredos fora do Git, parâmetros em SQL e mensagens de erro sem dados internos. Não declarar a aplicação funcional até verificação real: buscar `Dipi`, escolher a Dipirona 500 mg e conferir três ofertas, menor R$ 8,99, média R$ 9,99 e economia R$ 2,00.
 
 ## 6. Estado da decisão
 
-**Escolha submetida à revisão pela equipe.** O registro de uma stack-alvo não significa que dependências, controllers, testes ou endpoints já existam no repositório.
+Decisão aprovada pela coordenação em 23/11/2026, com revisão de PR e validação de ambiente pendentes. Não implica aprovação de código ou fechamento da Issue U02.

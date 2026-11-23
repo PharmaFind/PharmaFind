@@ -19,7 +19,7 @@ Este guia padroniza contribuições dos integrantes do PharmaFind. Seu objetivo 
 
 Uma branch histórica chamada `feature/estrutura-documentacao` foi criada antes da convenção com número. Ela não precisa ser renomeada para fabricar rastreabilidade retroativa.
 
-**Exemplos de nomes para futuras branches:** `feature/12-busca-medicamentos` (U03, Issue #12), `feature/13-motor-precos` (U04, Issue #13), `feature/15-interface-react` (U06, Issue #15) e `feature/17-ambiente-agentes` (U08, Issue #17). São **exemplos de nomenclatura, não declaração de branches existentes**. O número deve corresponder à **Issue real da tarefa**, nunca ao número da unidade ou de um PR. O prefixo `fix/`, se usado, depende de acordo da equipe.
+**Exemplos de nomes para futuras branches:** `feature/12-busca-medicamentos` (U03, Issue #12), `feature/13-motor-precos` (U04, Issue #13), `feature/15-interface-html-js` (U06, Issue #15) e `feature/17-ambiente-agentes` (U08, Issue #17). São **exemplos de nomenclatura, não declaração de branches existentes**. O número deve corresponder à **Issue real da tarefa**, nunca ao número da unidade ou de um PR. O prefixo `fix/`, se usado, depende de acordo da equipe.
 
 **Não faça push direto em `main` ou `develop`.** A ruleset ativa exige PR e uma aprovação em ambas.
 
@@ -135,13 +135,15 @@ Uma tarefa somente pode ser considerada **concluída** quando:
 
 As implementações podem ser produzidas com apoio de **agentes de IA orientados pelos desenvolvedores**, mas cada integrante continua responsável por executar, compreender, integrar e revisar o trabalho. Leia [AGENTS.md](AGENTS.md) antes de utilizar um agente. Agentes não substituem aprovações humanas.
 
-**Stack-alvo informada pela coordenação em 16/11, sob revisão da equipe:** frontend React + **JavaScript (sem TypeScript)** + Vite, aproveitando CSS existente; backend Java 21 + Spring Boot + Spring JDBC + Maven; MySQL. Chart.js será usado no histórico fictício de preços U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19). A auditoria visual/UX de todas as páginas será acompanhada em U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20), com observações exatas do professor a registrar.
+**Stack aprovada pela coordenação em 23/11, com revisão humana deste conjunto de PRs pendente:** frontend HTML + CSS + JavaScript, reaproveitando a interface atual **sem React/Vite** no MVP; backend Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven + MySQL. Chart.js é alternativa para o histórico fictício U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), sem dependência de React. ADRs 001/004 registram a decisão e ADR 006 registra a alternativa React não adotada nesta entrega. A auditoria visual/UX de todas as páginas será acompanhada em U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20), com observações exatas do professor a registrar.
 
-- **Não instalar tecnologias desnecessárias** nem presumir estrutura React/Java que ainda não existe. Exigências acadêmicas de JSP/Servlets e outras ferramentas devem ser verificadas antes de consolidar implementação.
-- **Coordenar interfaces e contratos** entre frontend/backend/banco conforme SPEC v1.1 e API; informar imediatamente alterações que afetem outros integrantes.
+- **Não instalar tecnologias desnecessárias** nem presumir frontend React, backend Java ou testes já existentes. O professor confirmou em 23/11 que Spring Boot pode ser usado no lugar de JSP/Servlets; versões de dependências e execução real ainda precisam ser verificadas.
+- **Coordenar interfaces e contratos** entre frontend HTML/CSS/JS, backend Java e banco conforme SPEC e API; informar imediatamente alterações que afetem outros integrantes. Escopo não foi congelado: nova funcionalidade exige Issue, avaliação de impacto e validação de PO/equipe; U09 segue planejada.
 - **Registrar feedback do professor** de forma verificável na Issue #20; não fabricar problemas ou evidências de correção.
 - **Testar de verdade e registrar os resultados:** JUnit/Spring Boot Test e Vitest são planejados, ainda não configurados. Testes não executados devem constar como pendentes.
 - **Separar o estado:** escolha da stack, implementação, execução de testes e aceite do PR são fatos diferentes. A publicação de documentos não significa que o sistema integrado funciona.
 - **Revisão cruzada:** mesmo que uma IA escreva o código, o autor humano do PR não pode ser seu único revisor; manter proteção `main`/`develop` e critérios de aceite.
+
+**As atribuições de U02–U07 aguardam validação da coordenação; não designar responsáveis por suposição.**
 
 **Entrega final informada pela equipe: 30/11/2026.** A antiga previsão de 19/11 foi substituída, mas marcos anteriores do GitHub permanecem no histórico.

@@ -145,4 +145,4 @@ Papéis não equivalem a atribuição automática das Issues. Cada responsável 
 
 A documentação será atualizada conforme mudanças efetivamente implementadas. **Nenhuma aprovação de PR demonstra, por si só, que a aplicação ou testes integrados funcionam.**
 
-**Atualização documental:** decisão de stack da coordenação em 23/11/2026, sob revisão no PR correspondente à [Issue #30](https://github.com/PharmaFind/PharmaFind/issues/30). Sincronização da U01 entre `main` e `develop` solicitada pelo PR #29, sem presumir o merge.
+**Atualização documental:** decisão de stack da coordenação em 23/11/2026, sob revisão no PR correspondente à [Issue #30](https://github.com/PharmaFind/PharmaFind/issues/30). Sincronização da U01 entre `main` e `develop` concluída pelo PR #29, integrado em 23/11/2026.

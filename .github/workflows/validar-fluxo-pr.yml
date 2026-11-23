@@ -1,0 +1,32 @@
+name: Validar fluxo de Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  validar-origem-destino:
+    name: Validar origem e destino
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir convencao de branches
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$BASE_REF" == "main" && "$HEAD_REF" == "develop" ]]; then
+            echo "OK: develop -> main (entrega estavel)."
+          elif [[ "$BASE_REF" == "develop" && "$HEAD_REF" =~ ^feature/[0-9]+-[a-z0-9][a-z0-9-]*$ ]]; then
+            echo "OK: feature da Issue -> develop."
+          else
+            echo "::error title=Fluxo de branches invalido::Destino '$BASE_REF' e origem '$HEAD_REF' nao seguem o ADR 002. Abra PR feature/NUMERO-descricao -> develop ou develop -> main."
+            exit 1
+          fi

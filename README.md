@@ -38,19 +38,19 @@ O sistema **não recomenda tratamentos, não vende, não reserva, não processa 
 
 **Fora da entrega:** autenticação/cadastro no fluxo público, painel administrativo de farmácias, pagamentos, pedidos, integração automática de preços reais, recomendações clínicas, favoritos, alertas, previsão de preços, score combinado preço/distância, geocodificação de qualquer CEP e rotas por ruas.
 
-## 3. Estado real do repositório — verificação de 16/11/2026
+## 3. Estado do código nesta branch — atualização U01 em 17/11/2026
 
 | Componente | Estado **verificado por inspeção de arquivos** |
 |---|---|
 | Frontend | Páginas HTML/CSS/JavaScript e busca demonstrativa com dados fixos em `frontend/consulta.js`. **Ainda não é React** nem consome API Java. |
-| Banco MySQL | Existe `database/PharmaFindDB.sql` com tabelas e `HISTORICO_PRECO`; **sem seed demonstrativa, disponibilidade/data de atualização na oferta ou integração Java**. |
+| Banco MySQL | Esquema, migração e carga demonstrativa com 6 medicamentos, 4 farmácias e 12 ofertas; três CEPs mapeados em JSON. Suíte ampliada, proteção da limpeza, inicialização e reaplicação passaram no MySQL 8.0.45, com sete booleanos em `1` e três hashes preservados ([evidência](database/tests/RESULTADOS.md)). Integração Java e revisão humana pendentes. Veja [instruções do banco](database/README.md). |
 | Backend Java / Spring Boot | **Não implementado** na árvore consultada. |
 | API, comparação persistida, distância calculada e gráfico | **Planejados, não implementados** na integração atual. |
 | Testes, agentes e ambiente | Testes e builds Java/React ainda não existem. `AGENTS.md` documenta orientações para agentes, **não comprova um agente instalado**. |
 | Governança GitHub | `main` e `develop` protegidas por regras de PR/revisão. PRs #5–#8 foram integrados à `develop`; PR [#9](https://github.com/PharmaFind/PharmaFind/pull/9) foi **aprovado pela Tainá e integrado à `main` em 16/11/2026**. |
 | Trabalho rastreado | Unidades U01–U08 em Issues #10–#17, histórico U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), auditoria frontend U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e revisão documental [#18](https://github.com/PharmaFind/PharmaFind/issues/18). Responsáveis de implementação ainda não confirmados. |
 
-Essa tabela **não é laudo de testes executados**: a verificação foi dos arquivos versionados e dos registros do GitHub.
+Os estados de implementação decorrem da inspeção dos arquivos; o resultado da suíte SQL tem evidência própria vinculada acima. Isso não comprova execução da aplicação integrada.
 
 ## 4. Arquitetura escolhida para orientar o desenvolvimento
 
@@ -84,14 +84,14 @@ Abra `frontend/index.html` no navegador ou use um servidor estático local, por 
 
 ### Esquema MySQL isolado
 
-O script `database/PharmaFindDB.sql` define tabelas, **mas não cria o banco nem insere registros**. Com MySQL local e permissão adequada:
+O script `database/PharmaFindDB.sql` define tabelas, **mas não cria o banco nem insere registros**. Requer MySQL **8.0.16+**, InnoDB e conexões em modo estrito/UTC. Com MySQL local e permissão adequada:
 
 ```bash
 mysql -u root -p -e "CREATE DATABASE pharmafind CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 mysql -u root -p pharmafind < database/PharmaFindDB.sql
 ```
 
-Execute a criação somente em banco novo; não repita comandos destrutivos sobre dados existentes. Isso cria apenas tabelas e **não sobe aplicação integrada**. A U01 deve fornecer migração e massa fictícia reproduzíveis, inclusive pontos do histórico para U09.
+Execute a criação somente em banco novo. Para banco existente, siga a migração em duas etapas, o preenchimento explícito da disponibilidade e a preservação das datas desconhecidas em [database/README.md](database/README.md), que também documenta os testes isolados. Para criar `pharmafind_demo` com o esquema e a massa fictícia, use `database/Inicializar-Demonstracao.cmd`; consulte [cenários, fontes e reexecução](database/seeds/README.md). Os CEPs/pontos de teste estão em JSON para a futura U05, ainda sem integração Java. Nenhum comando sobe aplicação integrada; histórico permanece com a U09.
 
 ## 6. Organização do repositório
 
@@ -101,7 +101,12 @@ PharmaFind/
 ├── .vscode/                # Configuração de desenvolvimento existente
 ├── frontend/               # Páginas legadas HTML/CSS/JS, ainda sem React
 ├── database/
-│   └── PharmaFindDB.sql    # Esquema inicial sem seed
+│   ├── PharmaFindDB.sql    # Esquema de instalação sem seed
+│   ├── migrations/        # Evolução do esquema legado, sem presumir disponibilidade/data
+│   ├── seeds/             # Massa SQL fictícia e mapa JSON de CEPs documentados
+│   ├── tests/             # Testes SQL isolados e runner PowerShell
+│   ├── Inicializar-Demonstracao.cmd # Banco novo pharmafind_demo ou reaplicação da carga
+│   └── README.md          # Instalação, migração e testes do banco
 ├── docs/
 │   ├── GUIA-ONBOARDING-AGENTES.md  # Preparação da equipe e prompt Codex
 │   ├── API.md              # Contratos HTTP/JSON propostos

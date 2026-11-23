@@ -1,0 +1,3 @@
+CALL u01_assert((SELECT COUNT(*) = 0 FROM MEDICAMENTO) AND (SELECT COUNT(*) = 0 FROM FARMACIA)
+    AND (SELECT COUNT(*) = 0 FROM MEDICAMENTO_FARMACIA) AND (SELECT COUNT(*) = 0 FROM HISTORICO_PRECO),
+    'Limpeza autorizada remove somente as fixtures esperadas');

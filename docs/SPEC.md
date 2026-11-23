@@ -41,8 +41,8 @@ Autenticação/cadastro (inclusive telas legadas como parte do fluxo ativo), pai
 | Dados de farmácias e preços fictícios, região Gama e arredores | **[CONFIRMADO]** | Não alegar farmácias ou preços comerciais reais. |
 | Layout do front-end existente | **[CONFIRMADO]** | Manter identidade e adaptar navegação/consulta. |
 | Stack-alvo | **[DEFINIDA PARA IMPLEMENTAÇÃO / EM REVISÃO]** | React + JavaScript + Vite, CSS reaproveitado; Java 21 + Spring Boot + Spring Web + Spring JDBC + Maven; MySQL; Chart.js planejado. ADR 001/004/006. **Não implementada.** |
-| Dados de disponibilidade e data da oferta | **[PENDENTE]** | SQL atual não tem campos, migração e semeadura ainda não existem. |
-| CEPs e respectivas coordenadas | **[PENDENTE]** | A escolha concreta e a origem dos dados não foram informadas. |
+| Dados de disponibilidade e data da oferta | **[IMPLEMENTADO NESTA BRANCH]** | Campos, validações, migração em duas etapas e seed de 6 medicamentos/4 farmácias/12 ofertas. Suíte ampliada, limpeza protegida e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); revisão humana pendente. |
+| CEPs e respectivas coordenadas | **[MAPA DE TESTE VERSIONADO]** | Três CEPs reais em `database/seeds/ceps-teste.json`, com pontos representativos e origem documentada. Dados não certificam geocodificação postal; integração depende da U05/U02. |
 | API HTTP v1 documentada aqui | **[PROPOSTA]** | Os três contratos existentes e o novo contrato de leitura de histórico U09 aguardam validação; não há endpoints implementados. |
 
 ## 2. Requisitos funcionais (RF)
@@ -116,7 +116,7 @@ IDs seguem o Documento de Visão. O documento original **salta RNF15**; **não e
 | **RNF27–RNF29** | Chaves estrangeiras, IDs únicos e oferta por par válido medicamento/farmácia. | Inspecionar schema e testar FKs/UNIQUE no MySQL. |
 | **RNF30** | Preço em tipo monetário com duas casas decimais. | `DECIMAL(10,2)` no SQL; `BigDecimal` em Java é **[PROPOSTA]**. |
 | **RNF31** | CEP brasileiro com oito dígitos. | Testar oito dígitos, pontuação opcional normalizada [PROPOSTA], incompleto e inválido. |
-| **RNF32–RNF33** | Coordenadas com precisão adequada; data de atualização válida quando adotada. | Inspecionar `DECIMAL(10,7)` atual; validar migração de data pendente. |
+| **RNF32–RNF33** | Coordenadas com precisão adequada; data de atualização válida quando adotada. | Inspecionar `DECIMAL(10,7)` atual; executar os testes da migração de `TIMESTAMP`/UTC (U01). |
 | **RNF34–RNF35** | Compatibilidade com navegadores modernos e uso móvel em conexão comum. | Testar Chrome/Edge/Firefox/Safari onde disponíveis; registrar cobertura real. |
 | **RNF36** | Separação MVC entre interface, controle, negócio e persistência. | **[PROPOSTA DE ARQUITETURA]** O Documento de Visão indicou MVC, mas a equipe definiu a stack/arquitetura do PDF como provisória; validar antes de tratar como decisão fechada. |
 | **RNF37** | Código versionado, alterações relevantes registradas. | Conferir branch/PR/commits no GitHub. |
@@ -177,19 +177,40 @@ Cada teste a seguir é um **caso especificado, não executado**. A identificaç�
 | **CT24** | Atualização de preços e histórico com datas fictícias reproduzíveis. | Registros permanecem persistidos, com critério documentado de criação/atualização, sem duplicações indevidas ou valores diferentes a cada consulta. | RF35–RF37, RN13 |
 | **CT25** | Auditoria de telas após recebimento das observações do professor. | Cada problema efetivamente informado tem evidência anterior, correção rastreável, verificação em mobile/desktop/teclado e resultado documentado; sem inventar feedback. | RNF01–RNF18, U10 |
 
-**Fixtures para CT02–CT06:** os preços e estabelecimentos dos cenários são **exemplos de teste**, não dados comprovadamente inseridos no MySQL. O PR da base deverá criar uma massa pequena reproduzível.
+**Fixtures para CT02–CT06:** os cenários estão materializados na carga `database/seeds/demonstracao.sql`, com IDs/dados fixos e farmácias fictícias. A suíte SQL da massa e a inicialização/reaplicação em clone descartável passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); isso não comprova os fluxos HTTP/interface. Ver [massa e verificação](../database/seeds/README.md).
 
 ## 6. Contratos e decisões técnicas a validar antes da implementação
 
-Os itens abaixo são **[PROPOSTA]**. Eles detalham questões abertas no contexto para tornar API/testes consistentes; a publicação do arquivo **não equivale a aprovação** da equipe.
+Os itens abaixo são **[PROPOSTA]**, exceto as decisões de persistência da seção 6.1 autorizadas pelo usuário para a etapa U01/#10 nesta branch. A autorização de implementação não substitui a revisão humana do PR nem aprova os demais contratos.
 
-### 6.1 Oferta válida e persistência
+### 6.1 Oferta válida e persistência — etapa U01/#10 autorizada em 17/11/2026
 
-- `MEDICAMENTO_FARMACIA.PRECO`: decimal **maior que zero**, duas casas, sem `NaN` ou valores negativos. O SQL atual usa `DECIMAL(10,2)` mas não possui `CHECK (PRECO > 0)`; alinhar validação e migração.
-- `DISPONIVEL`: campo booleano obrigatório no banco (MySQL `BOOLEAN`/`TINYINT(1)`), sem valor nulo; **dados antigos precisam de migração explícita** para não supor disponibilidade verdadeira sem avaliação.
-- `DATA_ATUALIZACAO`: data/hora da atualização da oferta (`DATETIME`/`TIMESTAMP` a decidir), preenchida ao editar preço/estado; definir fuso e regra de ausência na migração. No contrato JSON, usar ISO 8601 com offset quando existir; ausência representada por `null` [PROPOSTA].
+- `MEDICAMENTO_FARMACIA.PRECO`: `DECIMAL(10,2) NOT NULL`, **maior que zero**, com `CHECK (PRECO > 0)`. Usar MySQL 8.0.16+ e modo estrito; validação equivalente no futuro servidor continua necessária.
+- `DISPONIVEL`: `BOOLEAN NOT NULL`, restrito por `CHECK` a `0/1`, sem default de negócio. **Dados antigos exigem preenchimento explícito** antes de consolidar a migração, sem presumir disponibilidade.
+- `DATA_ATUALIZACAO`: `TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`; novas inclusões recebem data automaticamente, e mudanças reais na oferta (inclusive preço/estado) atualizam o campo. `UPDATE` sem mudança mantém a data. Sessões em UTC (`+00:00`); datas antigas desconhecidas continuam `NULL`. O JSON continua proposto: ISO 8601 com offset quando existir, ou `null`.
+- Instalação e migração são caminhos separados. A etapa preparatória não atualiza datas automaticamente durante a revisão da disponibilidade; a consolidação mantém datas `NULL` existentes. Procedimento e testes em [database/README.md](../database/README.md). Scripts presentes não significam migração executada nem U01 concluída.
 - Uma oferta por par `ID_MEDICAMENTO` + `ID_FARMACIA`, aproveitando `UNIQUE` atual; não armazenar preços como texto ou ponto flutuante no cálculo monetário.
 - Se o banco devolver um preço inválido, **não incluí-lo nos cálculos** e registrar falha de integridade para correção; política de visibilidade para esse caso é pendente [PROPOSTA].
+
+#### Massa demonstrativa e mapeamento local — U01/#10 autorizados em 17/11/2026
+
+- `database/seeds/demonstracao.sql`: 6 apresentações (IDs 1001–1006), 4 farmácias fictícias
+  (2001–2004) e 12 ofertas (3001–3012), 8 disponíveis/4 indisponíveis. Inclui dosagens
+  separadas, medicamento sem ofertas, todas indisponíveis, uma oferta única e empate.
+- Datas de oferta fixas de fixture (`2026-11-12T12:00:00Z`), sem alegar coleta comercial.
+  Carga transacional sem `UPDATE`/`REPLACE`/`IGNORE`; reexecução idêntica não duplica dados.
+  IDs, pares ou conteúdos incompatíveis impedem a carga; dados externos e histórico são preservados.
+- `database/Inicializar-Demonstracao.cmd` cria um banco novo `pharmafind_demo`; `--reaplicar`
+  só executa a carga idempotente nesse banco. Para validar o executável, admite um alvo
+  alternativo exclusivamente `pharmafind_u01_test_inicializado_<identificador>`, após
+  consulta de existência. Não recriar nem apagar bancos existentes.
+- `database/seeds/ceps-teste.json` é a lista local para U05: `72429005`, `72444240` e
+  `72620100`. CEPs confirmados em páginas IFB/UnB; pontos representativos de teste, com
+  origem explícita. Não são centroides oficiais nem geocodificação universal. Farmácias
+  usam pontos sintéticos; a farmácia 2004 fica sem coordenadas para CT13.
+- Não se acrescenta tabela permanente ou endpoint para o mapa. Fontes, estrutura JSON,
+  IDs/cenários e comandos em [database/seeds/README.md](../database/seeds/README.md).
+  Preparar os dados de CT09 não comprova cálculo de distância nem integração de API.
 
 ### 6.2 Cálculo e ordenação
 
@@ -262,7 +283,7 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 
 | Unidade | Escopo permitido (E) | Verificação (V) | Restrições (R) | Dependências |
 |---|---|---|---|---|
-| **U01 — Ajustar esquema e massa demonstrativa** | SQL de medicamento/farmácia/oferta, disponibilidade, atualização, CEPs de teste mapeados e inserts fictícios. | CT03/CT05/CT06/CT09/CT17 e testes SQL de FKs, `UNIQUE`, preço inválido. | RN01/RN06/RN07/RN11; não trazer cadastro real nem painel. | Nenhuma; decisão técnica dos campos pendente. |
+| **U01 — Ajustar esquema e massa demonstrativa** | SQL de medicamento/farmácia/oferta, disponibilidade, atualização, CEPs de teste mapeados e inserts fictícios. | CT03/CT05/CT06/CT09/CT17 e testes SQL de FKs, `UNIQUE`, preço inválido. | RN01/RN06/RN07/RN11; não trazer cadastro real nem painel. | Nenhuma; esquema, migração, seed/mapa e inicializador passaram na validação SQL; revisão humana pendente. |
 | **U02 — Inicializar backend Java e persistência** | Build e acesso controlado ao MySQL, sem interface administrativa. | Iniciar aplicação, conectar localmente, erro de conexão tratado, consultas parametrizadas. | RNF23–RNF25; framework pendente; nunca versionar senhas. | Decisão ADR004, U01 (para integração). |
 | **U03 — Busca/seleção exata** | Consulta e identificação de medicamentos por nome/ID. | CT01/CT03/CT20, validação HTTP/JSON da API. | RN06; não retornar ofertas de vários medicamentos juntas. | U01, U02. |
 | **U04 — Ofertas e motor de preços** | Consultar ofertas e produzir números/ranking em função testável isolada. | CT02–CT07; incluir todos-indisponíveis e empate. | RN01/RN02/RN07/RN08/RN12; não score composto. | U01–U03. |
@@ -304,9 +325,9 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 ## 10. Pendências que precisam de decisão ou execução
 
 1. **[REVISÃO DE EQUIPE]** Formalizar, pelo PR da [Issue #18](https://github.com/PharmaFind/PharmaFind/issues/18), a escolha de React + JavaScript + Vite, Java 21 + Spring Boot + Spring JDBC + Maven, MySQL e ferramentas complementares. A implementação **não existe ainda**; conferir exigência do professor sobre JSP/Servlets.
-2. **[PERSISTÊNCIA]** Aprovar campos `DISPONIVEL`, `DATA_ATUALIZACAO`, preço positivo, migração e fuso, preservando integridade da U01.
+2. **[PERSISTÊNCIA — U01]** Esquema, migração, seed e mapa de CEPs implementados nesta branch (§6.1). Suíte ampliada, limpeza protegida e inicialização/reaplicação passaram no MySQL 8.0.45, com [evidência](../database/tests/RESULTADOS.md). Obter revisão humana e atualizar Issue/Project conforme o trabalho real; os testes SQL não substituem integração ou revisão.
 3. **[CÁLCULOS]** Revisar/aceitar arredondamento monetário, empate por preço e ordenação por distância sem coordenadas; não prometer testes concluídos.
-4. **[GEOLOCALIZAÇÃO]** Selecionar CEPs mapeados e coordenadas com fonte documentada. GPS continua opcional e depende de consentimento.
+4. **[GEOLOCALIZAÇÃO]** Integrar na U05/U02 o mapa JSON de três CEPs/pontos de teste já documentado na U01; testar o fluxo de distância. GPS continua opcional e depende de consentimento.
 5. **[API]** Validar contratos/erros de [API.md](API.md) antes da implementação, inclusive a nova consulta de histórico U09 sem alterar indevidamente os três contratos existentes.
 6. **[HISTÓRICO — U09]** Definir a gravação/atualização de pontos históricos (por dia ou por evento), massa fictícia cronológica, contrato JSON e testes CT21–CT24. A tabela SQL legada não comprova implementação.
 7. **[FRONTEND — U10]** Registrar as **observações exatas do professor** na [Issue #20](https://github.com/PharmaFind/PharmaFind/issues/20), corrigir telas e comprovar avaliações de UX/responsividade/teclado, sem presumir problemas específicos.

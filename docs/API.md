@@ -125,12 +125,12 @@ Também se propõe aceitar `{}` como corpo equivalente (ordenar por preço, sem 
   "ordenacao": "distancia",
   "localizacao": {
     "origem": "cep",
-    "cep": "99999-999"
+    "cep": "72429-005"
   }
 }
 ```
 
-O valor `99999-999` é um **exemplo sintático de CEP**; não se afirma que foi selecionado pela equipe nem que existe nas coordenadas de teste. O comportamento para CEP **bem formado mas não mapeado** é retornar preços normalmente, com `status: "nao_mapeado"` e sem inventar distâncias (seção 6). A lista de CEPs realmente mapeados permanece pendente.
+O CEP `72429-005` corresponde à entrada `72429005` do mapa versionado em `database/seeds/ceps-teste.json`, autorizada na U01 com ponto representativo de demonstração. A aceitação/normalização do hífen continua proposta. O comportamento para CEP **bem formado mas não mapeado**, como `99999-999`, é retornar preços normalmente, com `status: "nao_mapeado"` (seção 6). O mapa também inclui `72444240` e `72620100`; [fontes e limitações](../database/seeds/README.md#ceps-e-pontos-de-teste). Nenhuma rota está implementada.
 
 ### 5.3 Requisição: usando GPS já consentido pelo navegador
 
@@ -251,7 +251,7 @@ Exemplo integral para **nenhuma localização informada**. Os dados são fictíc
 - A oferta C custa menos, porém está **indisponível**: permanece identificada, mas não participa das estatísticas e nunca recebe `menorPreco: true` (RN02/RN07).
 - `menorPreco`, `mediaPreco` e `economiaPotencial` são valores monetários **numéricos**; a interface formata `R$ 8,99`. Os exemplos exibem duas casas, mas o JSON numérico não garante preservação textual de zeros finais: **a formatação é responsabilidade do cliente**.
 - `horarioAbertura`/`horarioFechamento`: `HH:mm` quando cadastrados, senão `null`. **Não** se declara “aberta agora” por comparação ingênua de horários.
-- `dataAtualizacao`: ISO 8601 com offset quando disponível, ou `null` se não estiver cadastrada. A data do exemplo **não comprova** a existência da coluna no SQL atual.
+- `dataAtualizacao`: ISO 8601 com offset quando disponível, ou `null` para data desconhecida. A coluna `TIMESTAMP` e a política UTC estão definidas na etapa U01; a serialização Java continua não implementada. A data do exemplo é artificial, não um registro comprovado.
 - Para preço empatado, todas as ofertas disponíveis no menor valor podem receber `menorPreco: true` **[PROPOSTA]**; ordenação estável é `preco ASC`, depois `farmaciaId ASC`.
 - O campo `farmacia` retorna somente dados demonstrativos de exibição. No futuro, a equipe pode decidir um contrato separado para detalhes; **não há endpoint administrativo** no MVP.
 
@@ -308,7 +308,7 @@ Exemplo integral para **nenhuma localização informada**. Os dados são fictíc
 
 O exemplo é **recorte de campos** da resposta `200`, não outro tipo de resposta. As listas de ofertas e `resumo` seguem presentes como na seção 5.5.
 
-**Distância:** calcular em linha reta entre `(latitude, longitude)` do usuário e da farmácia, em quilômetros, por Haversine ou equivalente. Não utilizar ViaCEP como serviço de latitude/longitude: ele **não fornece coordenadas**. O arredondamento de distância a 2 casas e a ordenação de coordenadas ausentes por último são **propostas**. As coordenadas de teste e sua procedência ainda precisam ser definidas.
+**Distância:** calcular em linha reta entre `(latitude, longitude)` do usuário e da farmácia, em quilômetros, por Haversine ou equivalente. Não utilizar ViaCEP como serviço de latitude/longitude: ele **não fornece coordenadas**. O arredondamento de distância a 2 casas e a ordenação de coordenadas ausentes por último são **propostas**. Pontos de teste e origem estão em `database/seeds/ceps-teste.json`; a farmácia fictícia 2004 fica sem coordenadas para verificar ausência de distância. O cálculo e a leitura do mapa pelo backend ainda dependem da U05/U02.
 
 **GPS negado/indisponível:** é um evento tratado **no navegador**, portanto não há resposta HTTP específica para “permissão negada”. O front-end deve oferecer CEP de teste ou consulta sem posição; **não simular coordenadas**.
 
@@ -363,7 +363,7 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 
 ## 8. Modelo de dados e implementação em Java
 
-**Estado observado:** `database/PharmaFindDB.sql` possui `MEDICAMENTO`, `FARMACIA`, `MEDICAMENTO_FARMACIA`, `USUARIO` e `HISTORICO_PRECO`. O par medicamento/farmácia já tem restrição `UNIQUE`; preço já é `DECIMAL(10,2)`; latitude/longitude da farmácia são `DECIMAL(10,7)`. O script **não** tem disponibilidade nem data de atualização na oferta e **não** insere dados. Portanto, a API definida aqui **depende de migração SQL antes de ser implementada**.
+**Estado do código nesta branch — U01/#10:** o esquema tem as cinco tabelas existentes, InnoDB, par medicamento/farmácia `UNIQUE`, preço `DECIMAL(10,2)` positivo, `DISPONIVEL` restrito a `0/1` e `DATA_ATUALIZACAO TIMESTAMP` automática, permitindo `NULL` desconhecido. Coordenadas permanecem `DECIMAL(10,7)`. A seed versionada fornece 6 medicamentos, 4 farmácias e 12 ofertas; os CEPs ficam em JSON, sem nova tabela. Instalação, migração, UTC e modo estrito em [database/README.md](../database/README.md). **Suíte SQL ampliada e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); não há API implementada.**
 
 **Separação de responsabilidades na arquitetura-alvo (ainda não implementada):**
 
@@ -397,8 +397,8 @@ O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito 
 - Aprovar rotas, nomes de campos, limites de busca e formato de erros deste contrato.
 - A escolha-alvo Java 21 + Spring Boot + Spring JDBC + Maven e frontend React + JavaScript + Vite foi informada pela coordenação em 16/11; confirmar aceite coletivo via PR e compatibilidade com as exigências do professor, além das versões/testes/harness.
 - Fixar regras de preço válido, empate, arredondamento da média e da distância com atualização explícita da SPEC.
-- Definir esquema SQL para disponibilidade e data de atualização, política de migração e massa fictícia de testes.
-- Selecionar CEPs mapeados e coordenadas e indicar sua procedência; nenhuma cobertura geográfica universal é prometida.
+- Integrar o backend à massa fictícia; a suíte SQL ampliada e o inicializador/reaplicação da U01 passaram ([evidência](../database/tests/RESULTADOS.md)). O contrato HTTP e o mapeamento SQL/JSON ainda não foram implementados ou testados.
+- Integrar o mapa local de CEPs/pontos de teste já versionado e documentado; nenhuma cobertura geográfica universal é prometida.
 - Definir eventual política de cache/logs que evite retenção indevida de GPS; exigir HTTPS se houver publicação em produção.
 
 **Não há endpoints de autenticação (`/login`), administração de farmácias (`/farmacias/atualizar`), pagamentos (`/pagamentos`) ou alertas (`/alertas`) neste MVP.** Também **não há um endpoint genérico `/historico`**: a única rota de histórico prevista é a **consulta de leitura específica** `GET /api/v1/medicamentos/{id}/historico?farmaciaId={id}`, descrita nas seções 2 e 11 para a U09. Não criar endpoints administrativos ou funcionalidades além da SPEC por inferência de tabelas legadas.

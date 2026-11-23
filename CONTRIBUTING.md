@@ -23,6 +23,19 @@ Uma branch histórica chamada `feature/estrutura-documentacao` foi criada antes 
 
 **Não faça push direto em `main` ou `develop`.** A ruleset ativa exige PR e uma aprovação em ambas.
 
+### Validação automática do destino do Pull Request
+
+O workflow `.github/workflows/validar-fluxo-pr.yml` verifica a convenção do ADR 002 em PRs direcionados a `main` e `develop`:
+
+- `feature/<numero-real-da-issue>-<descricao>` **→ `develop`** para desenvolvimento;
+- `develop` **→ `main`** para promoção de uma versão estável.
+
+Uma tentativa de `feature/*` diretamente para `main`, ou de outra origem para `develop`, recebe **checagem vermelha**. O workflow não faz merge, não aprova código e não substitui revisão humana. O nome da branch precisa conter o número da Issue; exceções justificadas exigem decisão e alteração revisada desta política, sem bypass informal.
+
+**Ativação do bloqueio efetivo:** a existência do workflow, sozinha, **não impede merge**. Após sua integração e execução bem-sucedida nas branches protegidas, o administrador precisa acrescentar o check `Validar origem e destino` como **required status check** na ruleset `Protecao main e develop`, conferindo que o check realmente aparece para PRs direcionados a ambas as branches. Não exigir um check antes de ele existir e ter sido executado, para evitar travar os PRs. A integração excepcional do PR #29 (`main` → `develop` para corrigir o PR #27) deve acontecer **antes da ativação** desse check.
+
+O GitHub continua exigindo pelo menos uma aprovação de outro integrante e resolução de conversas. O mantenedor deve revisar também a opção de **descartar aprovações obsoletas quando novos commits são enviados**; hoje essa proteção adicional não está habilitada.
+
 ## 3. Passo a passo pelo Git
 
 Use os comandos a seguir **depois de criar a Issue** (substitua o número e o nome):

@@ -1,6 +1,6 @@
 # Manual de instalação, Git e agentes — PharmaFind
 
-> **Guia de entrada para os desenvolvedores (U08 / [Issue #17](https://github.com/PharmaFind/PharmaFind/issues/17))**. Atualizado em 17/11/2026. Público principal: integrantes que usam **Windows, PowerShell e VS Code**.
+> **Guia de entrada para os desenvolvedores (U08 / [Issue #17](https://github.com/PharmaFind/PharmaFind/issues/17))**. Atualizado em 17/11/2026; stack e instruções ajustadas em 23/11/2026. Público principal: integrantes que usam **Windows, PowerShell e VS Code**.
 >
 > **Repositório oficial:** https://github.com/PharmaFind/PharmaFind  
 > **Branch de integração:** `develop`, nunca `main` para começar uma feature.  
@@ -9,7 +9,7 @@
 
 ## Comece aqui: roteiro em 7 passos
 
-1. **Instale/valide** Git, VS Code, JDK 21, Node/npm e um servidor MySQL (seção 2).
+1. **Instale/valide** Git, VS Code, JDK 21 e um servidor MySQL (seção 2). **Node/npm são opcionais** e só se aplicam a tarefas com dependências JavaScript explícitas; a interface HTML/CSS/JS do MVP não usa React/Vite.
 2. **Clone o repositório da organização** ou atualize a cópia existente pela `develop` (seção 1).
 3. **Abra a pasta PharmaFind no VS Code** e instale a extensão oficial **Codex** (seção 3).
 4. **Cole o prompt padrão** da seção 4 na conversa do Codex. O agente deve **ler os arquivos `.md` primeiro**.
@@ -79,7 +79,7 @@ Os três `Test-Path` devem retornar `True` após a integração documental dos P
 
 Abra a **pasta raiz** do projeto com `File → Open Folder`. Ela deve conter `AGENTS.md`, `README.md`, `docs/`, `frontend/` e `database/`. Veja a branch no canto inferior esquerdo do VS Code ou execute `git branch --show-current`. O Codex deve trabalhar com essa pasta aberta, não com uma cópia antiga em outro diretório.
 
-## 2. Instalações no Windows: ferramentas que todos precisam
+## 2. Instalações no Windows: ferramentas necessárias e opcionais
 
 **Instale somente o que estiver faltando.** Os comandos `winget` abaixo são para Windows com o gerenciador de pacotes habilitado. Algumas instalações pedem permissão de administrador. Se `winget` não existir, use os links oficiais ao final.
 
@@ -88,7 +88,7 @@ Abra a **pasta raiz** do projeto com `File → Open Folder`. Ela deve conter `AG
 | Git | Clone, branches, commits e PRs | `git --version` |
 | Visual Studio Code | Editor e extensão Codex | Abrir VS Code / `code --version` |
 | **JDK 21** | Compilar e executar Java 21 / Spring Boot | `java -version` e `javac -version` |
-| **Node.js LTS + npm** | Executar Vite/React quando o frontend existir | `node --version` e `npm.cmd --version` |
+| **Node.js LTS + npm (opcional)** | Somente se alguma Issue aprovar dependências JS com `package.json`; **não é requisito do frontend HTML/CSS/JS atual** | `node --version` e `npm.cmd --version` |
 | **MySQL Server** | Armazenar medicamentos e ofertas fictícias | `Get-Service -Name "MySQL*"` |
 | Codex (extensão VS Code) | Agente que lê e altera código autorizado | Painel Codex e login individual |
 | Maven Wrapper | Build Java **quando U02 o criar** | `.\mvnw.cmd --version` no diretório apropriado |
@@ -102,6 +102,7 @@ java -version
 javac -version
 $env:JAVA_HOME
 where.exe java
+# Node/npm opcionais (somente se a Issue usar package.json)
 node --version
 npm.cmd --version
 Get-Service -Name "MySQL*" -ErrorAction SilentlyContinue
@@ -122,14 +123,14 @@ winget install --id Microsoft.VisualStudioCode --exact
 # Se não houver JDK 21
 winget install --id EclipseAdoptium.Temurin.21.JDK --exact
 
-# Se não houver Node/npm compatíveis com a versão do projeto
-winget install --id OpenJS.NodeJS.LTS --exact
+# Opcional: instalar Node/npm SOMENTE se a Issue aprovar dependências JavaScript
+# winget install --id OpenJS.NodeJS.LTS --exact
 
 # SOMENTE se não existir MySQL Server configurado
 winget install --id Oracle.MySQL --exact --interactive
 ```
 
-O pacote Node LTS e o instalador MySQL podem mudar de versão. Confira a versão disponível com `winget show --id <ID> --exact`, e posteriormente use as versões **realmente testadas com o código**. Depois de instalar, feche e reabra o VS Code/terminal.
+O pacote Node LTS (opcional) e o instalador MySQL podem mudar de versão. Confira a versão disponível com `winget show --id <ID> --exact`, e posteriormente use as versões **realmente testadas com o código**. Depois de instalar, feche e reabra o VS Code/terminal.
 
 ### 2.3 Java: precisa ser 21, mesmo que exista Java 24
 
@@ -161,7 +162,9 @@ if ($null -eq $jdk21) {
 
 Esse bloco não altera o PATH permanentemente. Para configuração persistente, ajustar `JAVA_HOME` e PATH no Windows e **retestar depois de reiniciar o VS Code**. Evidência do piloto: Temurin **21.0.13** e `JAVA_HOME` correto após reabrir o editor.
 
-### 2.4 Node, npm e React/Vite
+### 2.4 Node e npm (opcionais; sem React/Vite no MVP)
+
+**A coordenação aprovou HTML/CSS/JavaScript sem migração React/Vite em 23/11/2026.** O frontend atual não exige um build npm. Este trecho vale apenas para uma dependência JavaScript que venha a ser aprovada e versionada em Issue/PR.
 
 ```powershell
 node --version
@@ -171,9 +174,9 @@ npx.cmd --version
 
 Se `npm --version` exibir erro de `npm.ps1` bloqueado pela política do PowerShell, use `npm.cmd` e `npx.cmd`. **Não precisa desabilitar a segurança do PowerShell**.
 
-**Não instale React globalmente, nem crie um projeto Vite novo por conta própria.** React/Vite devem ser dependências do frontend versionado pela U06. Quando a U06 publicar um diretório com `package.json`, entre **naquele diretório** e use os scripts reais definidos ali (por exemplo, `npm.cmd install` e `npm.cmd run dev`, **somente se existirem**). Confira se a versão de Node atende aos requisitos do projeto.
+**Não instale React globalmente, nem crie projeto Vite:** React/Vite não foram adotados para este MVP (ADR 006). Se uma Issue futura aprovar dependências com `package.json`, entre no diretório versionado e use apenas os scripts reais definidos nele. Confira se a versão Node é compatível.
 
-No piloto, o Node **22.13.1** e o npm **10.9.2** foram validados como ferramentas instaladas; isso **não comprova** que a aplicação React já está implementada.
+No piloto, Node **22.13.1** e npm **10.9.2** foram validados como ferramentas instaladas, mas **não são pré-requisitos obrigatórios** da stack atual. Isso não comprova aplicação JavaScript integrada.
 
 ### 2.5 MySQL: reutilizar uma instância existente antes de instalar outra
 
@@ -288,7 +291,7 @@ REGRAS GERAIS
 - Ao final da FASE 2, AGUARDE a resposta do usuário.
 ```
 
-**Comportamento esperado do primeiro contato:** o Codex descreve a arquitetura **React + JavaScript + Vite / Java 21 + Spring Boot + Spring JDBC / MySQL**, ressalva os itens ainda não implementados, informa os arquivos lidos e **pergunta qual Issue/Task deve trabalhar**. Se começar a criar projeto React ou backend sem a task e a sua autorização, interrompa.
+**Comportamento esperado do primeiro contato:** o Codex descreve a arquitetura **HTML + CSS + JavaScript / Java 21 + Spring Boot + Spring JDBC + Maven / MySQL** (ADRs 001/004; React não adotado no ADR 006), ressalva os itens ainda não implementados, informa os arquivos lidos e **pergunta qual Issue/Task deve trabalhar**. Se começar a criar projeto React, backend ou arquivos sem a task e a sua autorização, interrompa.
 
 ## 5. Fluxo de desenvolvimento após escolher a Issue
 
@@ -327,7 +330,7 @@ Preencha uma linha **por integrante**, somente com resultados realmente observad
 | Verificação | Resultado a registrar |
 |---|---|
 | `git --version`, `java -version`, `javac -version` | Ferramentas disponíveis; Java 21 |
-| `node --version` e `npm.cmd --version` | Node/npm disponíveis |
+| `node --version` e `npm.cmd --version` (se aplicável) | Node/npm opcionais, somente para tarefas que exigirem esses comandos |
 | MySQL | Serviço e conexão autenticada locais, ou impedimento relatado |
 | `git remote -v` e branch `develop` | Apontam ao repositório/fluxo combinado |
 | `Test-Path AGENTS.md`, `Test-Path docs/SPEC.md` | Ambos encontrados |
@@ -353,18 +356,18 @@ Preencha uma linha **por integrante**, somente com resultados realmente observad
 | Serviço `MySQL80` parado | Verifique antes de iniciar como administrador; não reinstale sem necessidade |
 | `AGENTS.md` ausente | Confira branch/pasta, depois atualize `develop` do repo correto |
 | Codex “inventou” backend/React pronto | Verifique fontes e peça separar código existente de plano |
-| `npm.cmd run dev` não existe | Confirme o diretório e `package.json`; U06 pode ainda não estar implementada |
+| `npm.cmd run dev` não existe | Não é comando obrigatório: frontend atual é HTML/CSS/JS sem Vite; conferir scripts reais antes de executar |
 
 ## 8. Links oficiais e referências
 
 - Git: https://git-scm.com/downloads
 - VS Code: https://code.visualstudio.com/
 - Eclipse Temurin JDK 21: https://adoptium.net/
-- Node.js: https://nodejs.org/
+- Node.js (opcional): https://nodejs.org/
 - MySQL: https://dev.mysql.com/downloads/
 - Codex no editor: https://developers.openai.com/codex/ide/
 - Planos/acesso Codex: https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan
-- Vite: https://vite.dev/guide/
+- Vite (apenas referência histórica do ADR 006, não exigido para MVP): https://vite.dev/guide/
 - WinGet: https://learn.microsoft.com/pt-br/windows/package-manager/winget/install
 - PowerShell Execution Policies: https://learn.microsoft.com/pt-br/powershell/module/microsoft.powershell.core/about/about_execution_policies
 - [AGENTS.md](../AGENTS.md), [CONTEXTO.md](../CONTEXTO.md), [SPEC.md](SPEC.md), [API.md](API.md), [ADRs](ADR/), [CONTRIBUTING.md](../CONTRIBUTING.md)
@@ -548,7 +551,7 @@ npx.cmd --version
 - **Não precisa alterar `ExecutionPolicy`**, nem executar PowerShell como administrador para "desbloquear npm".
 - **Validação:** `npm.cmd --version` exibe a versão; no piloto foi **10.9.2**.
 
-### 9.9 Node/npm instalados, mas React/Vite não executa
+### 9.9 Erros de Node/npm em tarefas opcionais (React/Vite não adotados no MVP)
 
 **Sintoma A:** `npm ERR! enoent package.json` / `Missing script: dev`.
 
@@ -558,8 +561,8 @@ Test-Path package.json
 Get-ChildItem -Name
 ```
 
-- Você provavelmente está na **pasta errada** ou a U06 ainda não criou o projeto React. Consulte o README e localize **o `package.json` real**.
-- **Não rode `npm create vite` nem instale React globalmente** para "reparar" o repositório. A criação do frontend pertence à U06.
+- Um projeto com `package.json` só deve existir se alguma Issue o tiver aprovado; o frontend HTML/CSS/JS atual não exige Node. Consulte o README e a Issue correspondente.
+- **Não rode `npm create vite` nem instale React globalmente** para "reparar" o repositório. A U06 seguirá HTML/CSS/JS, e qualquer novo framework requer ADR/Issue/PR.
 - **Validação:** dentro da pasta correta, `npm.cmd run` lista scripts existentes; execute `npm.cmd run dev` **somente se o script `dev` existir**.
 
 **Sintoma B:** erro de engine/versão Node não suportada.

@@ -1,5 +1,153 @@
 # Banco de dados — U01 / Issue #10
 
+**Estado atual:** correção complementar [#33](https://github.com/PharmaFind/PharmaFind/issues/33),
+com quatro tabelas no MVP, apresentação própria e novas restrições. Consulte o procedimento
+003 abaixo; as evidências anteriores continuam limitadas à versão então testada.
+
+## Correção complementar U01 / Issue #33 — 23/11/2026
+
+O MVP **não possui autenticação nem cadastro**. Instalações novas têm quatro tabelas:
+`MEDICAMENTO`, `FARMACIA`, `MEDICAMENTO_FARMACIA` e `HISTORICO_PRECO`.
+`USUARIO` não é criada. Bancos anteriores podem mantê-la até a remoção separada e autorizada.
+
+Restrições adicionais:
+
+| Tabela | Regra |
+|---|---|
+| HISTORICO_PRECO | `PRECO > 0`; `UNIQUE (ID_MEDICAMENTO_FARMACIA, DATA_REGISTRO)`; FK preservada. |
+| FARMACIA | CEP `NULL` ou exatamente oito dígitos ASCII; manter `VARCHAR(8)` e modo estrito para rejeitar entradas longas. |
+| FARMACIA | Latitude entre -90/90 e longitude entre -180/180, inclusive; ambas presentes ou ambas `NULL`. |
+| MEDICAMENTO | `APRESENTACAO VARCHAR(150) NOT NULL`, sem default, não vazia após `TRIM`; identidade única por nome/dosagem/apresentação. |
+
+O histórico continua `DATE`, com **um ponto por oferta por dia**. Nenhum trigger insere histórico:
+a política de atualização de pontos fica com a U09, respeitando esta unicidade. Não mudar para
+eventos intradiários sem nova decisão. Alterações de apresentação preservam o ID e suas ofertas;
+o preenchimento da migração não altera preços, datas ou descrições.
+
+### Ordem de migração e diagnóstico
+
+Faça backup recuperável, verifique versão/instância e selecione o banco explicitamente.
+Suspenda escritas de todas as aplicações e mantenha essa condição até terminar a validação.
+Execute fora de outra transação e pare no primeiro erro; não use `--force`.
+
+1. **Legado anterior à U01:** executar 001, revisar disponibilidade/datas por ID, executar 002.
+   **U01 consolidada:** começar diretamente no próximo passo; não repetir 001/002.
+2. `SOURCE database/migrations/003a-preparar-integridade.sql;`
+   Valida estrutura, tipos, PKs/FKs, índices, checks de oferta e collations. Lista preços históricos
+   inválidos, duplicidades e farmácias incompatíveis; recusa pendências antes de adicionar a coluna.
+   Se aprovado, adiciona somente `APRESENTACAO` anulável, sem preencher valores.
+3. Revisar cada medicamento e preencher apresentação **explicitamente por ID**, com evidência.
+   Para a massa original completa de seis medicamentos, o script **opcional**
+   `003-preencher-demonstracao.sql` preenche as apresentações já descritas nas fixtures:
+   1001/20 comprimidos, 1002/10 comprimidos, 1003/20 comprimidos, 1004/10 cápsulas,
+   1005/12 comprimidos, 1006/28 cápsulas. Verifica os seis registros originais integralmente,
+   aceita apenas apresentação ausente/idêntica e recusa divergência sem atualização parcial.
+   Não é um extrator genérico de descrições nem deve ser aplicado automaticamente a outra base.
+   Outros IDs continuam pendentes até revisão; não preencher com “desconhecida”, vazio ou dados inventados.
+4. `SOURCE database/migrations/003b-restricoes-integridade.sql;`
+   Repete diagnóstico e verifica apresentações ausentes/vazias e identidades repetidas sob a
+   collation aprovada. Só depois aplica as restrições, sem mudar IDs ou excluir registros.
+5. Conferir `SHOW CREATE TABLE` nas quatro tabelas, dados/contagens e relacionamentos com o backup.
+   A seed atual pode ser reaplicada após 003b; divergências legítimas continuam causando recusa.
+6. Avaliar `USUARIO` separadamente, conforme procedimento abaixo. Sua permanência não bloqueia 003a/003b.
+
+### Collation, nomes e compatibilidade Java/Linux
+
+O esquema novo fixa `utf8mb4_unicode_ci`, também usada pelos runners originais.
+Ela compara sem distinguir caixa/acentos e tem `PAD SPACE` (espaços finais não distinguem identidades).
+Os testes cobrem essas equivalências. 003 exige essa collation em nome/dosagem e usa a mesma
+para apresentação; **recusa bases divergentes**, sem converter textos ou collations automaticamente.
+Uma divergência exige revisão e decisão específica antes de tentar novamente.
+
+Todos os SQLs de aplicação devem usar os identificadores canônicos em **MAIÚSCULAS**,
+incluindo consultas futuras do Repository Java. Não alternar `medicamento` e `MEDICAMENTO`.
+Consultar `@@lower_case_table_names`; não mudar a configuração de uma instância inicializada.
+Windows pode armazenar nomes em minúsculas; Linux com valor 0 exige a grafia criada pelo DDL.
+A execução disponível foi Windows/MySQL 8.0.45; execução Linux e MySQL 8.0.16 ainda não comprovadas.
+
+O backend deverá ler `APRESENTACAO` como campo próprio e mapear ao campo JSON proposto
+`apresentacao`, preservando seleção pelo ID exato. Nenhum endpoint ou código Java é implementado aqui.
+
+### Reaplicação, falha parcial e recuperação
+
+003a/003b **não são instaladores idempotentes**: reaplicação é recusada com SQLSTATE 45000
+(erro MySQL 1644); não duplicam constraints nem substituem objetos existentes.
+As rotinas auxiliares são criadas sem sobrescrever nomes. Em sucesso, 003a/003b removem suas
+próprias rotinas. Em erro, podem permanecer para diagnóstico:
+
+- `pf33_preparar_integridade`;
+- `pf33_consolidar_integridade`.
+
+Não repetir o arquivo às cegas. Inspecione `SHOW CREATE PROCEDURE` e `SHOW CREATE TABLE`.
+Se a estrutura ainda for a esperada e o problema for somente dado incompatível, faça saneamento
+revisado e chame a rotina já instalada. Depois de sucesso, remova somente esse auxiliar conhecido.
+Se não houver rotina, execute o arquivo correspondente somente após confirmar seu pré-requisito.
+Rotina de outra origem/nome em conflito exige decisão; não usar `DROP IF EXISTS` para substituí-la.
+
+Cada `ALTER TABLE` faz commit implícito. O conjunto de três ALTERs de 003b **não é uma transação**:
+falha depois do primeiro pode deixar parte consolidada. O diagnóstico recusa esse estado.
+Não tentar desfazer com `ROLLBACK`, remover constraints ou reaplicar etapas automaticamente.
+
+Antes da migração, com escritas suspensas, exportar estrutura/dados, rotinas, eventos e triggers
+para arquivo protegido **fora do Git**, por exemplo no terminal CMD (ajustar conta e nomes):
+
+```bat
+mysqldump --host=127.0.0.1 --user=root --password --single-transaction --routines --events --triggers --no-tablespaces --set-gtid-purged=OFF BANCO_ORIGEM > CAMINHO_SEGURO\backup.sql
+```
+
+Verificar o código de saída e restaurar esse dump em **outro banco novo**, explicitamente criado.
+Conferir tabelas, registros, FKs, contagens/hashes e rotinas na cópia. Em falha parcial, preservar
+a origem e usar a cópia validada para recuperação sob decisão humana; não sobrescrever nem excluir
+a origem. O backup deve anteceder qualquer DDL. Os testes de recuperação desta Issue usam somente
+alvos novos da instância temporária, sem copiar dados de pessoas.
+
+### Remoção controlada de USUARIO — etapa 003c
+
+`SOURCE database/migrations/003c-remover-usuario.sql;` **apenas instala auxiliares**; não remove tabelas.
+
+Usar conta administrativa com privilégios globais diretos `SELECT`, `SHOW VIEW`, `TRIGGER`
+e `EVENT`, além das permissões de execução/DDL necessárias. A inspeção recusa visibilidade
+insuficiente; privilégios recebidos apenas via roles não atendem a essa verificação conservadora.
+Não conceder privilégios automaticamente. Não utilizar a conta da aplicação para essa manutenção.
+
+1. Executar `CALL pf33_inspecionar_usuario();`. O resultado informa banco, versão,
+   **quantidade** de usuários e dependências: FKs de entrada/saída, views, triggers, rotinas e eventos.
+   Não lista nomes, emails ou senhas.
+2. Auditar também referências externas, SQL dinâmico e objetos cuja definição não possa ser
+   inspecionada. A busca textual de rotinas/eventos é conservadora e não substitui essa revisão.
+3. Havendo usuários, **preservar a tabela**. Informar quantidade, risco de perda de cadastros,
+   retenção de dados e opções: manter isolada do MVP ou planejar exportação/arquivamento com decisão
+   específica. O auxiliar nunca apaga tabela com registros, mesmo com variáveis preenchidas.
+4. Havendo dependências, preservar e decidir como tratá-las; não apagar dependências em cascata.
+5. Com tabela vazia, sem dependências e backup restaurável confirmado, apresentar os resultados
+   e obter **aprovação explícita do banco exato** antes do DROP em qualquer alvo não descartável.
+   Somente então, na mesma sessão de manutenção:
+   ```sql
+   SET @pf33_autorizar_remocao_usuario = 'NOME_EXATO_APROVADO';
+   SET @pf33_backup_usuario_confirmado = 'NOME_EXATO_APROVADO';
+   CALL pf33_remover_usuario();
+   ```
+   As variáveis devem coincidir com `DATABASE()`; são consumidas antes do DDL.
+   O auxiliar revalida contagem e dependências antes do DROP. Reaplicação recusa ausência da tabela.
+6. Validar os quatro conjuntos preservados e remover apenas os dois auxiliares conhecidos.
+   Nenhuma remoção desta entrega foi executada em banco preexistente da equipe ou `pharmafind_demo`.
+
+### Execução isolada adicional
+
+Os runners agora criam **quatro** bancos: novo, migrado, proteção e
+`pharmafind_u01_test_integridade_<identificador>`. O quarto começa no snapshot U01 anterior à #33,
+com a seed antiga, e prova a atualização sem recriação/perda dos registros.
+
+O runner CMD aceita `caminho_mysql [identificador] [porta] [--sem-senha]`.
+O PS1 aceita `-Port` e `-SkipPassword`. Autenticação sem senha serve somente a uma
+instância temporária local previamente preparada; o padrão continua solicitando senha.
+O inicializador aceita `caminho_mysql --criar|--reaplicar [clone] [porta] [--sem-senha]`,
+mantendo os alvos restritos e consulta prévia de existência.
+
+As fixtures `tests/u01-antes-003.sql`, `tests/seed-antes-003.sql` e `tests/legado.sql`
+são snapshots históricos de teste, não instaladores do MVP. Somente elas mantêm a definição
+antiga de USUARIO para comprovar migração e proteção contra perda de usuários.
+
 Esta etapa implementa **esquema, migração, massa demonstrativa e testes de integridade**.
 A carga em `seeds/demonstracao.sql` prepara 6 medicamentos, 4 farmácias fictícias e 12
 ofertas do Gama/arredores; `seeds/ceps-teste.json` contém três CEPs com pontos representativos
@@ -7,7 +155,7 @@ documentados. As fixtures de `tests/` existem somente para testes em bancos desc
 não são dados comerciais e não validam os fluxos HTTP ou a interface. Nenhuma migração
 é aplicada automaticamente. Veja [a massa e suas fontes](seeds/README.md).
 
-**Validação desta etapa:** a suíte ampliada via `Executar-Testes.cmd` passou no MySQL
+**Validação histórica da U01 anterior à #33:** a suíte ampliada via `Executar-Testes.cmd` passou no MySQL
 8.0.45 local, em execução autenticada pelo usuário: instalação nova, migração, massa,
 CEPs, preservação e limpeza protegida. O inicializador também passou na criação e
 reaplicação de um clone descartável, com sete booleanos em `1` antes/depois e três
@@ -34,7 +182,7 @@ hashes idênticos. Evidências, falhas anteriores corrigidas e limitações em
   na leitura; não guarda o offset original. A futura API deverá serializar em ISO 8601
   com offset, ou `null`, conforme `docs/API.md`. Não forçar datas antigas nas atualizações
   normais; datas explícitas são usadas apenas quando conhecidas ou em fixtures documentadas.
-- `HISTORICO_PRECO` mantém a estrutura existente. Atualizar uma oferta **não insere pontos
+- `HISTORICO_PRECO` mantém a FK e o campo DATE, com preço positivo e unicidade diária na correção #33. Atualizar uma oferta **não insere pontos
   históricos** nesta etapa; política de gravação e gráfico pertencem à U09.
 
 Os scripts configuram somente a sessão que os executa, sem alterar configuração global.
@@ -75,7 +223,7 @@ sobrescrevem registros incompatíveis. Comandos, cenários, IDs e pontos geográ
 
 ## Migração de banco existente
 
-Os scripts se destinam ao esquema legado de `PharmaFindDB.sql`, anterior a esta etapa.
+As etapas 001/002 abaixo se destinam ao esquema legado anterior à U01. Após elas, seguir 003a/003b acima e avaliar 003c separadamente.
 São de **execução única e ordenada**, não são um instalador idempotente. Faça backup,
 confira a versão, `SHOW CREATE TABLE MEDICAMENTO_FARMACIA`, InnoDB e as FKs existentes;
 pause escritas concorrentes durante a migração. DDL no MySQL faz commit implícito:
@@ -108,8 +256,8 @@ disponibilidade de outra dosagem ou atribua `1` a todas as ofertas sem avaliaç�
 ## Testes reproduzíveis no terminal Windows
 
 O runner exige uma conta local autorizada a criar/remover bancos de teste, tabelas e
-procedures. Cria **três bancos novos** `pharmafind_u01_test_novo_*`,
-`pharmafind_u01_test_migrado_*` e `pharmafind_u01_test_protecao_*`,
+procedures. Cria **quatro bancos novos** `pharmafind_u01_test_novo_*`,
+`pharmafind_u01_test_migrado_*`, `pharmafind_u01_test_protecao_*` e `pharmafind_u01_test_integridade_*`,
 testa instalação, migração e a massa demonstrativa nos dois esquemas e remove somente
 esses bancos quando termina com sucesso. Não inicializa `pharmafind_demo`.
 Se falhar, interrompe sem `--force` e preserva os bancos que chegou a criar para inspeção;
@@ -130,7 +278,7 @@ Se o PowerShell bloquear arquivos `.ps1` com `PSSecurityException`, use a altern
 
 O `.cmd` usa `root` em `127.0.0.1:3306` e envia os mesmos arquivos SQL ao cliente MySQL,
 sem chamar PowerShell. A primeira conexão consulta os nomes em `information_schema`;
-se algum existir, os testes não começam. A segunda cria os três bancos sem `IF NOT EXISTS`,
+se algum existir, os testes não começam. A segunda cria os quatro bancos sem `IF NOT EXISTS`,
 protegendo também contra criação concorrente. Sucesso os remove; falhas os preservam. O SQL é concatenado
 em um arquivo temporário sem credenciais, removido após a chamada ao cliente. Essa é
 uma alternativa para o ambiente local, não uma mudança nas permissões do Windows.

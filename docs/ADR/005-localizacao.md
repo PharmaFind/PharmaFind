@@ -44,3 +44,8 @@ A lista e a origem dos pontos estão documentadas; a integração deverá consul
 ## 6. Status da decisão
 
 **Aceita:** localização opcional, consentimento, mapeamento limitado e linha reta. **Autorizado na U01:** JSON e pontos demonstrativos documentados; validações SQL de CEPs/coordenadas passaram na suíte ampliada ([evidência](../../database/tests/RESULTADOS.md)). **Pendente:** integração U05/U02, execução dos fluxos e revisão da fórmula/arredondamento/desempate. Não afirmar que a localização já funciona na aplicação.
+
+**Complemento U01/#33 (23/11/2026):** o banco passou a rejeitar CEP que não seja NULL ou oito
+dígitos e coordenadas fora dos limites ou parcialmente preenchidas. Ausência de ambas continua
+válida. Isso não calcula distância nem implementa geolocalização. O MVP não possui autenticação
+nem cadastro; não se persistem coordenadas de visitantes em uma tabela USUARIO.

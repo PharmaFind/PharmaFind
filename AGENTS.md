@@ -57,3 +57,14 @@
 ## Definição de pronto
 
 Código implementado e revisado, caso de uso comprovado, testes aplicáveis executados, documentação afetada atualizada, critérios de aceite atendidos e Issue/Project atualizados conforme o trabalho **real**. A simples criação de arquivos ou respostas geradas por IA não representa conclusão.
+
+## Persistência complementar — U01/#33
+
+- O MVP não possui autenticação nem cadastro: esquema novo com quatro tabelas, sem USUARIO.
+- Bancos anteriores: 003a prepara APRESENTACAO sem inferir valores; preenchimento revisado;
+  003b consolida identidade única, CEP/coordenadas e histórico positivo/único por oferta/dia.
+- A 003c é separada: nunca apagar usuários existentes. Inspecionar registros/dependências,
+  confirmar backup e obter aprovação explícita do alvo antes de DROP em banco não descartável.
+- Manter nomes SQL canônicos em maiúsculas e a collation documentada. Alterações de collation,
+  histórico intradiário ou preenchimento desconhecido exigem decisão específica.
+- Fixtures históricas com USUARIO são apenas testes de migração, não o esquema vigente.

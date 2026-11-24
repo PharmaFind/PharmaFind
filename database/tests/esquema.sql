@@ -4,15 +4,15 @@ SET timestamp = 1794916800;
 SET @u01_agora = CURRENT_TIMESTAMP;
 START TRANSACTION;
 
-CALL u01_assert((SELECT COUNT(*) = 5 FROM information_schema.tables
+CALL u01_assert((SELECT COUNT(*) = 4 FROM information_schema.tables
     WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE' AND engine = 'InnoDB'),
-    'As cinco tabelas usam InnoDB');
+    'As quatro tabelas do MVP usam InnoDB');
 
-INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO) VALUES
-    (10, 'Medicamento teste', 'Ativo ficticio', 'Teste', '500 mg', 'Fixture da dosagem A'),
-    (11, 'Medicamento teste', 'Ativo ficticio', 'Teste', '1 g', 'Fixture da dosagem B'),
-    (12, 'Sem ofertas', 'Ativo ficticio', 'Teste', '10 mg', 'Fixture sem oferta'),
-    (13, 'Todas indisponiveis', 'Ativo ficticio', 'Teste', '20 mg', 'Fixture indisponivel');
+INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO) VALUES
+    (10, 'Medicamento teste', 'Ativo ficticio', 'Teste', '500 mg', 'Comprimido de teste', 'Fixture da dosagem A'),
+    (11, 'Medicamento teste', 'Ativo ficticio', 'Teste', '1 g', 'Comprimido de teste', 'Fixture da dosagem B'),
+    (12, 'Sem ofertas', 'Ativo ficticio', 'Teste', '10 mg', 'Comprimido de teste', 'Fixture sem oferta'),
+    (13, 'Todas indisponiveis', 'Ativo ficticio', 'Teste', '20 mg', 'Comprimido de teste', 'Fixture indisponivel');
 INSERT INTO FARMACIA (ID_FARMACIA, NOME, ENDERECO) VALUES
     (2, 'Farmacia teste A', 'Endereco ficticio A'),
     (3, 'Farmacia teste B', 'Endereco ficticio B'),
@@ -43,7 +43,7 @@ CALL u01_assert((SELECT DATA_ATUALIZACAO IS NULL FROM MEDICAMENTO_FARMACIA
 
 CALL u01_esperar_erro('INSERT INTO MEDICAMENTO_FARMACIA (ID_MEDICAMENTO, ID_FARMACIA, PRECO, DISPONIVEL) VALUES (10, 2, 9.00, 1)',
     1062, 'Par medicamento/farmacia duplicado rejeitado');
-CALL u01_esperar_erro('INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO) VALUES (10, ''Duplicado'', ''Teste'', ''Teste'', ''1 mg'', ''Fixture'')',
+CALL u01_esperar_erro('INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO) VALUES (10, ''Duplicado'', ''Teste'', ''Teste'', ''1 mg'', ''Comprimido de teste'', ''Fixture'')',
     1062, 'ID de medicamento duplicado rejeitado');
 CALL u01_esperar_erro('INSERT INTO MEDICAMENTO_FARMACIA (ID_MEDICAMENTO, ID_FARMACIA, PRECO, DISPONIVEL) VALUES (999, 2, 9.00, 1)',
     1452, 'FK: medicamento inexistente rejeitado');

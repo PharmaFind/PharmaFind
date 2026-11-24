@@ -13,7 +13,17 @@ if not "%~2"=="" if not "%~2"=="--reaplicar" if not "%~2"=="--criar" (
     echo ERRO: segundo argumento permitido: --criar ou --reaplicar. Nao passe senha.
     exit /b 2
 )
-if not "%~4"=="" exit /b 2
+if not "%~6"=="" exit /b 2
+set "U01_PORT=3306"
+if not "%~4"=="" set "U01_PORT=%~4"
+set U01_PORT | findstr /r /x "U01_PORT=[0-9][0-9]*" >nul
+if errorlevel 1 exit /b 2
+if not "%U01_PORT:~5,1%"=="" exit /b 2
+if %U01_PORT% LSS 1 exit /b 2
+if %U01_PORT% GTR 65535 exit /b 2
+set "U01_AUTH=--password"
+if "%~5"=="--sem-senha" set "U01_AUTH=--skip-password"
+if not "%~5"=="" if not "%~5"=="--sem-senha" exit /b 2
 set "U01_BANCO=pharmafind_demo"
 if not "%~3"=="" (
     set "U01_BANCO=%~3"
@@ -55,7 +65,7 @@ if errorlevel 1 (
 )
 echo Banco alvo: %U01_BANCO%. Modo: %U01_MODO%. Dados ficticios para demonstracao.
 echo Primeira conexao: verificar existencia do banco sem alterar registros.
-"%U01_MYSQL%" --host=127.0.0.1 --port=3306 --user=root --password --connect-timeout=5 --batch --raw --skip-column-names --skip-force --execute="SELECT COUNT(*) FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '%U01_BANCO%';" > "%U01_EXISTENCE_FILE%"
+"%U01_MYSQL%" --host=127.0.0.1 --port=%U01_PORT% --user=root %U01_AUTH% --connect-timeout=5 --batch --raw --skip-column-names --skip-force --execute="SELECT COUNT(*) FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '%U01_BANCO%';" > "%U01_EXISTENCE_FILE%"
 set "U01_EXIT=%ERRORLEVEL%"
 if not "%U01_EXIT%"=="0" (
     del /q "%U01_SQL_FILE%" "%U01_EXISTENCE_FILE%"
@@ -76,7 +86,7 @@ if "%U01_MODO%"=="reaplicar" if not "%U01_EXISTE%"=="1" (
     exit /b 2
 )
 echo Estado do banco confirmado. Segunda conexao: executar o modo solicitado nesse alvo.
-"%U01_MYSQL%" --host=127.0.0.1 --port=3306 --user=root --password --connect-timeout=5 --default-character-set=utf8mb4 --batch --raw --skip-force < "%U01_SQL_FILE%"
+"%U01_MYSQL%" --host=127.0.0.1 --port=%U01_PORT% --user=root %U01_AUTH% --connect-timeout=5 --default-character-set=utf8mb4 --batch --raw --skip-force < "%U01_SQL_FILE%"
 set "U01_EXIT=%ERRORLEVEL%"
 del /q "%U01_SQL_FILE%"
 if not "%U01_EXIT%"=="0" (

@@ -17,13 +17,13 @@ CREATE TEMPORARY TABLE u01_seed_validacao (
 ) ENGINE=InnoDB;
 
 INSERT INTO u01_seed_medicamentos
-    (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO) VALUES
-    (1001, 'Dipirona', 'Dipirona sódica', 'Analgésico', '500 mg', 'Apresentação demonstrativa fictícia: 20 comprimidos.'),
-    (1002, 'Dipirona', 'Dipirona sódica', 'Analgésico', '1 g', 'Apresentação demonstrativa fictícia: 10 comprimidos.'),
-    (1003, 'Paracetamol', 'Paracetamol', 'Analgésico', '750 mg', 'Apresentação demonstrativa fictícia: 20 comprimidos.'),
-    (1004, 'Ibuprofeno', 'Ibuprofeno', 'Anti-inflamatório', '400 mg', 'Apresentação demonstrativa fictícia: 10 cápsulas.'),
-    (1005, 'Loratadina', 'Loratadina', 'Antialérgico', '10 mg', 'Apresentação demonstrativa fictícia: 12 comprimidos.'),
-    (1006, 'Omeprazol', 'Omeprazol', 'Categoria demonstrativa', '20 mg', 'Apresentação demonstrativa fictícia: 28 cápsulas.');
+    (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO) VALUES
+    (1001, 'Dipirona', 'Dipirona sódica', 'Analgésico', '500 mg', '20 comprimidos', 'Apresentação demonstrativa fictícia: 20 comprimidos.'),
+    (1002, 'Dipirona', 'Dipirona sódica', 'Analgésico', '1 g', '10 comprimidos', 'Apresentação demonstrativa fictícia: 10 comprimidos.'),
+    (1003, 'Paracetamol', 'Paracetamol', 'Analgésico', '750 mg', '20 comprimidos', 'Apresentação demonstrativa fictícia: 20 comprimidos.'),
+    (1004, 'Ibuprofeno', 'Ibuprofeno', 'Anti-inflamatório', '400 mg', '10 cápsulas', 'Apresentação demonstrativa fictícia: 10 cápsulas.'),
+    (1005, 'Loratadina', 'Loratadina', 'Antialérgico', '10 mg', '12 comprimidos', 'Apresentação demonstrativa fictícia: 12 comprimidos.'),
+    (1006, 'Omeprazol', 'Omeprazol', 'Categoria demonstrativa', '20 mg', '28 cápsulas', 'Apresentação demonstrativa fictícia: 28 cápsulas.');
 
 -- Pontos sinteticos para a demonstracao regional; nao sao estabelecimentos reais.
 -- As fontes dos CEPs e a origem dos pontos estao em README.md e ceps-teste.json.
@@ -57,7 +57,14 @@ SET @u01_seed_compativel = NOT EXISTS (
             AND (CAST(m.PRINCIPIO_ATIVO AS BINARY) <=> CAST(s.PRINCIPIO_ATIVO AS BINARY))
             AND (CAST(m.CATEGORIA AS BINARY) <=> CAST(s.CATEGORIA AS BINARY))
             AND (CAST(m.DOSAGEM AS BINARY) <=> CAST(s.DOSAGEM AS BINARY))
+            AND (CAST(m.APRESENTACAO AS BINARY) <=> CAST(s.APRESENTACAO AS BINARY))
             AND (CAST(m.DESCRICAO AS BINARY) <=> CAST(s.DESCRICAO AS BINARY)))
+    );
+SET @u01_seed_compativel = @u01_seed_compativel AND NOT EXISTS (
+        -- Mesma identidade sob outro ID tambem conflita antes de inserir qualquer registro.
+        SELECT 1 FROM MEDICAMENTO m JOIN u01_seed_medicamentos s
+            ON m.NOME = s.NOME AND m.DOSAGEM = s.DOSAGEM AND m.APRESENTACAO = s.APRESENTACAO
+        WHERE m.ID_MEDICAMENTO <> s.ID_MEDICAMENTO
     );
 SET @u01_seed_compativel = @u01_seed_compativel AND NOT EXISTS (
         SELECT 1 FROM FARMACIA f JOIN u01_seed_farmacias s ON s.ID_FARMACIA = f.ID_FARMACIA
@@ -84,8 +91,9 @@ SET @u01_seed_compativel = @u01_seed_compativel AND NOT EXISTS (
 
 -- Erro identificavel se um ID, par ou conteudo conflitar. Nenhum UPDATE/REPLACE/IGNORE.
 INSERT INTO u01_seed_validacao (COMPATIVEL) VALUES (@u01_seed_compativel);
-INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO)
-    SELECT s.* FROM u01_seed_medicamentos s
+INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO)
+    SELECT s.ID_MEDICAMENTO, s.NOME, s.PRINCIPIO_ATIVO, s.CATEGORIA, s.DOSAGEM, s.APRESENTACAO, s.DESCRICAO
+    FROM u01_seed_medicamentos s
     WHERE @u01_seed_compativel = 1
         AND NOT EXISTS (SELECT 1 FROM MEDICAMENTO m WHERE m.ID_MEDICAMENTO = s.ID_MEDICAMENTO);
 INSERT INTO FARMACIA

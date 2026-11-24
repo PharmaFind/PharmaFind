@@ -29,7 +29,7 @@ DELETE FROM MEDICAMENTO
 WHERE REGEXP_LIKE(DATABASE(), '^pharmafind_u01_test_migrado_[0-9a-f_]{1,24}$', 'c')
     AND CAST(DATABASE() AS BINARY) = CAST(@u01_banco_descartavel AS BINARY)
     AND ID_MEDICAMENTO = 1 AND NOME = 'Medicamento legado de teste'
-    AND PRINCIPIO_ATIVO = 'Ativo ficticio' AND CATEGORIA = 'Teste' AND DOSAGEM = '10 mg' AND DESCRICAO = 'Fixture';
+    AND PRINCIPIO_ATIVO = 'Ativo ficticio' AND CATEGORIA = 'Teste' AND DOSAGEM = '10 mg' AND APRESENTACAO = 'Comprimido de teste' AND DESCRICAO = 'Fixture';
 DELETE FROM FARMACIA
 WHERE REGEXP_LIKE(DATABASE(), '^pharmafind_u01_test_migrado_[0-9a-f_]{1,24}$', 'c')
     AND CAST(DATABASE() AS BINARY) = CAST(@u01_banco_descartavel AS BINARY)

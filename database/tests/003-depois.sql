@@ -1,4 +1,5 @@
 -- O runner executou o preenchimento OPCIONAL real, explicitamente para as seis fixtures conhecidas.
+CALL pf33_testar_indice_ofertas('003b');
 INSERT INTO MEDICAMENTO (ID_MEDICAMENTO,NOME,PRINCIPIO_ATIVO,CATEGORIA,DOSAGEM,APRESENTACAO,DESCRICAO)
 SELECT 9998,UPPER(NOME),PRINCIPIO_ATIVO,CATEGORIA,DOSAGEM,APRESENTACAO,DESCRICAO
 FROM MEDICAMENTO WHERE ID_MEDICAMENTO = 1001;
@@ -41,3 +42,5 @@ CALL u01_assert((SELECT COUNT(*) = 1 FROM HISTORICO_PRECO) AND NOT EXISTS (
 DROP PROCEDURE pf33_preparar_integridade;
 DROP PROCEDURE pf33_consolidar_integridade;
 DROP PROCEDURE u01_seed_anterior_em_teste;
+DROP PROCEDURE pf33_testar_indice_ofertas;
+DROP PROCEDURE pf33_testar_recusa_indice;

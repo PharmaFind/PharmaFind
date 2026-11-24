@@ -1,5 +1,94 @@
 # Correção complementar U01 / Issue #33 — 23/11/2026
 
+## Correção P2 da segunda auditoria — 23/11/2026
+
+A segunda auditoria reproduziu uma lacuna no preflight: um índice chamado
+`UQ_MEDICAMENTO_FARMACIA` com três colunas `(ID_MEDICAMENTO, ID_FARMACIA, PRECO)`
+era aceito porque a consulta contava apenas as duas posições esperadas. Em esquema
+divergente, isso permitia concluir 003a/003b mantendo ofertas repetidas para o mesmo par.
+O sucesso histórico das 313 asserções abaixo não cobria esse caso.
+
+**Correção autorizada:** cada etapa agora verifica, independentemente, pares duplicados
+e a composição integral em `information_schema.STATISTICS`: exatamente duas entradas,
+ordem/nomes esperados, `NON_UNIQUE = 0` e `SUB_PART IS NULL`. Duplicidades listam
+medicamento/farmácia/quantidade; índices divergentes listam suas colunas/metadados.
+Ambas as situações geram erro 1644/SQLSTATE 45000 antes de qualquer ALTER da etapa.
+Não há reconstrução de índice, exclusão de ofertas ou saneamento automático.
+
+### Execução real da correção
+
+Instância MySQL **8.0.45/Windows** nova, com datadir
+`%TEMP%\pharmafind_p2_33_zn12yrn7\data`, somente em `127.0.0.1:57526`,
+mysqlx desabilitado, `lower_case_table_names=1`. Nenhum serviço/banco da equipe foi
+selecionado; o cliente foi conferido sem defaults adicionais e sem perfil pessoal.
+A preparação temporária inicialmente parou numa verificação do processo lançador e,
+depois, numa comparação de caminho escapado pelo cliente; a identificação foi
+reconferida com `--raw`, `@@datadir` e `@@port`, sem mudar o projeto por essas verificações.
+
+Comando efetivamente executado, com identificador novo e preflight de existência do runner:
+
+```powershell
+.\database\tests\Executar-Testes.cmd 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe' c33_b6e6dc02 57526 --sem-senha
+```
+
+**Código de saída 0; 389 linhas `OK:`, incluindo 76 novas asserções P2.**
+As 313 verificações anteriores continuaram passando. A suíte cria/remove exclusivamente:
+
+- `pharmafind_u01_test_novo_c33_b6e6dc02`;
+- `pharmafind_u01_test_migrado_c33_b6e6dc02`;
+- `pharmafind_u01_test_protecao_c33_b6e6dc02`;
+- `pharmafind_u01_test_integridade_c33_b6e6dc02`.
+
+| Regressão executada separadamente na 003a e 003b | Resultado |
+|---|---|
+| Índice correto com duas colunas únicas, na ordem esperada e sem prefixos | Aceito; caminhos válidos da migração/seed preservados. |
+| Três colunas, sem duplicidade de ofertas | Recusado e diagnosticado como índice divergente. |
+| Três colunas, com duas ofertas no mesmo medicamento/farmácia | Recusado e diagnosticado como par duplicado. |
+| Duas colunas sem unicidade | Recusado e diagnosticado. |
+| Duas colunas com ordem invertida | Recusado e diagnosticado. |
+| Nomes de colunas divergentes, uma coluna ou índice ausente | Todos recusados e diagnosticados. |
+| Cada recusa | Hashes de colunas, índices, constraints e de todos os atributos das ofertas inalterados. |
+
+Cada chamada de teste verifica código **e mensagem**, evitando aceitar um erro 1644 de
+outro preflight como evidência da correção. O suporte às FKs, as trocas de índices e a
+inclusão/limpeza do ID 3999 pertencem somente às fixtures descartáveis, não às migrações.
+Os testes anteriores continuam comprovando IDs/preços/datas, demais dados do domínio,
+seed e cenários do medicamento 1001. Não houve modificação na seed ou em 001/002.
+
+A primeira rodada `c33_a71bdc49` parou com erro **1553** ao trocar a fixture de índice
+invertido: o InnoDB dependia dele para a FK da farmácia. Havia 269 asserções OK (23 P2),
+sem sucesso global. Foi corrigido exclusivamente o suporte da fixture às duas FKs,
+sem afrouxar validações. Os quatro bancos dessa rodada ficaram preservados; a rodada
+bem-sucedida usou nomes novos.
+
+### Arquivos completos, além das chamadas da suíte
+
+Em dois novos bancos `pharmafind_u01_test_integridade_c33_a03b51ef_a` e
+`pharmafind_u01_test_integridade_c33_a03b51ef_b`, o agente enviou por stdin ao cliente
+os arquivos 003a/003b completos, com `--no-defaults --protocol=TCP --host=127.0.0.1
+--port=57526 --user=root --skip-password --batch --raw --default-character-set=utf8mb4
+--skip-force`. Nenhuma senha foi fornecida.
+
+- 003a com índice de três colunas, sem duplicados: erro 1644, saída 1 esperada,
+  `APRESENTACAO` continuou ausente.
+- 003b após preparação/preenchimento válidos, com índice divergente e par repetido:
+  erro 1644, saída 1 esperada, `APRESENTACAO` continuou anulável e o par 1001/2001
+  permaneceu com suas duas ofertas para revisão.
+
+Logs integrais e resultados temporários: `%TEMP%\pharmafind_p2_33_zn12yrn7`
+(`suite01-integral.log`, `suite02-integral.log`, `scripts-completos.log` e JSONs).
+Não versionar esses logs ou o datadir. A instância foi encerrada com `mysqladmin shutdown`,
+saída 0, e a porta foi confirmada fechada. A ausência dos quatro bancos da suíte de sucesso
+foi consultada; o general log contém somente schemas novos desta rodada, sem seleção de
+`pharmafind_demo`. Arquivos/bancos de diagnóstico ficaram preservados fora do Git.
+
+Limitações mantidas: MySQL 8.0.16, Linux, runner PS1 integral, concorrência e falha de
+infraestrutura no meio do DDL não foram executados nesta correção. Não houve nova
+execução do inicializador ou restauração de backup; seus resultados anteriores são
+históricos. Revisão humana do PR #34 continua obrigatória; sem merge automático.
+
+---
+
 **Estado: implementada e validada em MySQL 8.0.45/Windows, pendente de revisão humana.**
 Branch `feature/33-integridade-banco`, criada de `develop` `2045c94`.
 As evidências abaixo são desta execução pelo agente. O registro anterior de 17/11 foi

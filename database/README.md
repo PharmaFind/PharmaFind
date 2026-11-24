@@ -47,6 +47,12 @@ Execute fora de outra transação e pare no primeiro erro; não use `--force`.
 4. `SOURCE database/migrations/003b-restricoes-integridade.sql;`
    Repete diagnóstico e verifica apresentações ausentes/vazias e identidades repetidas sob a
    collation aprovada. Só depois aplica as restrições, sem mudar IDs ou excluir registros.
+   Após a correção P2 da segunda auditoria, **ambas as etapas validam independentemente**
+   que `UQ_MEDICAMENTO_FARMACIA` tem exatamente duas colunas, na ordem
+   `(ID_MEDICAMENTO, ID_FARMACIA)`, é único e não usa prefixos. Índices com terceira
+   coluna, ordem/nomes divergentes, sem unicidade ou ausentes são recusados antes do ALTER.
+   Pares duplicados são listados com quantidade e impedem a etapa, mesmo se o índice
+   também estiver incorreto. Não há exclusão de ofertas ou reconstrução automática do índice.
 5. Conferir `SHOW CREATE TABLE` nas quatro tabelas, dados/contagens e relacionamentos com o backup.
    A seed atual pode ser reaplicada após 003b; divergências legítimas continuam causando recusa.
 6. Avaliar `USUARIO` separadamente, conforme procedimento abaixo. Sua permanência não bloqueia 003a/003b.

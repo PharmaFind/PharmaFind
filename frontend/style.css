@@ -635,6 +635,9 @@ nav.container-fluid a {
   flex-wrap: wrap;
 
   gap: 0.7rem;
+
+  margin-top:
+    1rem;
 }
 
 
@@ -1731,6 +1734,9 @@ footer.container {
   .hero-buttons {
     flex-direction:
       column;
+
+    margin-top:
+      1rem;
   }
 
   .hero-buttons a {

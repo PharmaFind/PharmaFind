@@ -188,6 +188,9 @@ function atualizarProdutos() {
     imagem.src = medicamento.imagem;
     imagem.alt = `Imagem ilustrativa de ${medicamento.nome}`;
     imagem.loading = "lazy";
+    imagem.addEventListener("error", () => {
+      imagem.src = "medicamento-placeholder.svg";
+    }, { once: true });
 
     const conteudo = document.createElement("div");
     conteudo.className = "product-content";

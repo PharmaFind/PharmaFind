@@ -1967,3 +1967,115 @@ nav.container-fluid a.nav-account-button:focus {
   border-color: var(--pf-navy-dark);
   color: var(--pf-white);
 }
+
+/* busca principal do hero */
+.hero-search {
+  width: 100%;
+  max-width: 620px;
+  margin-top: 1.25rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.hero-search label {
+  display: block;
+  margin: 0 0 0.35rem;
+  color: var(--pf-navy);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.hero-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem;
+}
+
+.hero-search input {
+  height: 44px;
+  margin: 0;
+  border: 1px solid var(--pf-border);
+  border-radius: 9px;
+  background: var(--pf-white);
+  color: var(--pf-text);
+}
+
+.hero-search button {
+  height: 44px;
+  margin: 0;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 9px;
+  background: var(--pf-red);
+  color: var(--pf-white);
+  font-weight: 800;
+}
+
+.offer-button {
+  border: 0;
+  cursor: pointer;
+}
+
+.offer-button:hover,
+.offer-button:focus-visible {
+  background: var(--pf-navy-dark);
+  color: var(--pf-white);
+}
+
+/* navegação por teclado e foco */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 999;
+  transform: translateY(-180%);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: var(--pf-navy-dark);
+  color: var(--pf-white);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+:focus-visible {
+  outline: 3px solid #c62f3a;
+  outline-offset: 3px;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.toast-status {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 200;
+  max-width: min(360px, calc(100% - 2rem));
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--pf-border);
+  border-radius: 12px;
+  background: var(--pf-navy-dark);
+  color: var(--pf-white);
+  box-shadow: var(--pf-shadow);
+}
+
+.toast-status[hidden] {
+  display: none;
+}
+
+.hero-search-row button:focus-visible,
+.mobile-menu-button:focus-visible,
+.utility-button:focus-visible,
+.offer-button:focus-visible {
+  outline: 3px solid #ffd166;
+  outline-offset: 3px;
+}

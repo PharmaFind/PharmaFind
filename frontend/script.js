@@ -11,124 +11,172 @@ const cepClose = document.getElementById('cepClose');
 const cepInput = document.getElementById('cepInput');
 const saveCep = document.getElementById('saveCep');
 
+let ultimoDisparador = null;
 
+function criarAvisoAcessivel(mensagem) {
+  let aviso = document.getElementById('toastStatus');
 
-// janela pop up de localização
+  if (!aviso) {
+    aviso = document.createElement('div');
+    aviso.id = 'toastStatus';
+    aviso.className = 'toast-status';
+    aviso.setAttribute('role', 'status');
+    aviso.setAttribute('aria-live', 'polite');
+    document.body.appendChild(aviso);
+  }
 
-locOpen.addEventListener('click', () => {
-  locationPopup.hidden = false;
-});
+  aviso.textContent = mensagem;
+  aviso.hidden = false;
+
+  window.clearTimeout(criarAvisoAcessivel.timer);
+  criarAvisoAcessivel.timer = window.setTimeout(() => {
+    aviso.hidden = true;
+  }, 5000);
+}
+
+if (locationPopup) {
+  locationPopup.setAttribute('role', 'dialog');
+  locationPopup.setAttribute('aria-modal', 'true');
+  locationPopup.setAttribute('aria-label', 'Permissão de localização');
+}
+
+if (cepBox) {
+  cepBox.setAttribute('role', 'dialog');
+  cepBox.setAttribute('aria-modal', 'true');
+  cepBox.setAttribute('aria-label', 'Informar CEP');
+}
 
 function fecharPopupLocalizacao() {
+  if (!locationPopup) return;
   locationPopup.hidden = true;
+  if (ultimoDisparador) ultimoDisparador.focus();
 }
 
-locClose.addEventListener('click', fecharPopupLocalizacao);
-decline.addEventListener('click', fecharPopupLocalizacao);
+if (locOpen && locationPopup) {
+  locOpen.addEventListener('click', () => {
+    ultimoDisparador = locOpen;
+    locationPopup.hidden = false;
+    locClose?.focus();
+  });
+}
+
+if (locClose) locClose.addEventListener('click', fecharPopupLocalizacao);
+if (decline) decline.addEventListener('click', fecharPopupLocalizacao);
 
 
-allow.addEventListener('click', () => {
-  fecharPopupLocalizacao();
+if (allow) {
+  allow.addEventListener('click', () => {
+    fecharPopupLocalizacao();
 
-  if (!navigator.geolocation) {
-    alert('Seu navegador não suporta geolocalização.');
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
-      console.log('Latitude:', latitude);
-      console.log('Longitude:', longitude);
-
-      alert('Localização ativada com sucesso!');
-    },
-
-    () => {
-      alert(
-        'Não foi possível acessar sua localização. Você pode informar o CEP.'
-      );
+    if (!navigator.geolocation) {
+      criarAvisoAcessivel('Seu navegador não suporta geolocalização.');
+      return;
     }
-  );
-});
 
-
-// janela do CEP
-
-cepOpen.addEventListener('click', () => {
-  cepBox.hidden = false;
-  cepInput.focus();
-});
-
-cepClose.addEventListener('click', () => {
-  cepBox.hidden = true;
-});
-
-// salvar CEP
-
-saveCep.addEventListener('click', () => {
-
-  const cep = cepInput.value
-    .replace(/\D/g, '')
-    .trim();
-
-  if (cep.length !== 8) {
-    alert('Digite um CEP válido com 8 dígitos.');
-    return;
-  }
-
-  const cepFormatado =
-    cep.substring(0, 5) +
-    '-' +
-    cep.substring(5);
-
-  localStorage.setItem(
-    'pharmafindCep',
-    cepFormatado
-  );
-
-  cepInput.value = cepFormatado;
-
-  cepBox.hidden = true;
-
-  alert(
-    `CEP ${cepFormatado} definido para a consulta.`
-  );
-
-}); 
-
-
-// carregar o CEP já salvo no localStorage
-
-const cepSalvo =
-  localStorage.getItem('pharmafindCep');
-
-if (cepSalvo) {
-  cepInput.value = cepSalvo;
+    navigator.geolocation.getCurrentPosition(
+      () => criarAvisoAcessivel('Localização ativada com sucesso.'),
+      () => criarAvisoAcessivel('Não foi possível acessar sua localização. Você pode informar o CEP.')
+    );
+  });
 }
 
 
-// fechar as janelas com a tecla ESC
+if (cepOpen && cepBox) {
+  cepOpen.addEventListener('click', () => {
+    ultimoDisparador = cepOpen;
+    cepBox.hidden = false;
+    if (cepInput) cepInput.focus();
+  });
+}
+
+if (cepClose && cepBox) {
+  cepClose.addEventListener('click', () => {
+    cepBox.hidden = true;
+    if (ultimoDisparador) ultimoDisparador.focus();
+  });
+}
+
+if (saveCep && cepInput && cepBox) {
+  saveCep.addEventListener('click', () => {
+    const cep = cepInput.value.replace(/\D/g, '').trim();
+
+    if (cep.length !== 8) {
+      criarAvisoAcessivel('Digite um CEP válido com 8 dígitos.');
+      cepInput.focus();
+      return;
+    }
+
+    const cepFormatado = `${cep.substring(0, 5)}-${cep.substring(5)}`;
+    localStorage.setItem('pharmafindCep', cepFormatado);
+    cepInput.value = cepFormatado;
+    cepBox.hidden = true;
+    criarAvisoAcessivel(`CEP ${cepFormatado} definido para a consulta.`);
+    if (ultimoDisparador) ultimoDisparador.focus();
+  });
+}
+
+if (cepInput) {
+  const cepSalvo = localStorage.getItem('pharmafindCep');
+  if (cepSalvo) cepInput.value = cepSalvo;
+}
+
+
+const mobileMenuButton = document.getElementById('mobileMenuButton');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (mobileMenuButton && mobileMenu) {
+  mobileMenuButton.setAttribute('type', 'button');
+  mobileMenuButton.setAttribute('aria-controls', 'mobileMenu');
+  mobileMenuButton.setAttribute('aria-expanded', 'false');
+
+  mobileMenuButton.addEventListener('click', () => {
+    const isOpen = mobileMenu.hidden;
+    mobileMenu.hidden = !isOpen;
+    mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
+    mobileMenuButton.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  });
+}
+
+
+const heroMedicineSearch = document.getElementById('heroMedicineSearch');
+const heroSearchButton = document.getElementById('heroSearchButton');
+
+
+function pesquisarMedicamentoNaConsulta() {
+  if (!heroMedicineSearch) return;
+  const termo = heroMedicineSearch.value.trim();
+  window.location.href = termo
+    ? `consulta.html?termo=${encodeURIComponent(termo)}`
+    : 'consulta.html';
+}
+
+if (heroSearchButton) heroSearchButton.addEventListener('click', pesquisarMedicamentoNaConsulta);
+if (heroMedicineSearch) {
+  heroMedicineSearch.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') pesquisarMedicamentoNaConsulta();
+  });
+}
 
 document.addEventListener('keydown', (event) => {
-
   if (event.key === 'Escape') {
-    locationPopup.hidden = true;
-    cepBox.hidden = true;
-  }
+    if (locationPopup && !locationPopup.hidden) fecharPopupLocalizacao();
 
+    if (cepBox && !cepBox.hidden) {
+      cepBox.hidden = true;
+      if (ultimoDisparador) ultimoDisparador.focus();
+    }
+
+    if (mobileMenu && mobileMenuButton && !mobileMenu.hidden) {
+      mobileMenu.hidden = true;
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+      mobileMenuButton.setAttribute('aria-label', 'Abrir menu');
+      mobileMenuButton.focus();
+    }
+  }
 });
 
-
-// fechar a janela de localização ao clicar fora 
-
-locationPopup.addEventListener('click', (event) => {
-
-  if (event.target === locationPopup) {
-    fecharPopupLocalizacao();
-  }
-
-});
+if (locationPopup) {
+  locationPopup.addEventListener('click', (event) => {
+    if (event.target === locationPopup) fecharPopupLocalizacao();
+  });
+}

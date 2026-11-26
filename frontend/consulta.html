@@ -103,7 +103,7 @@
 
       margin-bottom: 2rem;
 
-      padding: 1rem;
+      padding: 1.25rem;
 
       background: white;
 
@@ -111,6 +111,10 @@
         1px solid var(--pf-border);
 
       border-radius: 18px;
+
+      box-shadow:
+        0 10px 30px
+        rgba(16, 43, 78, 0.06);
 
     }
 
@@ -479,7 +483,9 @@
 
 <body>
 
-  <main class="container">
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <main class="container" id="conteudo-principal">
 
     <div class="utility">
 
@@ -561,11 +567,6 @@
           </a>
         </li>
 
-        <li class="auth-actions">
-          <a class="auth-login-button" href="login.html">Entrar</a>
-          <a class="auth-signup-button" href="conta.html">Criar conta</a>
-        </li>
-
       </ul>
 
 
@@ -601,9 +602,6 @@
       <a href="sobre.html">
         Sobre nós
       </a>
-
-      <a class="auth-login-button" href="login.html">Entrar</a>
-      <a class="auth-signup-button" href="conta.html">Criar conta</a>
 
     </div>
 
@@ -740,12 +738,23 @@
       <div
         id="productsGrid"
         class="products-grid"
+        aria-live="polite"
       ></div>
+
+
+      <p
+        id="loadingState"
+        class="empty-message"
+        hidden
+      >
+        Carregando medicamentos…
+      </p>
 
 
       <p
         id="emptyState"
         class="empty-message"
+        role="status"
         hidden
       >
         Nenhum medicamento encontrado.

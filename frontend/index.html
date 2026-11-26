@@ -32,7 +32,9 @@
 
 <body>
 
-  <main class="container">
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <main class="container" id="conteudo-principal">
 
     <!-- 
         localização e cep
@@ -111,11 +113,6 @@
           </a>
         </li>
 
-        <li class="auth-actions">
-          <a class="auth-login-button" href="login.html">Entrar</a>
-          <a class="auth-signup-button" href="conta.html">Criar conta</a>
-        </li>
-
       </ul>
 
 
@@ -151,9 +148,6 @@
         Sobre nós
       </a>
 
-      <a class="auth-login-button" href="login.html">Entrar</a>
-      <a class="auth-signup-button" href="conta.html">Criar conta</a>
-
     </div>
 
 
@@ -183,6 +177,20 @@
           e comparação em uma interface simples, clara
           e feita para funcionar no computador e no celular.
         </p>
+
+        <div class="hero-search">
+          <label for="heroMedicineSearch">Buscar medicamento</label>
+          <div class="hero-search-row">
+            <input
+              id="heroMedicineSearch"
+              type="search"
+              placeholder="Ex.: Dipirona 500 mg"
+            >
+            <button id="heroSearchButton" type="button">
+              Pesquisar
+            </button>
+          </div>
+        </div>
 
         <div class="hero-buttons">
 

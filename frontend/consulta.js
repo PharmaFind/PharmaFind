@@ -138,167 +138,85 @@ function formatarPreco(valor) {
 }
 
 
+const params = new URLSearchParams(window.location.search);
+const termoInicial = params.get("termo");
+
+if (termoInicial && searchInput) {
+  searchInput.value = termoInicial;
+}
+
+
+function criarTexto(elemento, classe, texto) {
+  const node = document.createElement(elemento);
+  node.className = classe;
+  node.textContent = texto;
+  return node;
+}
+
+
 function atualizarProdutos() {
 
-  const pesquisa =
-    searchInput.value
-      .toLowerCase()
-      .trim();
+  const pesquisa = searchInput.value.toLowerCase().trim();
 
-
-  let resultados =
-    medicamentos.filter(
-      medicamento =>
-
-        medicamento.nome
-          .toLowerCase()
-          .includes(pesquisa)
-
-    );
-
-
-  if (typeSelect.value !== "all") {
-
-    resultados =
-      resultados.filter(
-        medicamento =>
-          medicamento.tipo ===
-          typeSelect.value
-      );
-
-  }
-
-
-  if (pharmacySelect.value !== "all") {
-
-    resultados =
-      resultados.filter(
-        medicamento =>
-          medicamento.farmacia ===
-          pharmacySelect.value
-      );
-
-  }
-
-
-  if (sortSelect.value === "priceAsc") {
-
-    resultados.sort(
-      (a, b) =>
-        a.preco - b.preco
-    );
-
-  }
-
-
-  if (sortSelect.value === "priceDesc") {
-
-    resultados.sort(
-      (a, b) =>
-        b.preco - a.preco
-    );
-
-  }
-
-
-  productsGrid.innerHTML = "";
-
-
-  resultados.forEach(
-    medicamento => {
-
-      const card =
-        document.createElement("article");
-
-
-      card.classList.add(
-        "product-card"
-      );
-
-
-      card.innerHTML = `
-
-        <img
-          src="${medicamento.imagem}"
-          alt="Imagem ilustrativa de ${medicamento.nome}"
-          loading="lazy"
-        >
-
-        <div class="product-content">
-
-          <span class="product-type">
-            ${medicamento.tipo}
-          </span>
-
-          <h3>
-            ${medicamento.nome}
-          </h3>
-
-          <p class="product-description">
-            ${medicamento.descricao}
-          </p>
-
-          <p class="product-pharmacy">
-            ${medicamento.farmacia}
-          </p>
-
-          <div class="product-price">
-            ${formatarPreco(medicamento.preco)}
-          </div>
-
-          <a
-            class="offer-button"
-            href="#"
-          >
-            Ver oferta
-          </a>
-
-        </div>
-
-      `;
-
-
-      const botao =
-        card.querySelector(
-          ".offer-button"
-        );
-
-
-      botao.addEventListener(
-        "click",
-        event => {
-
-          event.preventDefault();
-
-          alert(
-            `${medicamento.nome}
-
-Preço demonstrativo: ${formatarPreco(medicamento.preco)}
-
-Farmácia: ${medicamento.farmacia}`
-          );
-
-        }
-      );
-
-
-      productsGrid.appendChild(card);
-
-    }
+  let resultados = medicamentos.filter(medicamento =>
+    medicamento.nome.toLowerCase().includes(pesquisa)
   );
 
+  if (typeSelect.value !== "all") {
+    resultados = resultados.filter(medicamento => medicamento.tipo === typeSelect.value);
+  }
 
-  resultsCount.textContent =
-    `${resultados.length} ${
-      resultados.length === 1
-        ? "item"
-        : "itens"
-    }`;
+  if (pharmacySelect.value !== "all") {
+    resultados = resultados.filter(medicamento => medicamento.farmacia === pharmacySelect.value);
+  }
 
+  if (sortSelect.value === "priceAsc") {
+    resultados.sort((a, b) => a.preco - b.preco);
+  }
 
-  emptyState.hidden =
-    resultados.length !== 0;
+  if (sortSelect.value === "priceDesc") {
+    resultados.sort((a, b) => b.preco - a.preco);
+  }
 
+  productsGrid.replaceChildren();
+
+  resultados.forEach(medicamento => {
+    const card = document.createElement("article");
+    card.className = "product-card";
+
+    const imagem = document.createElement("img");
+    imagem.src = medicamento.imagem;
+    imagem.alt = `Imagem ilustrativa de ${medicamento.nome}`;
+    imagem.loading = "lazy";
+
+    const conteudo = document.createElement("div");
+    conteudo.className = "product-content";
+
+    conteudo.appendChild(criarTexto("span", "product-type", medicamento.tipo));
+    conteudo.appendChild(criarTexto("h3", "", medicamento.nome));
+    conteudo.appendChild(criarTexto("p", "product-description", medicamento.descricao));
+    conteudo.appendChild(criarTexto("p", "product-pharmacy", medicamento.farmacia));
+
+    const preco = criarTexto("div", "product-price", formatarPreco(medicamento.preco));
+    conteudo.appendChild(preco);
+
+    const botao = document.createElement("button");
+    botao.type = "button";
+    botao.className = "offer-button";
+    botao.textContent = "Selecionar apresentação";
+    botao.addEventListener("click", () => {
+      document.querySelector(".consulta-header h1").textContent = `${medicamento.nome} — oferta demonstrativa`;
+      document.querySelector(".consulta-header p").textContent =
+        `Apresentação selecionada: ${medicamento.descricao}. Preço fictício na ${medicamento.farmacia}: ${formatarPreco(medicamento.preco)}.`;
+    });
+
+    conteudo.appendChild(botao);
+    card.append(imagem, conteudo);
+    productsGrid.appendChild(card);
+  });
+
+  resultsCount.textContent = `${resultados.length} ${resultados.length === 1 ? "item" : "itens"}`;
+  emptyState.hidden = resultados.length !== 0;
 }
 
 

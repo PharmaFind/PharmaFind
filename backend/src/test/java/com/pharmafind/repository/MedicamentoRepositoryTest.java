@@ -9,6 +9,7 @@ import org.mockito.ArgumentMatchers;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -39,7 +40,9 @@ class MedicamentoRepositoryTest {
         JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
         MedicamentoRepository repository = new MedicamentoRepository(jdbcTemplate);
         org.junit.jupiter.api.Assertions.assertTrue(repository.buscarPorNome(null).isEmpty());
+        org.junit.jupiter.api.Assertions.assertTrue(repository.buscarPorNome("").isEmpty());
         org.junit.jupiter.api.Assertions.assertTrue(repository.buscarPorNome("  ").isEmpty());
+        assertThrows(IllegalArgumentException.class, () -> repository.buscarPorNome("a".repeat(101)));
         org.mockito.Mockito.verifyNoInteractions(jdbcTemplate);
     }
 
@@ -50,5 +53,15 @@ class MedicamentoRepositoryTest {
                 .thenReturn(List.of());
         new MedicamentoRepository(jdbcTemplate).buscarPorNome("100%_");
         verify(jdbcTemplate).query(any(String.class), ArgumentMatchers.<RowMapper<Medicamento>>any(), eq("%100\\%\\_%"));
+    }
+
+    @Test
+    void tentativaDeSqlInjectionPermaneceParametroVinculado() {
+        JdbcTemplate jdbcTemplate = mock(JdbcTemplate.class);
+        String termo = "' OR 1=1 --";
+        new MedicamentoRepository(jdbcTemplate).buscarPorNome(termo);
+        verify(jdbcTemplate).query(
+                org.mockito.ArgumentMatchers.contains("WHERE LOWER(NOME) LIKE LOWER(?)"),
+                ArgumentMatchers.<RowMapper<Medicamento>>any(), eq("%" + termo + "%"));
     }
 }

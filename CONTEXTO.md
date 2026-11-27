@@ -51,7 +51,7 @@
 - [IMPLEMENTADO/VERIFICADO POR CÓDIGO] Pastas de implementação na `develop`: `frontend/` (HTML/CSS/JavaScript) e `database/PharmaFindDB.sql` (script de criação de tabelas MySQL), além de `.vscode/settings.json`. Esta constatação decorre da inspeção de arquivos e não comprova execução do banco.
 - [IMPLEMENTADO/VERIFICADO POR CÓDIGO] `frontend/consulta.js` contém **dez medicamentos demonstrativos fixados no próprio JavaScript**; a página possui busca textual, filtros de tipo e farmácia, ordenação local por preço e cartões com botão demonstrativo que abre um `alert`, **sem consulta HTTP ao backend**. Não há seleção seguida de comparação de várias ofertas de um mesmo medicamento. `frontend/index.html` ainda inclui links de login e cadastro. A presença dos scripts não equivale à validação funcional no navegador.
 - [ESTADO LOCAL DA BRANCH U02] `backend/` contém aplicação Spring Boot, configuração JDBC e repositórios de leitura; esta presença não comprova compilação ou conexão MySQL. Endpoints de negócio e integração efetiva do frontend continuam pendentes. O JavaScript `frontend/script.js` obtém coordenadas pelo navegador e as registra em `console.log`, mas não calcula distâncias nem integra o GPS ao backend.
-- [OBSERVADO NA BASE DE DESENVOLVIMENTO LOCAL] `database/PharmaFindDB.sql` define as cinco tabelas; a evolução U01 inclui disponibilidade e data de atualização. A coluna `APRESENTACAO` depende da integração do PR #34 e ainda não está no esquema desta base local.
+- [CONFERÊNCIA LOCAL U02 EM 26/11/2026] O merge `21eec81` incorpora a `develop` em `53c7ae2` (PR #34): `database/PharmaFindDB.sql` define quatro tabelas, sem USUARIO, e inclui `APRESENTACAO` obrigatória. A branch U02 contém os repositórios Java correspondentes; evidências de execução em `backend/tests/RESULTADOS.md`. Não há endpoints de negócio nem integração do frontend.
 - [CONFIRMADO] **Não existe código mais recente fora do GitHub que deva ser integrado:** o repositório é o ponto de partida real da continuação.
 - [AÇÃO] Preservar o visual existente; implementar o novo fluxo por Issue e PR; tirar login/cadastro da navegação ativa sem atribuir a mudança a uma implementação já feita.
 
@@ -252,3 +252,13 @@ e remoção controlada aprovada por alvo, independente das etapas 003a/003b.
 As menções anteriores às cinco tabelas e à ausência de apresentação são registros históricos.
 Os PRs #29/#32 estão integrados; esta alteração complementar exige revisão humana própria.
 Testes desta correção e limites de ambiente em database/tests/RESULTADOS.md.
+
+## Validação local da fundação U02 — 26/11/2026
+
+Na branch `feature/11-backend-java-persistencia`, o merge `21eec81` de `develop` em
+`53c7ae2` combina os PRs #34/#36. Compilação, 19 testes com MySQL habilitado,
+empacotamento e inicialização do JAR passaram. A integração usou somente `pharmafind_test`
+em instância temporária isolada; CT17 foi revertido e os hashes dos dados foram preservados.
+Evidências em [backend/tests/RESULTADOS.md](backend/tests/RESULTADOS.md). Os registros anteriores
+datados permanecem históricos. Não há endpoints de negócio, motor de preços ou frontend integrado.
+Reprodução por outro integrante e revisão humana independente continuam pendentes.

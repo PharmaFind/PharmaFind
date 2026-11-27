@@ -631,7 +631,7 @@
 
     <!-- introdução da pagina -->
 
-    <header class="how-intro">
+    <header class="how-intro" id="conteudo-principal" tabindex="-1">
 
       <span class="how-eyebrow">
         COMO FUNCIONA
@@ -879,68 +879,6 @@
     </section>
 
 
-    <!-- area de cadastrar o email -->
-
-    <section
-      class="how-subscribe"
-      aria-label="Receba novidades"
-    >
-
-      <div class="container">
-
-        <article>
-
-          <hgroup>
-
-            <h2>
-              Deseja receber novidades sobre o PharmaFind?
-            </h2>
-
-            <h3>
-              Protótipo acadêmico em desenvolvimento.
-            </h3>
-
-          </hgroup>
-
-
-          <form class="grid">
-
-            <input
-              type="text"
-              id="firstname"
-              name="firstname"
-              placeholder="Seu nome"
-              aria-label="Seu nome"
-              required
-            >
-
-
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Seu e-mail"
-              aria-label="Seu e-mail"
-              required
-            >
-
-
-            <button
-              type="submit"
-              onclick="event.preventDefault()"
-            >
-              Cadastrar
-            </button>
-
-          </form>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
     <!--rodapé final -->
 
     <footer class="container">
@@ -1009,7 +947,7 @@
 
         <p>
           Sua localização aproximada será utilizada
-          apenas para simular ofertas próximas.
+          solicitado para uso futuro em comparação por distância.
         </p>
 
 
@@ -1095,7 +1033,6 @@
 
   <!-- js compartilhado -->
   <script src="script.js"></script>
-  <script src="auth.js"></script>
 
 </body>
 

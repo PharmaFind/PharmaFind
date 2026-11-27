@@ -69,13 +69,13 @@ if (allow) {
     fecharPopupLocalizacao();
 
     if (!navigator.geolocation) {
-      criarAvisoAcessivel('Seu navegador não suporta geolocalização.');
+      criarAvisoAcessivel('Localização indisponível. A comparação por distância ainda não está integrada; a consulta continua por preço.');
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      () => criarAvisoAcessivel('Localização ativada com sucesso.'),
-      () => criarAvisoAcessivel('Não foi possível acessar sua localização. Você pode informar o CEP.')
+      () => criarAvisoAcessivel('Localização autorizada pelo navegador. A comparação por distância ainda não está integrada.'),
+      () => criarAvisoAcessivel('GPS negado ou indisponível. Você pode consultar normalmente ou informar o CEP.')
     );
   });
 }
@@ -85,7 +85,7 @@ if (cepOpen && cepBox) {
   cepOpen.addEventListener('click', () => {
     ultimoDisparador = cepOpen;
     cepBox.hidden = false;
-    if (cepInput) cepInput.focus();
+    cepClose?.focus();
   });
 }
 
@@ -98,10 +98,11 @@ if (cepClose && cepBox) {
 
 if (saveCep && cepInput && cepBox) {
   saveCep.addEventListener('click', () => {
-    const cep = cepInput.value.replace(/\D/g, '').trim();
+    const entrada = cepInput.value.trim();
+    const cep = entrada.replace(/\D/g, '');
 
-    if (cep.length !== 8) {
-      criarAvisoAcessivel('Digite um CEP válido com 8 dígitos.');
+    if (!/^\d{5}-?\d{3}$/.test(entrada) || cep.length !== 8) {
+      criarAvisoAcessivel('CEP inválido. Use oito dígitos, com ou sem hífen: 00000-000.');
       cepInput.focus();
       return;
     }
@@ -110,7 +111,7 @@ if (saveCep && cepInput && cepBox) {
     localStorage.setItem('pharmafindCep', cepFormatado);
     cepInput.value = cepFormatado;
     cepBox.hidden = true;
-    criarAvisoAcessivel(`CEP ${cepFormatado} definido para a consulta.`);
+    criarAvisoAcessivel(`CEP ${cepFormatado} registrado. A comparação por distância ainda não está integrada.`);
     if (ultimoDisparador) ultimoDisparador.focus();
   });
 }
@@ -158,6 +159,33 @@ if (heroMedicineSearch) {
 }
 
 document.addEventListener('keydown', (event) => {
+  if (event.key === 'Tab') {
+    const dialogo = locationPopup && !locationPopup.hidden
+      ? locationPopup
+      : cepBox && !cepBox.hidden
+        ? cepBox
+        : null;
+
+    if (dialogo) {
+      const focaveis = Array.from(dialogo.querySelectorAll(
+        'button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+      )).filter((elemento) => !elemento.hidden);
+
+      if (focaveis.length) {
+        const primeiro = focaveis[0];
+        const ultimo = focaveis[focaveis.length - 1];
+
+        if (event.shiftKey && document.activeElement === primeiro) {
+          event.preventDefault();
+          ultimo.focus();
+        } else if (!event.shiftKey && document.activeElement === ultimo) {
+          event.preventDefault();
+          primeiro.focus();
+        }
+      }
+    }
+  }
+
   if (event.key === 'Escape') {
     if (locationPopup && !locationPopup.hidden) fecharPopupLocalizacao();
 

@@ -4,7 +4,7 @@
   --pf-navy: #102b4e;
   --pf-navy-dark: #071c35;
 
-  --pf-red: #e63946;
+  --pf-red: #d62f3f;
 
   --pf-background: #f7f8fa;
   --pf-white: #ffffff;
@@ -16,6 +16,12 @@
 
   --pf-shadow:
     0 22px 60px rgba(16, 43, 78, 0.09);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #5f6f82;
+  opacity: 1;
 }
 
 

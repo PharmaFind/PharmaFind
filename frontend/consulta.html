@@ -90,14 +90,8 @@
 
 
     .search-panel {
-
       display: grid;
-
-      grid-template-columns:
-        2fr
-        1fr
-        1fr
-        1fr;
+      grid-template-columns: 1fr auto;
 
       gap: 0.8rem;
 
@@ -143,6 +137,60 @@
 
       min-height: 44px;
 
+    }
+
+    .comparison-panel {
+      margin-bottom: 2rem;
+      padding: 1.25rem;
+      background: white;
+      border: 1px solid var(--pf-border);
+      border-radius: 18px;
+    }
+
+    .comparison-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .comparison-header h2,
+    .comparison-header p {
+      margin: 0;
+    }
+
+    .offers-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .offer-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.8rem;
+      padding: 1rem;
+      border: 1px solid var(--pf-border);
+      border-radius: 12px;
+    }
+
+    .offer-card.unavailable {
+      background: #f5f6f7;
+      border-style: dashed;
+    }
+
+    .offer-card h3,
+    .offer-card p {
+      margin: 0;
+    }
+
+    .availability {
+      font-weight: 800;
+      color: #176344;
+    }
+
+    .unavailable .availability {
+      color: #9b2c35;
     }
 
 
@@ -517,6 +565,15 @@
 
       }
 
+      .search-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-header,
+      .offer-card {
+        grid-template-columns: 1fr;
+      }
+
 
       .search-panel {
 
@@ -702,7 +759,7 @@
     </div>
 
 
-    <header class="consulta-header">
+    <header class="consulta-header" id="conteudo-principal" tabindex="-1">
 
       <span>
         CONSULTA DE MEDICAMENTOS
@@ -713,107 +770,24 @@
       </h1>
 
       <p>
-        Use a busca e os filtros para encontrar
-        medicamentos cadastrados neste protótipo.
-        Você também pode ordenar os resultados
-        pelo menor preço.
+        Pesquise uma apresentação específica e selecione-a
+        antes de consultar as ofertas associadas.
       </p>
 
     </header>
 
 
-    <section class="search-panel">
-
-      <label>
-
+    <form class="search-panel" id="searchForm" role="search">
+      <label for="searchInput">
         Buscar medicamento
-
         <input
           id="searchInput"
           type="search"
-          placeholder="Ex.: Dipirona..."
+          placeholder="Ex.: Dipirona"
         >
-
       </label>
-
-
-      <label>
-
-        Ordenar
-
-        <select id="sortSelect">
-
-          <option value="default">
-            Destaques
-          </option>
-
-          <option value="priceAsc">
-            Menor preço
-          </option>
-
-          <option value="priceDesc">
-            Maior preço
-          </option>
-
-        </select>
-
-      </label>
-
-
-      <label>
-
-        Tipo
-
-        <select id="typeSelect">
-
-          <option value="all">
-            Todos
-          </option>
-
-          <option value="Genérico">
-            Genérico
-          </option>
-
-          <option value="Similar">
-            Similar
-          </option>
-
-          <option value="Referência">
-            Referência
-          </option>
-
-        </select>
-
-      </label>
-
-
-      <label>
-
-        Farmácia
-
-        <select id="pharmacySelect">
-
-          <option value="all">
-            Todas
-          </option>
-
-          <option value="Farmácia Vida">
-            Farmácia Vida
-          </option>
-
-          <option value="Saúde Popular">
-            Saúde Popular
-          </option>
-
-          <option value="Bem Estar">
-            Bem Estar
-          </option>
-
-        </select>
-
-      </label>
-
-    </section>
+      <button class="primary-button" type="submit">Pesquisar</button>
+    </form>
 
 
     <section>
@@ -824,9 +798,7 @@
           Medicamentos
         </h2>
 
-        <span id="resultsCount">
-          10 itens
-        </span>
+        <span id="resultsCount">6 medicamentos</span>
 
       </div>
 
@@ -857,6 +829,13 @@
       </p>
 
     </section>
+
+    <section
+      id="comparisonPanel"
+      class="comparison-panel"
+      aria-live="polite"
+      hidden
+    ></section>
 
 
     <aside class="academic-notice">
@@ -922,6 +901,7 @@
         id="locClose"
         class="popup-close"
         type="button"
+        aria-label="Fechar diálogo de localização"
       >
         ×
       </button>
@@ -937,8 +917,8 @@
       </h2>
 
       <p>
-        Podemos usar sua localização aproximada
-        para simular ofertas próximas.
+        Podemos solicitar sua localização aproximada.
+        Esta informação ainda não é usada para calcular distâncias.
       </p>
 
 
@@ -976,6 +956,8 @@
     <button
       id="cepClose"
       class="popup-close"
+      type="button"
+      aria-label="Fechar diálogo de CEP"
     >
       ×
     </button>
@@ -985,8 +967,8 @@
       Informe seu CEP
     </h3>
 
-    <p>
-      Usado somente para simular sua região.
+    <p id="cepOrientacao">
+      CEP opcional, usado somente quando a localização por distância estiver integrada.
     </p>
 
 
@@ -995,8 +977,11 @@
       <input
         id="cepInput"
         type="text"
+        inputmode="numeric"
         maxlength="9"
         placeholder="00000-000"
+        aria-label="CEP"
+        aria-describedby="cepOrientacao"
       >
 
       <button
@@ -1012,7 +997,6 @@
 
 
   <script src="script.js"></script>
-  <script src="auth.js"></script>
   <script src="consulta.js"></script>
 
 </body>

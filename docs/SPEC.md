@@ -5,7 +5,7 @@
 **Fontes:** [`CONTEXTO.md`](../CONTEXTO.md) (prioridade para decisões recentes), Documento de Visão do Produto (RF01–RF30, RNF01–RNF42, RN01–RN05) e apostilas de SDD do professor Romes.  
 **Contratos detalhados:** [`docs/API.md`](API.md). **Decisões técnicas:** [`docs/ADR/`](ADR/).
 
-> **Leitura obrigatória:** esta SPEC descreve o **comportamento a implementar**, não a implementação atual. O código observado em `develop` mantém dados fixos em JavaScript, não possui backend Java, não consulta o MySQL e não oferece ainda as estatísticas descritas. Requisitos originários do Documento de Visão preservam seus IDs; novos requisitos derivados de decisões do `CONTEXTO.md` recebem IDs a partir de RF31. As definições técnicas sinalizadas como **[PROPOSTA]** exigem validação da equipe.
+> **Leitura obrigatória:** esta SPEC descreve o comportamento do produto, não comprova a implementação atual. Na branch U02 existe fundação Java/Spring Boot com configuração e repositórios JDBC de leitura; endpoints de negócio, integração do frontend e estatísticas ainda estão pendentes. Requisitos originários do Documento de Visão preservam seus IDs; novos requisitos derivados de decisões do `CONTEXTO.md` recebem IDs a partir de RF31. As definições técnicas sinalizadas como **[PROPOSTA]** exigem validação da equipe.
 
 ## 1. Problema, objetivo e fronteira
 

@@ -40,15 +40,15 @@ O sistema **não recomenda tratamentos, não vende, não reserva, não processa 
 
 **Fora da entrega:** autenticação/cadastro no fluxo público, painel administrativo de farmácias, pagamentos, pedidos, integração automática de preços reais, recomendações clínicas, favoritos, alertas, previsão de preços, score combinado preço/distância, geocodificação de qualquer CEP e rotas por ruas.
 
-## 3. Estado do código — última inspeção em 23/11/2026
+## 3. Estado do código — conferência da branch U02 em 26/11/2026
 
 | Componente | Estado **verificado por inspeção de arquivos** |
 |---|---|
 | Frontend | Páginas HTML/CSS/JavaScript e busca demonstrativa com dados fixos em `frontend/consulta.js`. **Ainda não consome API Java** (o frontend estático HTML/CSS/JS foi mantido como escolha). |
-| Banco MySQL | Esquema, migração e carga demonstrativa com 6 medicamentos, 4 farmácias e 12 ofertas; três CEPs mapeados em JSON. Suíte ampliada, proteção da limpeza, inicialização e reaplicação passaram no MySQL 8.0.45, com sete booleanos em `1` e três hashes preservados ([evidência](database/tests/RESULTADOS.md)). Integração Java e revisão humana pendentes. Veja [instruções do banco](database/README.md). |
-| Backend Java / Spring Boot | **Não implementado** na árvore consultada. |
+| Banco MySQL | Quatro tabelas, `APRESENTACAO` própria e carga com 6 medicamentos, 4 farmácias e 12 ofertas; três CEPs mapeados em JSON. Evidências históricas SQL preservadas em [database/tests/RESULTADOS.md](database/tests/RESULTADOS.md). A integração JDBC foi validada em `pharmafind_test` isolado ([evidências U02](backend/tests/RESULTADOS.md)); revisão humana pendente. |
+| Backend Java / Spring Boot | Fundação Spring Boot/JDBC de leitura em `backend/`: compilação, 19 testes com MySQL habilitado, empacotamento e inicialização do JAR passaram em 26/11/2026. Endpoints de negócio ainda pendentes. |
 | API, comparação persistida, distância calculada e gráfico | **Planejados, não implementados** na integração atual. |
-| Testes, agentes e ambiente | Builds e testes integrados Java/frontend ainda não existem. `AGENTS.md` documenta orientações para agentes, **não comprova um agente instalado**. |
+| Testes, agentes e ambiente | Build Maven e testes Java presentes em `backend/`; execuções e limitações em [backend/tests/RESULTADOS.md](backend/tests/RESULTADOS.md). Testes de integração do frontend permanecem pendentes. `AGENTS.md` documenta orientações para agentes, **não comprova um agente instalado**. |
 | Governança GitHub | `main` e `develop` protegidas por regras de PR/revisão. PRs #5–#8 foram integrados à `develop`; PR [#9](https://github.com/PharmaFind/PharmaFind/pull/9) foi **aprovado pela Tainá e integrado à `main` em 16/11/2026**. |
 | Trabalho rastreado | Unidades U01–U08 em Issues #10–#17, histórico U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), auditoria frontend U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e revisão documental [#18](https://github.com/PharmaFind/PharmaFind/issues/18). Responsáveis de implementação ainda não confirmados. |
 
@@ -68,7 +68,7 @@ Os estados de implementação decorrem da inspeção dos arquivos; o resultado d
 | Testes | JUnit/Spring Boot Test para backend; testes JavaScript e de interface a definir na U07. |
 | Organização | GitHub Issues, Kanban, branches `feature/*`, PR para `develop`, revisão humana. |
 
-As versões exatas do Spring Boot e as configurações de execução serão documentadas quando definidas e verificadas. O frontend deverá consumir a API descrita em [docs/API.md](docs/API.md). As decisões estão explicadas nos [ADRs](docs/ADR/), em especial [ADR 001](docs/ADR/001-arquitetura.md), [ADR 004](docs/ADR/004-backend-java.md) e [ADR 006](docs/ADR/006-frontend-react.md), que registra a não adoção de React no MVP.
+As versões verificadas e as configurações de execução estão em [backend/README.md](backend/README.md). O frontend deverá consumir a API descrita em [docs/API.md](docs/API.md). As decisões estão explicadas nos [ADRs](docs/ADR/), em especial [ADR 001](docs/ADR/001-arquitetura.md), [ADR 004](docs/ADR/004-backend-java.md) e [ADR 006](docs/ADR/006-frontend-react.md), que registra a não adoção de React no MVP.
 
 ## 5. Como executar **o que realmente existe**
 
@@ -82,7 +82,7 @@ git switch develop
 
 Abra `frontend/index.html` no navegador ou use um servidor estático local, por exemplo o **Live Server** do VS Code, apontando para `frontend/`. A página `frontend/consulta.html` usa uma lista fixa em `frontend/consulta.js`, ainda sem acesso HTTP ao backend. Os botões de oferta são demonstrativos. Alguns elementos de autenticação/CEP pertencem à interface legada e serão revisados em U06/U10.
 
-**Ainda não existem comandos reais para iniciar Spring Boot ou testes integrados.** Eles serão acrescentados quando os respectivos projetos forem implementados e seus comandos executados por outro integrante.
+O backend e os comandos Maven estão em [`backend/README.md`](backend/README.md). A aplicação pode iniciar sem banco; isso não comprova persistência operacional. Os testes JDBC efetivamente executados em banco descartável estão em [backend/tests/RESULTADOS.md](backend/tests/RESULTADOS.md).
 
 ### Esquema MySQL isolado
 
@@ -93,7 +93,7 @@ mysql -u root -p -e "CREATE DATABASE pharmafind CHARACTER SET utf8mb4 COLLATE ut
 mysql -u root -p pharmafind < database/PharmaFindDB.sql
 ```
 
-Execute a criação somente em banco novo. Para banco existente, siga as migrações 001/002 e a 003 em etapas, com preenchimento explícito da disponibilidade/apresentação e a preservação das datas desconhecidas em [database/README.md](database/README.md), que também documenta os testes isolados. Para criar `pharmafind_demo` com o esquema e a massa fictícia, use `database/Inicializar-Demonstracao.cmd`; consulte [cenários, fontes e reexecução](database/seeds/README.md). Os CEPs/pontos de teste estão em JSON para a futura U05, ainda sem integração Java. Nenhum comando sobe aplicação integrada; histórico permanece com a U09.
+Execute a criação somente em banco novo. Para banco existente, siga as migrações 001/002 quando aplicáveis e a 003 em etapas, com preenchimento explícito da disponibilidade/apresentação e preservação das datas desconhecidas em [database/README.md](database/README.md), que também documenta os testes isolados. Para criar `pharmafind_demo` com o esquema e a massa fictícia, use `database/Inicializar-Demonstracao.cmd`; consulte [cenários, fontes e reexecução](database/seeds/README.md). Os CEPs/pontos de teste estão em JSON para a futura U05, ainda sem integração Java. A branch U02 contém repositórios JDBC de leitura compatíveis com `APRESENTACAO`; os testes Java usam exclusivamente `pharmafind_test` descartável. Nenhum desses comandos sobe aplicação integrada ao frontend; histórico permanece com a U09.
 
 ## 6. Organização do repositório
 
@@ -102,6 +102,7 @@ PharmaFind/
 ├── .github/                # Templates de Issue e PR
 ├── .vscode/                # Configuração de desenvolvimento existente
 ├── frontend/               # Páginas HTML/CSS/JS a adaptar ao fluxo com API
+├── backend/                # Fundação Spring Boot/JDBC, build Maven e testes Java
 ├── database/
 │   ├── PharmaFindDB.sql    # Esquema de instalação sem seed
 │   ├── migrations/        # Evolução do esquema legado, sem presumir disponibilidade/data
@@ -120,7 +121,7 @@ PharmaFind/
 └── README.md
 ```
 
-**Ainda não existe diretório de implementação Java e as páginas HTML/CSS/JS ainda precisam consumir a API** nesta verificação. O layout de pastas será atualizado pelas Issues U02/U06, em vez de descrever uma estrutura fictícia agora.
+O diretório `backend/` contém a fundação Java/JDBC. As páginas HTML/CSS/JS ainda precisam consumir uma API de negócio, que permanece pendente; o layout será evoluído pelas Issues U02/U06 conforme os resultados reais.
 
 ## 7. Equipe
 
@@ -153,4 +154,4 @@ Foram adicionadas apresentação própria e identidade única do medicamento, do
 e integridade diária de histórico. Bases existentes usam 003a/003b; remover USUARIO exige etapa
 separada, tabela vazia, ausência de dependências, backup e aprovação do alvo não descartável.
 Ver [migração e recuperação](database/README.md) e [execuções reais](database/tests/RESULTADOS.md).
-Nenhum banco preexistente da equipe foi migrado por esta entrega; integração Java permanece pendente.
+Nenhum banco preexistente da equipe foi migrado por esta entrega. A fundação JDBC da U02 foi validada separadamente em instância descartável; integração HTTP/frontend permanece pendente.

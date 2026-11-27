@@ -7,6 +7,11 @@
 > **Entrega acadêmica:** 30/11/2026.  
 > **Estado:** o guia cobre preparação e colaboração; a execução do sistema completo depende de implementação e verificação reais de U01/U02/U06/U07.
 
+> **Conferência U02 em 26/11/2026:** já existem `backend/pom.xml`, aplicação Spring Boot,
+> repositórios JDBC e testes Java. Use [backend/README.md](../backend/README.md) para os comandos
+> Maven e [evidências locais](../backend/tests/RESULTADOS.md). Não há Maven Wrapper nesta branch;
+> referências abaixo à sua criação são planejamento histórico. API de negócio e integração do frontend continuam pendentes.
+
 ## Comece aqui: roteiro em 7 passos
 
 1. **Instale/valide** Git, VS Code, JDK 21 e um servidor MySQL (seção 2). **Node/npm são opcionais** e só se aplicam a tarefas com dependências JavaScript explícitas; a interface HTML/CSS/JS do MVP não usa React/Vite.

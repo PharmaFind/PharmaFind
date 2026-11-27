@@ -66,3 +66,7 @@ Esta evolução não implementa gráfico nem gravação automática de pontos da
 respeitar a unicidade diária. API permanece proposta; backend/frontend não foram implementados.
 Ver [procedimento](../../database/README.md), [Issue #33](https://github.com/PharmaFind/PharmaFind/issues/33)
 e [evidências atuais](../../database/tests/RESULTADOS.md). Revisão humana desta alteração pendente.
+
+**Conferência U02 em 26/11/2026:** os estados acima descrevem a etapa SQL. A branch U02
+agora contém fundação JDBC validada com o esquema/seed atualizados em MySQL descartável;
+ver [evidências Java](../../backend/tests/RESULTADOS.md). API de negócio e frontend integrado permanecem pendentes.

@@ -2,7 +2,7 @@
 
 **Status de toda esta API: PROPOSTA, NÃO IMPLEMENTADA.**  
 **Documento de referência:** [SPEC v1.1](SPEC.md). **Registro inicial:** 12/11/2026. **Refinamento:** 16/11/2026.  
-**Arquitetura-alvo aprovada pela coordenação em 23/11/2026:** Java 21 + Spring Boot / Spring Web + Spring JDBC + Maven + MySQL; API consumida por **HTML/CSS/JavaScript sem React/Vite**, conforme ADRs 001/004 e a não adoção de React registrada no ADR 006. A implementação e os contratos HTTP continuam pendentes. A árvore atualmente inspecionada **não contém servidor nem rotas HTTP**.
+**Arquitetura-alvo aprovada pela coordenação em 23/11/2026:** Java 21 + Spring Boot / Spring Web + Spring JDBC + Maven + MySQL; API consumida por **HTML/CSS/JavaScript sem React/Vite**, conforme ADRs 001/004 e a não adoção de React registrada no ADR 006. Os contratos HTTP continuam pendentes. A branch U02 contém aplicação Spring Boot e repositórios JDBC de leitura, **sem endpoints de negócio**.
 
 ## 1. Princípios
 
@@ -370,14 +370,16 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 
 **Estado do código nesta branch — U01/#10:** o esquema tem as quatro tabelas do MVP, sem USUARIO, InnoDB, par medicamento/farmácia `UNIQUE`, preço `DECIMAL(10,2)` positivo, `DISPONIVEL` restrito a `0/1` e `DATA_ATUALIZACAO TIMESTAMP` automática, permitindo `NULL` desconhecido. Coordenadas permanecem `DECIMAL(10,7)`. A seed versionada fornece 6 medicamentos, 4 farmácias e 12 ofertas; os CEPs ficam em JSON, sem nova tabela. Instalação, migração, UTC e modo estrito em [database/README.md](../database/README.md). **Suíte SQL ampliada e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); não há API implementada.**
 
-**Separação de responsabilidades na arquitetura-alvo (ainda não implementada):**
+**Fundação U02/#11:** `backend/` contém aplicação Spring Boot/JDBC e repositórios de leitura, incluindo `MEDICAMENTO.APRESENTACAO` como campo próprio. O esquema atualizado do PR #34 está na árvore deste merge. Evidências e limites da validação Java em [backend/tests/RESULTADOS.md](../backend/tests/RESULTADOS.md). Não há endpoints de negócio, motor de preços nem serialização HTTP implementados.
+
+**Separação prevista para os endpoints de negócio (ainda não implementados):**
 
 1. **Controller** recebe HTTP, valida campos e devolve códigos/JSON, sem fórmulas monetárias embutidas.
 2. **Service** filtra ofertas válidas/disponíveis, calcula resumo com decimal exato, ordena e calcula distâncias opcionalmente.
 3. **Repository** consulta medicamentos/farmácias/ofertas no MySQL com parâmetros vinculados, sem concatenar entradas do usuário em SQL.
 4. **DTOs** representam os contratos JSON definidos aqui, separando-os das entidades persistidas.
 
-O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito à revisão do PR documental. Nomes concretos de classes, versões de dependências e portas só serão registrados após implementação. Não persistir GPS do usuário; não criar login administrativo para fazer updates no banco; registrar erros sem dados sensíveis.
+O uso de Spring Boot, Spring JDBC e Java 21 consta no ADR 004. Classes da fundação, versões verificadas e comandos estão em [backend/README.md](../backend/README.md); controllers, services de negócio e DTOs HTTP continuam pendentes. Não persistir GPS do usuário; não criar login administrativo para fazer updates no banco; registrar erros sem dados sensíveis.
 
 ## 9. Critérios de aceitação do contrato
 
@@ -400,9 +402,9 @@ O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito 
 ## 10. Decisões em aberto
 
 - Aprovar rotas, nomes de campos, limites de busca e formato de erros deste contrato.
-- Stack aprovada pela coordenação em 23/11: Java 21 + Spring Boot + Spring JDBC + Maven + MySQL e frontend HTML/CSS/JavaScript. A decisão será revisada por PR, e versões/testes/harness continuam pendentes. O professor informou que Spring Boot é permitido.
+- Stack aprovada pela coordenação em 23/11: Java 21 + Spring Boot + Spring JDBC + Maven + MySQL e frontend HTML/CSS/JavaScript. Versões e testes da fundação JDBC estão em [backend/README.md](../backend/README.md); validação dos contratos HTTP e testes de negócio/frontend continuam pendentes. O professor informou que Spring Boot é permitido.
 - Fixar regras de preço válido, empate, arredondamento da média e da distância com atualização explícita da SPEC.
-- Integrar o backend à massa fictícia; a suíte SQL ampliada e o inicializador/reaplicação da U01 passaram ([evidência](../database/tests/RESULTADOS.md)). O contrato HTTP e o mapeamento SQL/JSON ainda não foram implementados ou testados.
+- A integração JDBC de leitura com a massa fictícia foi validada na U02 ([evidência Java](../backend/tests/RESULTADOS.md)); a suíte SQL ampliada e o inicializador/reaplicação da U01 têm [evidência própria](../database/tests/RESULTADOS.md). Implementar e testar o contrato HTTP e o mapeamento SQL/JSON permanece pendente.
 - Integrar o mapa local de CEPs/pontos de teste já versionado e documentado; nenhuma cobertura geográfica universal é prometida.
 - Definir eventual política de cache/logs que evite retenção indevida de GPS; exigir HTTPS se houver publicação em produção.
 

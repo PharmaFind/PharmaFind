@@ -3,6 +3,7 @@
 **Estado:** SPEC v1.1 anterior consolidada na Issue [#18](https://github.com/PharmaFind/PharmaFind/issues/18); **atualização de 23/11/2026** registra a stack aceita pela coordenação e a não adoção de React no MVP, sob revisão humana da [Issue #30](https://github.com/PharmaFind/PharmaFind/issues/30). Nenhum contrato proposto ou código é automaticamente implementado.  
 **Data de elaboração da v1.0:** 12/11/2026. **Refinamento v1.1:** 16/11/2026. **Entrega final informada:** 30/11/2026.  
 **Fontes:** [`CONTEXTO.md`](../CONTEXTO.md) (prioridade para decisões recentes), Documento de Visão do Produto (RF01–RF30, RNF01–RNF42, RN01–RN05) e apostilas de SDD do professor Romes.  
+**Documentos de Visão de origem:** [histórico e versões em Markdown](visao/README.md) (registros históricos, sem substituir esta SPEC).
 **Contratos detalhados:** [`docs/API.md`](API.md). **Decisões técnicas:** [`docs/ADR/`](ADR/).
 
 > **Leitura obrigatória:** esta SPEC descreve o **comportamento a implementar**, não a implementação atual. O código observado em `develop` mantém dados fixos em JavaScript, não possui backend Java, não consulta o MySQL e não oferece ainda as estatísticas descritas. Requisitos originários do Documento de Visão preservam seus IDs; novos requisitos derivados de decisões do `CONTEXTO.md` recebem IDs a partir de RF31. As definições técnicas sinalizadas como **[PROPOSTA]** exigem validação da equipe.

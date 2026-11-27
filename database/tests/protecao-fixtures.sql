@@ -1,7 +1,7 @@
 -- Somente no banco descartavel de protecao, criado e verificado pelo runner.
 -- Mesmo conteudo esperado pela limpeza, para que a preservacao nao dependa de dados diferentes.
-INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO)
-    VALUES (1, 'Medicamento legado de teste', 'Ativo ficticio', 'Teste', '10 mg', 'Fixture');
+INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO)
+    VALUES (1, 'Medicamento legado de teste', 'Ativo ficticio', 'Teste', '10 mg', 'Comprimido de teste', 'Fixture');
 INSERT INTO FARMACIA (ID_FARMACIA, NOME, ENDERECO) VALUES
     (1, 'Farmacia teste A', 'Endereco ficticio A'), (2, 'Farmacia teste B', 'Endereco ficticio B');
 INSERT INTO MEDICAMENTO_FARMACIA

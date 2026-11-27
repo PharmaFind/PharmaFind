@@ -45,6 +45,7 @@ Accept: application/json
       "id": 10,
       "nome": "Dipirona",
       "dosagem": "500 mg",
+      "apresentacao": "20 comprimidos",
       "categoria": "Analgésico",
       "principioAtivo": "Dipirona sódica",
       "descricao": "Apresentação demonstrativa de 500 mg"
@@ -53,6 +54,7 @@ Accept: application/json
       "id": 11,
       "nome": "Dipirona",
       "dosagem": "1 g",
+      "apresentacao": "10 comprimidos",
       "categoria": "Analgésico",
       "principioAtivo": "Dipirona sódica",
       "descricao": "Apresentação demonstrativa de 1 g"
@@ -91,6 +93,7 @@ Accept: application/json
   "id": 10,
   "nome": "Dipirona",
   "dosagem": "500 mg",
+  "apresentacao": "20 comprimidos",
   "categoria": "Analgésico",
   "principioAtivo": "Dipirona sódica",
   "descricao": "Apresentação demonstrativa de 500 mg"
@@ -170,6 +173,7 @@ Exemplo integral para **nenhuma localização informada**. Os dados são fictíc
     "id": 10,
     "nome": "Dipirona",
     "dosagem": "500 mg",
+    "apresentacao": "20 comprimidos",
     "categoria": "Analgésico",
     "principioAtivo": "Dipirona sódica",
     "descricao": "Apresentação demonstrativa de 500 mg"
@@ -263,6 +267,7 @@ Exemplo integral para **nenhuma localização informada**. Os dados são fictíc
     "id": 10,
     "nome": "Dipirona",
     "dosagem": "500 mg",
+    "apresentacao": "20 comprimidos",
     "categoria": "Analgésico",
     "principioAtivo": "Dipirona sódica",
     "descricao": "Apresentação demonstrativa de 500 mg"
@@ -363,7 +368,7 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 
 ## 8. Modelo de dados e implementação em Java
 
-**Estado do código nesta branch — U01/#10:** o esquema tem as cinco tabelas existentes, InnoDB, par medicamento/farmácia `UNIQUE`, preço `DECIMAL(10,2)` positivo, `DISPONIVEL` restrito a `0/1` e `DATA_ATUALIZACAO TIMESTAMP` automática, permitindo `NULL` desconhecido. Coordenadas permanecem `DECIMAL(10,7)`. A seed versionada fornece 6 medicamentos, 4 farmácias e 12 ofertas; os CEPs ficam em JSON, sem nova tabela. Instalação, migração, UTC e modo estrito em [database/README.md](../database/README.md). **Suíte SQL ampliada e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); não há API implementada.**
+**Estado do código nesta branch — U01/#10:** o esquema tem as quatro tabelas do MVP, sem USUARIO, InnoDB, par medicamento/farmácia `UNIQUE`, preço `DECIMAL(10,2)` positivo, `DISPONIVEL` restrito a `0/1` e `DATA_ATUALIZACAO TIMESTAMP` automática, permitindo `NULL` desconhecido. Coordenadas permanecem `DECIMAL(10,7)`. A seed versionada fornece 6 medicamentos, 4 farmácias e 12 ofertas; os CEPs ficam em JSON, sem nova tabela. Instalação, migração, UTC e modo estrito em [database/README.md](../database/README.md). **Suíte SQL ampliada e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); não há API implementada.**
 
 **Separação de responsabilidades na arquitetura-alvo (ainda não implementada):**
 
@@ -417,7 +422,7 @@ Accept: application/json
 - `id`: inteiro positivo correspondente ao medicamento exato.
 - `farmaciaId`: inteiro positivo **obrigatório**; o histórico é restrito à oferta formada pelo par medicamento/farmácia.
 - Datas/preços devem vir de `HISTORICO_PRECO` associado à oferta; não gerar uma série aleatória em cada consulta.
-- A gravação de histórico por dia ou por evento dependerá de política explícita de persistência na U09 (a tabela existente usa `DATA_REGISTRO DATE`).
+- A U01/#33 fixa um ponto por oferta/dia (`DATA_REGISTRO DATE`, preço positivo e par oferta/data único). A U09 deve definir gravação/atualização respeitando essa granularidade; eventos intradiários exigem nova decisão.
 
 ### 11.2 Resposta 200 (dados totalmente fictícios)
 
@@ -466,3 +471,12 @@ Uma oferta com zero pontos deve retornar `200` e `historico: []`; com um ponto, 
 **Tratamento de erros [PROPOSTA]:** `400` para `id`/`farmaciaId` inválidos ou ausentes; `404` para medicamento ou par medicamento/farmácia inexistente; `503` para indisponibilidade de dados; `500` para erro inesperado tratado. Usar o envelope de erro da seção 7. Não usar dados de outra farmácia como fallback nem devolver `0` para variação não calculável.
 
 **Verificações:** CT21–CT24 da SPEC v1.1, além de integridade e testes de persistência registrados em PR. Nenhuma resposta acima comprova implementação ou execução real.
+
+### Mapeamento SQL/JSON complementar — U01/#33
+
+MEDICAMENTO.APRESENTACAO é campo próprio e será mapeado ao campo proposto `apresentacao`
+nos resultados de busca, detalhes e medicamento da comparação. Os exemplos acima foram alinhados;
+DESCRICAO continua independente. O Repository Java deve usar os nomes SQL canônicos em maiúsculas,
+consultar pelo ID e preservar dosagens/apresentações distintas. Nenhuma rota foi criada/alterada.
+O MVP não possui autenticação nem cadastro: USUARIO foi retirada da instalação nova e sua remoção
+em bases anteriores é manutenção controlada separada, sem endpoint ou impacto nos IDs do domínio.

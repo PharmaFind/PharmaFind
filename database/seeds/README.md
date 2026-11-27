@@ -1,6 +1,6 @@
 # Massa demonstrativa U01 / Issue #10
 
-`demonstracao.sql` é a carga versionada para MySQL com o esquema U01. São **6 apresentações,
+`demonstracao.sql` é a carga versionada para MySQL com o esquema final da U01/#33 (003b). O MVP não possui autenticação nem cadastro e a instalação nova não cria USUARIO. São **6 apresentações,
 4 farmácias fictícias e 12 ofertas**, com IDs e valores fixos. O catálogo utiliza nomes
 de medicamentos para demonstrar a pesquisa; não é orientação clínica. Nomes de farmácias,
 endereços, preços, disponibilidade, horários e datas são artificiais e não representam
@@ -70,7 +70,7 @@ IDs `3001`–`3012`, **8 disponíveis e 4 indisponíveis**. Em UTC, todas começ
 `2026-11-12 12:00:00`, uma **data de fixture**, não de coleta real. O automatismo do esquema
 atualiza esse instante quando a equipe modifica preço/disponibilidade posteriormente.
 
-Não se insere nada em `USUARIO` ou `HISTORICO_PRECO`. A política de registros históricos
+Não se cria USUARIO nem se insere histórico. Bases anteriores devem passar pela 003a/003b antes de usar esta versão da seed; a retirada de USUARIO é separada e controlada (003c). A política de registros históricos
 e os dados de evolução pertencem à U09. Esta carga não calcula o resumo da API.
 
 ## CEPs e pontos de teste
@@ -111,3 +111,24 @@ pelo usuário. O inicializador passou na criação e reaplicação de um clone d
 sete booleanos em `1` antes/depois e três hashes preservados. Evidências e limitações
 em [RESULTADOS.md](../tests/RESULTADOS.md). Dados disponíveis para CT09/CT13 não
 comprovam distância calculada: esses fluxos dependem da U05 e da integração HTTP.
+
+## Compatibilidade após a correção #33
+
+APRESENTACAO é campo próprio, obrigatório: 1001/20 comprimidos, 1002/10 comprimidos,
+1003/20 comprimidos, 1004/10 cápsulas, 1005/12 comprimidos, 1006/28 cápsulas.
+As descrições foram preservadas. A carga compara apresentação em binário junto aos
+atributos anteriores e detecta a mesma identidade sob outro ID conforme utf8mb4_unicode_ci.
+Conteúdo divergente interrompe a carga antes de inserir registros do domínio.
+Os SELECTs de medicamentos enumeram as colunas, evitando depender da posição da coluna adicionada.
+
+A seed não preenche apresentações desconhecidas em uma base anterior: seguir o procedimento
+[003](../README.md). O script opcional de preenchimento das seis fixtures exige conteúdo
+original compatível e não altera descrições, IDs, ofertas, preços ou datas.
+Não executar a seed para “consertar” dados de desenvolvimento alterados legitimamente.
+A demonstração mantém 6 medicamentos, 4 farmácias, 12 ofertas e todos os cenários originais.
+CEP/coordenadas ausentes da farmácia 2004 continuam NULL; coordenadas parciais são rejeitadas.
+
+O inicializador aceita também porta e opção explícita --sem-senha para uma instância
+local descartável: `caminho_mysql --criar|--reaplicar clone_descartavel porta --sem-senha`.
+O padrão continua root/127.0.0.1:3306 com senha no prompt, sem armazenamento.
+Esta extensão foi usada apenas na instância temporária de teste; consulte RESULTADOS.md.

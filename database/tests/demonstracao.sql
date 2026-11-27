@@ -1,7 +1,7 @@
 -- Somente em bancos exclusivos dos runners. u01_seed_em_teste usa o arquivo REAL da seed.
 -- Primeiro verifica que um conflito impede a carga inteira, inclusive insercoes ainda ausentes.
-INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO)
-    VALUES (1006, 'Registro conflitante do teste', 'Teste', 'Teste', '1 mg', 'Nao pertence a seed');
+INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO)
+    VALUES (1006, 'Registro conflitante do teste', 'Teste', 'Teste', '1 mg', 'Comprimido de teste', 'Nao pertence a seed');
 CALL u01_esperar_erro('CALL u01_seed_em_teste()', 3819, 'Seed recusa ID existente com conteudo diferente');
 ROLLBACK;
 CALL u01_assert((SELECT COUNT(*) = 1 FROM MEDICAMENTO), 'Conflito impede insercao parcial dos medicamentos');
@@ -9,6 +9,13 @@ CALL u01_assert((SELECT COUNT(*) = 0 FROM FARMACIA) AND (SELECT COUNT(*) = 0 FRO
     'Conflito impede insercao parcial de farmacias e ofertas');
 DELETE FROM MEDICAMENTO WHERE ID_MEDICAMENTO = 1006;
 
+INSERT INTO MEDICAMENTO (ID_MEDICAMENTO,NOME,PRINCIPIO_ATIVO,CATEGORIA,DOSAGEM,APRESENTACAO,DESCRICAO)
+VALUES (9998,'Dipirona','Teste','Teste','500 mg','20 comprimidos','Fixture de identidade sob outro ID');
+CALL u01_esperar_erro('CALL u01_seed_em_teste()',3819,'Seed recusa identidade existente sob outro ID');
+ROLLBACK;
+CALL u01_assert((SELECT COUNT(*) = 1 FROM MEDICAMENTO) AND (SELECT COUNT(*) = 0 FROM FARMACIA),
+    'Conflito de identidade nao produz insercoes parciais');
+DELETE FROM MEDICAMENTO WHERE ID_MEDICAMENTO = 9998;
 CALL u01_seed_em_teste();
 CALL u01_assert((SELECT COUNT(*) = 6 FROM MEDICAMENTO) AND (SELECT COUNT(*) = 4 FROM FARMACIA)
     AND (SELECT COUNT(*) = 12 FROM MEDICAMENTO_FARMACIA), 'Seed carrega 6 medicamentos, 4 farmacias e 12 ofertas');
@@ -56,8 +63,8 @@ CALL u01_assert((SELECT COUNT(*) = 0 FROM JSON_TABLE(@u01_ceps_json, '$.ceps[*]'
     COLUMNS (cep VARCHAR(32) PATH '$.cep')) AS pontos WHERE cep = '99999999'), 'CT11 dados: CEP de exemplo nao mapeado fica fora da lista');
 
 -- Registros sentinela fora da seed: verificar preservacao na reexecucao.
-INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO)
-    VALUES (9001, 'Sentinela ficticia', 'Teste', 'Teste', '1 mg', 'Dado de teste fora da seed');
+INSERT INTO MEDICAMENTO (ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO)
+    VALUES (9001, 'Sentinela ficticia', 'Teste', 'Teste', '1 mg', 'Comprimido de teste', 'Dado de teste fora da seed');
 INSERT INTO FARMACIA (ID_FARMACIA, NOME, ENDERECO) VALUES (9001, 'Sentinela ficticia', 'Endereco ficticio de teste');
 INSERT INTO MEDICAMENTO_FARMACIA
     (ID_MEDICAMENTO_FARMACIA, ID_MEDICAMENTO, ID_FARMACIA, PRECO, DISPONIVEL, DATA_ATUALIZACAO)
@@ -95,3 +102,10 @@ ROLLBACK;
 CALL u01_assert((SELECT COUNT(*) = 1 FROM MEDICAMENTO_FARMACIA WHERE ID_MEDICAMENTO_FARMACIA = 3900), 'Seed nao apaga oferta extra ao detectar conflito');
 DELETE FROM MEDICAMENTO_FARMACIA WHERE ID_MEDICAMENTO_FARMACIA = 3900;
 CALL u01_seed_em_teste();
+
+UPDATE MEDICAMENTO SET APRESENTACAO = '30 comprimidos' WHERE ID_MEDICAMENTO = 1001;
+CALL u01_esperar_erro('CALL u01_seed_em_teste()',3819,'Seed preserva apresentacao alterada legitimamente');
+ROLLBACK;
+CALL u01_assert((SELECT APRESENTACAO = '30 comprimidos' FROM MEDICAMENTO WHERE ID_MEDICAMENTO = 1001),
+    'Conflito nao sobrescreve apresentacao');
+UPDATE MEDICAMENTO SET APRESENTACAO = '20 comprimidos' WHERE ID_MEDICAMENTO = 1001;

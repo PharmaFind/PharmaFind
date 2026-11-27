@@ -988,3 +988,9 @@ Se já existe uma feature em andamento, consulte as regras de atualização e co
 - [ ] Confirmei merge, estado da Issue/Project e atualizei `develop` para a próxima tarefa.
 
 **Se houver erro:** consulte as **seções 7 e 9**. Ao pedir ajuda, informe comando, mensagem de erro **sem segredos**, branch e `git status --short`. Não execute correções destrutivas sem entender o impacto.
+
+**Atualização de banco — U01/#33:** o MVP não possui autenticação nem cadastro. Instalação nova
+usa quatro tabelas, sem USUARIO. Banco existente exige sequência documentada 001/002 (se legado),
+003a, preenchimento revisado e 003b. A retirada de USUARIO é separada, com inspeção, backup e
+aprovação do alvo não descartável; nunca reutilizar o instalador para atualizar tabelas existentes.
+Consultar database/README.md e as evidências, sem confundir snapshots de teste com o esquema atual.

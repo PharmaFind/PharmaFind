@@ -1,0 +1,3584 @@
+{
+  "date": "2026-11-27",
+  "branch": "feature/20-auditoria-frontend",
+  "head": "54f8a4ab467686bd1921daa31486bd03599bb4bb",
+  "diff_sha256": "d8fd4812e08d859745d49e92bb2480c92c0aa42648f097e44f54674efcb8a480",
+  "total": 428,
+  "passed": 428,
+  "failed": 0,
+  "suites": {
+    "acessibilidade": {
+      "total": 17,
+      "passed": 17,
+      "failed": 0
+    },
+    "browser": {
+      "total": 216,
+      "passed": 216,
+      "failed": 0
+    },
+    "comandos": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "integridade": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "seed": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "sticky": {
+      "total": 169,
+      "passed": 169,
+      "failed": 0
+    },
+    "tecnico": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0
+    }
+  },
+  "checks": [
+    {
+      "name": "home 320: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 320: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 320: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "palette 320: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 320: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 320: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 320: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 320: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 320: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 320: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 320: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP 320: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "location 320: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 390: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 390: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 390: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "palette 390: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 390: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 390: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 390: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 390: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 390: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 390: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 390: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP 390: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "location 390: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 768: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 768: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 768: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "palette 768: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 768: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 768: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 768: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 768: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 768: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 768: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 768: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 768: price centered",
+      "passed": true,
+      "expected": "[...document.querySelectorAll('.offer-card')].every(c => {const a=c.firstElementChild.getBoundingClientRect(), b=c.lastElementChild.getBoundingClientRect(); return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<1})",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP 768: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "location 768: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1280: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1280: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1280: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "palette 1280: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1280: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1280: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1280: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1280: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1280: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1280: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1280: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1280: price centered",
+      "passed": true,
+      "expected": "[...document.querySelectorAll('.offer-card')].every(c => {const a=c.firstElementChild.getBoundingClientRect(), b=c.lastElementChild.getBoundingClientRect(); return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<1})",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP 1280: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "location 1280: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1920: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1920: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home 1920: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "palette 1920: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1920: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1920: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "products 1920: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1920: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1920: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1920: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1920: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "offers 1920: price centered",
+      "passed": true,
+      "expected": "[...document.querySelectorAll('.offer-card')].every(c => {const a=c.firstElementChild.getBoundingClientRect(), b=c.lastElementChild.getBoundingClientRect(); return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<1})",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP 1920: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "location 1920: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home search via button",
+      "passed": true,
+      "expected": "location.pathname.endsWith('consulta.html') && new URLSearchParams(location.search).get('termo') === 'Dipi' && document.querySelectorAll('.product-card').length === 2",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "home search via Enter",
+      "passed": true,
+      "expected": "location.pathname.endsWith('consulta.html') && new URLSearchParams(location.search).get('termo') === 'Dipi' && document.querySelectorAll('.product-card').length === 2",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "initial state distinct from no results",
+      "passed": true,
+      "expected": "!initialState.hidden && emptyState.hidden && document.querySelectorAll('.product-card').length === 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search 'Dipi'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 2 && emptyState.hidden === true",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search 'Dipirona'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 2 && emptyState.hidden === true",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search 'DIPIRONA'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 2 && emptyState.hidden === true",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search 'zzzz-inexistente'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 0 && emptyState.hidden === false",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search ''",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 0 && emptyState.hidden === true",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search '   '",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 0 && emptyState.hidden === true",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1001: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 3 && document.querySelectorAll(\".offer-card.unavailable\").length === 1 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"8,99\\\",\\\"10,99\\\",\\\"7,50\\\"]\"",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1001: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1001: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1002: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 2 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"14,00\\\",\\\"16,00\\\"]\"",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1002: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1002: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1003: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 3 && document.querySelectorAll(\".offer-card.unavailable\").length === 3 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"6,50\\\",\\\"7,25\\\",\\\"5,99\\\"]\"",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "all unavailable message",
+      "passed": true,
+      "expected": "comparisonPanel.innerText.includes(\"Nenhuma oferta disponível\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1003: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1003: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1004: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 0 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[]\"",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "no offers message and focus",
+      "passed": true,
+      "expected": "comparisonPanel.innerText.includes(\"Nenhuma oferta cadastrada\") && document.activeElement === comparisonPanel",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1004: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1004: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1005: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 1 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"12,00\\\"]\"",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1005: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1005: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1006: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 3 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"15,90\\\",\\\"15,90\\\",\\\"18,50\\\"]\"",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1006: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "medicine 1006: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "invalid CEP stays open and focuses input",
+      "passed": true,
+      "expected": "!cepBox.hidden && document.activeElement === cepInput && document.querySelector('#toastStatus').innerText.includes('inválido')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "valid CEP formats, closes, returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement === cepOpen && localStorage.getItem('pharmafindCep') === '72429-005'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP Tab can leave nonmodal dialog",
+      "passed": true,
+      "expected": "document.activeElement !== cepClose",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement === cepOpen",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "modal Tab wraps and background inert",
+      "passed": true,
+      "expected": "document.activeElement === locClose && document.querySelector(\"main\").inert",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "modal Shift Tab wraps",
+      "passed": true,
+      "expected": "document.activeElement === decline",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "location Escape restores focus and background",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.activeElement === locOpen && !document.querySelector(\"main\").inert",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "denied GPS is handled",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.querySelector(\"#toastStatus\").innerText.includes(\"GPS negado\") && !searchStep.hidden",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "image fallback loads",
+      "passed": true,
+      "expected": "document.querySelector('.product-card img').getAttribute('src') === 'medicamento-placeholder.svg' && document.querySelector('.product-card img').naturalWidth > 0",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "placeholder contrast color",
+      "passed": true,
+      "expected": "getComputedStyle(searchInput,'::placeholder').color === 'rgb(95, 111, 130)'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "select another presentation through its button",
+      "passed": true,
+      "expected": "document.querySelector('#comparisonTitle').textContent.includes('Dipirona 1 g') && document.querySelectorAll('.offer-card').length === 2 && !comparisonPanel.textContent.includes('8,99')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 320: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 320: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 390: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 390: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 768: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 768: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 1280: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 1280: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 1920: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "catalog 1920: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "buttons align with different content lengths",
+      "passed": true,
+      "expected": "(() => {const b=[...document.querySelectorAll('.offer-button')].map(e=>e.getBoundingClientRect().bottom);return Math.abs(b[0]-b[1])<1})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "keyboard action has visible outline",
+      "passed": true,
+      "expected": "getComputedStyle(document.activeElement).outlineStyle !== 'none' && parseFloat(getComputedStyle(document.activeElement).outlineWidth) >= 2",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "keyboard selects medicine and focuses comparison",
+      "passed": true,
+      "expected": "document.activeElement === comparisonPanel && comparisonPanel.innerText.includes('Dipirona 500 mg')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "keyboard returns to search",
+      "passed": true,
+      "expected": "document.activeElement === searchInput && comparisonPanel.hidden",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "reserved error state visible and legible",
+      "passed": true,
+      "expected": "getComputedStyle(document.getElementById('errorState')).display !== 'none' && document.getElementById('errorState').getAttribute('role') === 'alert'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "contrast: secondary text on blue gray >= 4.5",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(document.querySelector('.consulta-header p')).color, getComputedStyle(document.body).backgroundColor)>=4.5",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "contrast: placeholder on white >= 4.5",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(searchInput,'::placeholder').color, getComputedStyle(searchInput).backgroundColor)>=4.5",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "contrast: selected medicine on navy >= 4.5",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(document.querySelector('#comparisonTitle')).color, getComputedStyle(document.querySelector('.comparison-header')).backgroundColor)>=4.5",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "contrast: comparison return focus outline >= 3",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(document.activeElement).outlineColor, getComputedStyle(document.querySelector('.comparison-header')).backgroundColor)>=3",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "comparison skip link still bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement === document.querySelector('.comparison-header button')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search introduction restored after comparison",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display !== 'none' && !searchStep.hidden",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1001: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1001 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1001).length && comparisonPanel.textContent.includes(\"Dipirona 500 mg\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1001: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1001: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1001: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1002: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1002 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1002).length && comparisonPanel.textContent.includes(\"Dipirona 1 g\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1002: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1002: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1002: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1003: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1003 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1003).length && comparisonPanel.textContent.includes(\"Paracetamol 750 mg\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1003: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1003: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1003: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1004: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1004 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1004).length && comparisonPanel.textContent.includes(\"Ibuprofeno 400 mg\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1004: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1004: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1004: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1005: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1005 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1005).length && comparisonPanel.textContent.includes(\"Loratadina 10 mg\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1005: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1005: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1005: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1006: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1006 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1006).length && comparisonPanel.textContent.includes(\"Omeprazol 20 mg\")",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1006: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1006: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "UI medicine 1006: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP input 72429-005",
+      "passed": true,
+      "expected": "cepBox.hidden && cepInput.value==='72429-005' && document.activeElement===cepOpen && toastStatus.textContent.includes('ainda não está integrada')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "CEP input 72429005",
+      "passed": true,
+      "expected": "cepBox.hidden && cepInput.value==='72429-005' && document.activeElement===cepOpen && toastStatus.textContent.includes('ainda não está integrada')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "GPS unavailable simulated without coordinates",
+      "passed": true,
+      "expected": "locationPopup.hidden && toastStatus.textContent.includes('Localização indisponível') && toastStatus.textContent.includes('ainda não está integrada') && !searchStep.hidden",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "search continues after GPS unavailable",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length===2",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/medicamento-placeholder.svg",
+          "status": 200
+        },
+        {
+          "url": "/index.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        }
+      ],
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "consulta.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/medicamento-placeholder.svg",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        }
+      ],
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "como-funciona.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/medicamento-placeholder.svg",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        }
+      ],
+      "suite": "browser"
+    },
+    {
+      "name": "public instructions do not promise missing filters",
+      "passed": true,
+      "expected": "!/utilize os filtros/i.test(document.body.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "sobre.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/medicamento-placeholder.svg",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        }
+      ],
+      "suite": "browser"
+    },
+    {
+      "name": "institutional catalog count agrees with six medicines",
+      "passed": true,
+      "expected": "!/dez medicamentos/i.test(document.body.innerText)",
+      "obtained": true,
+      "suite": "browser"
+    },
+    {
+      "name": "no JavaScript console errors",
+      "passed": true,
+      "suite": "browser"
+    },
+    {
+      "name": "index.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "home 320: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "home 390: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "home 768: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "home 1280: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "home 1920: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "consulta.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "como-funciona.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "sobre.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true,
+      "suite": "sticky"
+    },
+    {
+      "name": "index.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharma\nfind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        },
+        {
+          "label": "Pesquisar",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        },
+        {
+          "label": "Consultar medicamentos",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "index.html: modal Escape returns to location trigger with menu previously open",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "index.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "index.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "consulta.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharma\nfind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        },
+        {
+          "label": "Pesquisar",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "consulta.html: modal Escape returns to location trigger with menu previously open",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "consulta.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "consulta.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "como-funciona.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharmafind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        }
+      ],
+      "passed": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "como-funciona.html: modal Escape returns to location trigger with menu previously open",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "como-funciona.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "como-funciona.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "sobre.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharma\nfind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        },
+        {
+          "label": "Consultar medicamentos",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "sobre.html: modal Escape returns to location trigger with menu previously open",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "sobre.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "sobre.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "offer prices, availability and addresses contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "Endereço fictício 01 - Ponte Alta, Gama/DF",
+          "fg": "rgb(82, 100, 119)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 6.09
+        },
+        {
+          "label": "Disponível",
+          "fg": "rgb(23, 99, 68)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 7.23
+        },
+        {
+          "label": "R$ 15,90",
+          "fg": "rgb(214, 47, 63)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 4.84
+        },
+        {
+          "label": "Endereço fictício 02 - Setor Leste, Gama/DF",
+          "fg": "rgb(82, 100, 119)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 6.09
+        },
+        {
+          "label": "Disponível",
+          "fg": "rgb(23, 99, 68)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 7.23
+        },
+        {
+          "label": "R$ 15,90",
+          "fg": "rgb(214, 47, 63)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 4.84
+        },
+        {
+          "label": "Endereço fictício 04 - Setor Sul, Gama/DF",
+          "fg": "rgb(82, 100, 119)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 6.09
+        },
+        {
+          "label": "Disponível",
+          "fg": "rgb(23, 99, 68)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 7.23
+        },
+        {
+          "label": "R$ 18,50",
+          "fg": "rgb(214, 47, 63)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true,
+      "suite": "acessibilidade"
+    },
+    {
+      "name": "frontend\\como-funciona.html: unique IDs",
+      "expected": "all unique",
+      "obtained": true,
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "frontend\\consulta.html: unique IDs",
+      "expected": "all unique",
+      "obtained": true,
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "frontend\\index.html: unique IDs",
+      "expected": "all unique",
+      "obtained": true,
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "frontend\\sobre.html: unique IDs",
+      "expected": "all unique",
+      "obtained": true,
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "local HTML references",
+      "expected": "no broken references",
+      "obtained": {
+        "checked": 71,
+        "broken": []
+      },
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "no removed authentication references in public HTML/JS",
+      "expected": "none",
+      "obtained": [],
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "no economic engine added",
+      "expected": "none",
+      "obtained": [],
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "branch",
+      "expected": "feature/20-auditoria-frontend",
+      "obtained": "feature/20-auditoria-frontend",
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "tracked changes scope",
+      "expected": "only authorized frontend and audit",
+      "obtained": [
+        "docs/U10-AUDITORIA.md",
+        "frontend/como-funciona.html",
+        "frontend/consulta.html",
+        "frontend/consulta.js",
+        "frontend/index.html",
+        "frontend/script.js",
+        "frontend/sobre.html",
+        "frontend/style.css"
+      ],
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "untracked artifacts",
+      "expected": "only QA evidence files",
+      "obtained": {
+        "count": 181,
+        "unexpected": []
+      },
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "evidence secret scan",
+      "expected": "no matching credential patterns",
+      "obtained": [],
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "PNG embedded metadata",
+      "expected": "no text or EXIF metadata",
+      "obtained": [],
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "JSON evidence integrity",
+      "expected": "all JSON parse",
+      "obtained": 22,
+      "passed": true,
+      "suite": "tecnico"
+    },
+    {
+      "name": "official seed at PR base",
+      "expected": "a8e546f574fedaa38cdca6844ff76e352c075fbd",
+      "obtained": "a8e546f574fedaa38cdca6844ff76e352c075fbd",
+      "passed": true,
+      "suite": "seed"
+    },
+    {
+      "name": "six medications and presentations",
+      "expected": [
+        {
+          "id": 1001,
+          "nome": "Dipirona",
+          "dosagem": "500 mg",
+          "apresentacao": "20 comprimidos"
+        },
+        {
+          "id": 1002,
+          "nome": "Dipirona",
+          "dosagem": "1 g",
+          "apresentacao": "10 comprimidos"
+        },
+        {
+          "id": 1003,
+          "nome": "Paracetamol",
+          "dosagem": "750 mg",
+          "apresentacao": "20 comprimidos"
+        },
+        {
+          "id": 1004,
+          "nome": "Ibuprofeno",
+          "dosagem": "400 mg",
+          "apresentacao": "10 cápsulas"
+        },
+        {
+          "id": 1005,
+          "nome": "Loratadina",
+          "dosagem": "10 mg",
+          "apresentacao": "12 comprimidos"
+        },
+        {
+          "id": 1006,
+          "nome": "Omeprazol",
+          "dosagem": "20 mg",
+          "apresentacao": "28 cápsulas"
+        }
+      ],
+      "obtained": [
+        {
+          "id": 1001,
+          "nome": "Dipirona",
+          "dosagem": "500 mg",
+          "apresentacao": "20 comprimidos"
+        },
+        {
+          "id": 1002,
+          "nome": "Dipirona",
+          "dosagem": "1 g",
+          "apresentacao": "10 comprimidos"
+        },
+        {
+          "id": 1003,
+          "nome": "Paracetamol",
+          "dosagem": "750 mg",
+          "apresentacao": "20 comprimidos"
+        },
+        {
+          "id": 1004,
+          "nome": "Ibuprofeno",
+          "dosagem": "400 mg",
+          "apresentacao": "10 cápsulas"
+        },
+        {
+          "id": 1005,
+          "nome": "Loratadina",
+          "dosagem": "10 mg",
+          "apresentacao": "12 comprimidos"
+        },
+        {
+          "id": 1006,
+          "nome": "Omeprazol",
+          "dosagem": "20 mg",
+          "apresentacao": "28 cápsulas"
+        }
+      ],
+      "passed": true,
+      "suite": "seed"
+    },
+    {
+      "name": "four pharmacies",
+      "expected": {
+        "2001": {
+          "nome": "Farmácia Demo Ponte Alta",
+          "endereco": "Endereço fictício 01 - Ponte Alta, Gama/DF"
+        },
+        "2002": {
+          "nome": "Farmácia Demo Gama Leste",
+          "endereco": "Endereço fictício 02 - Setor Leste, Gama/DF"
+        },
+        "2003": {
+          "nome": "Farmácia Demo Recanto",
+          "endereco": "Endereço fictício 03 - Recanto das Emas/DF"
+        },
+        "2004": {
+          "nome": "Farmácia Demo Gama Sul",
+          "endereco": "Endereço fictício 04 - Setor Sul, Gama/DF"
+        }
+      },
+      "obtained": {
+        "2001": {
+          "nome": "Farmácia Demo Ponte Alta",
+          "endereco": "Endereço fictício 01 - Ponte Alta, Gama/DF"
+        },
+        "2002": {
+          "nome": "Farmácia Demo Gama Leste",
+          "endereco": "Endereço fictício 02 - Setor Leste, Gama/DF"
+        },
+        "2003": {
+          "nome": "Farmácia Demo Recanto",
+          "endereco": "Endereço fictício 03 - Recanto das Emas/DF"
+        },
+        "2004": {
+          "nome": "Farmácia Demo Gama Sul",
+          "endereco": "Endereço fictício 04 - Setor Sul, Gama/DF"
+        }
+      },
+      "passed": true,
+      "suite": "seed"
+    },
+    {
+      "name": "twelve offers and relations",
+      "expected": [
+        {
+          "id": 3001,
+          "medicamentoId": 1001,
+          "farmaciaId": 2001,
+          "preco": 8.99,
+          "disponivel": true
+        },
+        {
+          "id": 3002,
+          "medicamentoId": 1001,
+          "farmaciaId": 2002,
+          "preco": 10.99,
+          "disponivel": true
+        },
+        {
+          "id": 3003,
+          "medicamentoId": 1001,
+          "farmaciaId": 2003,
+          "preco": 7.5,
+          "disponivel": false
+        },
+        {
+          "id": 3004,
+          "medicamentoId": 1002,
+          "farmaciaId": 2001,
+          "preco": 14.0,
+          "disponivel": true
+        },
+        {
+          "id": 3005,
+          "medicamentoId": 1002,
+          "farmaciaId": 2004,
+          "preco": 16.0,
+          "disponivel": true
+        },
+        {
+          "id": 3006,
+          "medicamentoId": 1003,
+          "farmaciaId": 2001,
+          "preco": 6.5,
+          "disponivel": false
+        },
+        {
+          "id": 3007,
+          "medicamentoId": 1003,
+          "farmaciaId": 2002,
+          "preco": 7.25,
+          "disponivel": false
+        },
+        {
+          "id": 3008,
+          "medicamentoId": 1003,
+          "farmaciaId": 2003,
+          "preco": 5.99,
+          "disponivel": false
+        },
+        {
+          "id": 3009,
+          "medicamentoId": 1005,
+          "farmaciaId": 2002,
+          "preco": 12.0,
+          "disponivel": true
+        },
+        {
+          "id": 3010,
+          "medicamentoId": 1006,
+          "farmaciaId": 2001,
+          "preco": 15.9,
+          "disponivel": true
+        },
+        {
+          "id": 3011,
+          "medicamentoId": 1006,
+          "farmaciaId": 2002,
+          "preco": 15.9,
+          "disponivel": true
+        },
+        {
+          "id": 3012,
+          "medicamentoId": 1006,
+          "farmaciaId": 2004,
+          "preco": 18.5,
+          "disponivel": true
+        }
+      ],
+      "obtained": [
+        {
+          "id": 3001,
+          "medicamentoId": 1001,
+          "farmaciaId": 2001,
+          "preco": 8.99,
+          "disponivel": true
+        },
+        {
+          "id": 3002,
+          "medicamentoId": 1001,
+          "farmaciaId": 2002,
+          "preco": 10.99,
+          "disponivel": true
+        },
+        {
+          "id": 3003,
+          "medicamentoId": 1001,
+          "farmaciaId": 2003,
+          "preco": 7.5,
+          "disponivel": false
+        },
+        {
+          "id": 3004,
+          "medicamentoId": 1002,
+          "farmaciaId": 2001,
+          "preco": 14,
+          "disponivel": true
+        },
+        {
+          "id": 3005,
+          "medicamentoId": 1002,
+          "farmaciaId": 2004,
+          "preco": 16,
+          "disponivel": true
+        },
+        {
+          "id": 3006,
+          "medicamentoId": 1003,
+          "farmaciaId": 2001,
+          "preco": 6.5,
+          "disponivel": false
+        },
+        {
+          "id": 3007,
+          "medicamentoId": 1003,
+          "farmaciaId": 2002,
+          "preco": 7.25,
+          "disponivel": false
+        },
+        {
+          "id": 3008,
+          "medicamentoId": 1003,
+          "farmaciaId": 2003,
+          "preco": 5.99,
+          "disponivel": false
+        },
+        {
+          "id": 3009,
+          "medicamentoId": 1005,
+          "farmaciaId": 2002,
+          "preco": 12,
+          "disponivel": true
+        },
+        {
+          "id": 3010,
+          "medicamentoId": 1006,
+          "farmaciaId": 2001,
+          "preco": 15.9,
+          "disponivel": true
+        },
+        {
+          "id": 3011,
+          "medicamentoId": 1006,
+          "farmaciaId": 2002,
+          "preco": 15.9,
+          "disponivel": true
+        },
+        {
+          "id": 3012,
+          "medicamentoId": 1006,
+          "farmaciaId": 2004,
+          "preco": 18.5,
+          "disponivel": true
+        }
+      ],
+      "passed": true,
+      "suite": "seed"
+    },
+    {
+      "suite": "comandos",
+      "name": "git status",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "git branch --show-current",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "git diff --stat",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "git diff --check",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "git diff --name-only",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "git ls-files --others --exclude-standard",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "node --check frontend/script.js",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "comandos",
+      "name": "node --check frontend/consulta.js",
+      "expected": "exit 0",
+      "obtained": 0,
+      "passed": true
+    },
+    {
+      "suite": "integridade",
+      "name": "preexisting files unchanged during tests",
+      "expected": [],
+      "obtained": [],
+      "passed": true
+    }
+  ],
+  "jsErrors": {
+    "browser": [],
+    "sticky": [],
+    "acessibilidade": []
+  },
+  "networkErrors": {
+    "browser": [
+      {
+        "method": "Log.entryAdded",
+        "params": {
+          "entry": {
+            "source": "network",
+            "level": "error",
+            "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+            "timestamp": 1795749992657.472,
+            "url": "http://127.0.0.1:61083/missing-u10-test.png",
+            "networkRequestId": "48092.493"
+          }
+        }
+      }
+    ],
+    "sticky": [],
+    "acessibilidade": []
+  },
+  "notExecuted": [
+    {
+      "name": "real browser zoom 200 percent",
+      "reason": "CDP shortcuts did not change DPR/innerWidth; viewport reduction and page scale not substituted"
+    },
+    {
+      "name": "screen reader",
+      "reason": "No assistive reader automation available"
+    },
+    {
+      "name": "physical mobile devices and other browsers",
+      "reason": "Only Brave headless was executed"
+    },
+    {
+      "name": "HTTP backend, MySQL, distance and economic engine integration",
+      "reason": "Outside U10 demonstrative frontend scope"
+    }
+  ]
+}

@@ -1,0 +1,923 @@
+{
+  "png": [
+    {
+      "path": "docs/evidencias/u10/cep-320.png",
+      "sha256": "f57df43825c395322da3abdd67fbe35b6a2a89d4c04a5a1bc1c47a7fb743a1d6",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/home-1280.png",
+      "sha256": "b27cba0e581cc42a6bdeade66d4b0fb9e6fe72ab1d6eeb408bb123b016d1e302",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/home-320.png",
+      "sha256": "9d2e9ecce28dbd48dc0a55889cc35e1ce15c74c6d12361bfaf75666aba836561",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/location-320.png",
+      "sha256": "9a6976f6d6d286dacd4d5368873826220c36326b617bba8911f3ce564e22a751",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/offers-1280.png",
+      "sha256": "e24491cdb065b0eab547036a7e5e917733526ffbb6865832995591155a0c9a41",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/offers-320.png",
+      "sha256": "d0661c02041d8cea684400bce409c4eb9a6eb802e5265077acddc2dc6598ba69",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/products-1280.png",
+      "sha256": "2671ef677896b2826654d428b2cbc0ff1b6e3a2107103f6ede44c8be0cbedbff",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/products-320.png",
+      "sha256": "d2a45d186ef9ebc39b4260820511d3541e788495dc67975e6ac9eab0e05e1c82",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/cep-1280.png",
+      "sha256": "a4c8235adb90154713f9a713f2bdd03fd48698f9f6fed1d679a8cbbf92f852a7",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/cep-1920.png",
+      "sha256": "8ed3451c1953c973f27181cce98a1bed69ba822ac20fd961c3a111864ec471b3",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/cep-320.png",
+      "sha256": "a6157501b284fe0ae07701729811d2d53d7a29a6548fa4cd7ea9f43f368f4584",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/cep-390.png",
+      "sha256": "f80e5d954e2c63448bac98d14b135027b9ebcfe29db49437cc68366f48b60306",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/cep-768.png",
+      "sha256": "bb6cdc3083a369ec4bf11454bf1c8a996f74002c83dadf5bd342dfef2a86a473",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/como-funciona-1280.png",
+      "sha256": "62896168a62ee65b951c9229220381a1337bd9eb0499ea0974bb645d036162b5",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/como-funciona-1920.png",
+      "sha256": "e7e93566ad8c56b45e5fce4a1b05ad06221075577f60461d8f22999d0ddf5f01",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/como-funciona-320.png",
+      "sha256": "6eae3a8e7e3c732f438a4f7797081c063d53bdc3b9bb61519227ff3e3ddb237e",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/como-funciona-390.png",
+      "sha256": "0232040421a220dd63a29378fe257965bc83e2d868a05f5cf40db1a1de9f1794",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/como-funciona-768.png",
+      "sha256": "58872a0513d8e2a1c85f5f0f95a3c21b36f39abacacfbb6774e199ec661d04b1",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/home-1280.png",
+      "sha256": "bcf30064ffe30b1265d697813fbfa2e9047cc5e8e848e3c89abac4459bdc7d18",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/home-1920.png",
+      "sha256": "3e7bd012446093b8677b49cc52fde0e495d46e4a23ca0f6c2f18519578aa3e19",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/home-320.png",
+      "sha256": "3f62d2210d9ca4ba6d04591bea4ece7387da128efbeac9765561c95672b27387",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/home-390.png",
+      "sha256": "3436f0b3d05fdf04a29a81adf9d3d9b1b3cfcf4a31465c69ee8ea4c7f19bb649",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/home-768.png",
+      "sha256": "a8cd6089a9840b5548a4102b7994eaed580d5932d4e0e6c533467faee6ff571a",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/location-1280.png",
+      "sha256": "4e952dbb1357f0d22be75d87e7ae737b90134557144b64a9f035c9f433cad0ae",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/location-1920.png",
+      "sha256": "8dbeab8945644835495f8dfa2ebf27af8b6ab4652ff52652c2d9466f880d8a51",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/location-320.png",
+      "sha256": "fdec5dadb3b9c4907d619f06e3373a173c508138dfc7a95d614c3ccad7649fcc",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/location-390.png",
+      "sha256": "4fd279b0cb9881c424c217b49f98f9103ff9355fb00b4861ee196db07ac6f2f8",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/location-768.png",
+      "sha256": "55747449afd8af7f512147448f68813175dca4fe5c3a0bad9f898063267e39c7",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/offers-1280.png",
+      "sha256": "9e0b85b6b167aecd796f0f27a92e06330e8a989bed18b35588a1ac7eebb69931",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/offers-1920.png",
+      "sha256": "f4e173008e23d59acdd4b7de73534faed8da2f583afd19318a4f7ae1fa1fb13a",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/offers-320.png",
+      "sha256": "22f13392fc4409db3b49178135e53f1d79471103628bb7e8d00660c2c142f808",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/offers-390.png",
+      "sha256": "1749385c61eb3083f48b59b6a6e3f058f49567514ae57c43e273524290e301fe",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/offers-768.png",
+      "sha256": "6c0cf6e3e9c9b04f8731f69e0085072694cd83779ee90d6c95210c8aafd4e348",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/products-1280.png",
+      "sha256": "bd9e105754034e852690e77c378aa68187f7ede5e611e33d4b435c931c1890d9",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/products-1920.png",
+      "sha256": "49ff32e2888747ea27355a8a3a11c38870c3408dd6371b65b1f20ab940e03ca1",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/products-320.png",
+      "sha256": "9f5e89a5cbb98d8966f6d4c3524bc0c921d3f7cddf3471d7fb11bcca15f79536",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/products-390.png",
+      "sha256": "ad9930a73f6e47e30288806f7eeb3257af82651801b9828add86e9c4f3d5c8cf",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/products-768.png",
+      "sha256": "b301e7784439ec0801423fdb315331169498bd0085a2bf83e4a9fbf1367d09b4",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/query-error-1280.png",
+      "sha256": "519a67e14b1c0f2fe1ea35422434594bf77132283ab25672d65ec7ba59652b6e",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/sobre-1280.png",
+      "sha256": "a3bb38c8de60bcb0fe7bc4af13915f774f6cedca3e4de1b0d175589e08a3c438",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/sobre-1920.png",
+      "sha256": "0f2d46ae1204111c5d6b70a971320df34636d5bfe98615ef8585b1acdd8a85f0",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/sobre-320.png",
+      "sha256": "b0e8b84775d20bbaaa301bc365e6cbe195d39916f4cba14b2251bf17757ef4e9",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/sobre-390.png",
+      "sha256": "fae800ca64ffd148dea5bef720e33042864bda22102114fdba7d00af129f2a0e",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/refinamento/sobre-768.png",
+      "sha256": "aad7c058f9d025514a8697f85d59d2f23658b519a210d1a4076bc9fd00a726ab",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/acessibilidade/como-funciona-focus-after-escape.png",
+      "sha256": "6326db3a125c0e100246accf582eec4ea50b482de372dcacdc449774e12e21b1",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/acessibilidade/consulta-focus-after-escape.png",
+      "sha256": "e77b8db8a04b31b2793013f31d0a0498dfe389dbd7c95ccd0fb2c804795cf9e7",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/acessibilidade/index-focus-after-escape.png",
+      "sha256": "5b5b3f5bd8807eb2fca0061f62350a8299139e5f708c972af18f3438cbaaebb5",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/acessibilidade/sobre-focus-after-escape.png",
+      "sha256": "ceaac9fd9a969ed8c8702851270420bf7d464cd877a3cf1d27f8d7b4a380b37d",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/cep-1280.png",
+      "sha256": "445ad98c76b5c92c798b4c9df81bd3eaf952e0ab5cca73a2bdf0cd07e74080a8",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/cep-1920.png",
+      "sha256": "02dd1da6438d185cb13745aa14b37ad75a9d35a1ea44072004c6b95f73479595",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/cep-320.png",
+      "sha256": "ce78843f327636510218e2f812283cba1d8f33d1a63b87af19a335f43d6c1e09",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/cep-390.png",
+      "sha256": "47d7a3feed8583c765974d51839cc88db25a8ff95895c3b4b081a1086742ae27",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/cep-768.png",
+      "sha256": "603fd5b791cc266d05c72a593f68f9fde19e2fab00a577f7817704f8e8051c04",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/como-funciona-1280.png",
+      "sha256": "f42429e3e53014b25444b68c2260e6aa7e4799077c832f85bb0eca1791c3bea1",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/como-funciona-1920.png",
+      "sha256": "4c9931810584bee98a840dd32b620e27d23cbb698756a11e80d4f611f0a358dc",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/como-funciona-320.png",
+      "sha256": "445cca1f6c0b4ba3f308b9dd1dad3fe394d93714a2d637e341e9e126162b4409",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/como-funciona-390.png",
+      "sha256": "427d554da4d69f2a605816020a583b23eceed78c3f61dc60d844915d21d9cf0c",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/como-funciona-768.png",
+      "sha256": "f62cb98ae543cdb3680512cea845f8083d16a6c33b29405e732944004b734b1f",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/finding-catalog-count.png",
+      "sha256": "ec9e9acae512b03ce2a726caf636d3127f72cdb7b9497121f96fed5ab7fddb0f",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/finding-filters.png",
+      "sha256": "7add464f937b14bba3e030b78f4b2b24ee39c71504df64670b8e668bfb8c0842",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/home-1280.png",
+      "sha256": "6b60fe31c769623e638dcb389033bc7d879a958da1b864659416ecc37f3a16f8",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/home-1920.png",
+      "sha256": "24f4e09e3f50df556f5d5f0070f47ca8e98dc60a1a99e291eb9c7631e88febbb",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/home-320.png",
+      "sha256": "0373b563b8087ab7b5040bf15a12da5ae1833615fd73b434722793d2bc2b57f9",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/home-390.png",
+      "sha256": "9ad6c626f0f9e71caefb24bed55603774efc2457cccbc9768df44cad3cb89b32",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/home-768.png",
+      "sha256": "b3a18bb6275ecae3f4d3adea668aabd2663701f00369cb7fdb5ec5f779011439",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/location-1280.png",
+      "sha256": "a97a98f93035fcae7bec8ae0ba0e929ebd6c47ce66fa2822bf377d33ec5624be",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/location-1920.png",
+      "sha256": "584fd2e0c8609efc564654c6825bc4d2296d86edcfb428408fabdae4be5be794",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/location-320.png",
+      "sha256": "f396f512ab2c4ade9d19a1ab4b53d5690e42a4b7e5f6f068ef959ac04d89e6c3",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/location-390.png",
+      "sha256": "33dddcafca6e5e3e7b1004eb281a3aa540254fbca812ccc8402ae8f3afab98ed",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/location-768.png",
+      "sha256": "aa5dce08881c5298b0fc899b4ccc8f03180cf6728d472f8d1edf39ca71896e4c",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/medicine-1001-1280.png",
+      "sha256": "ae31b6cd05a80184311436fd766a463faf2f5f2c5f33b7da835727a11b2d5497",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/medicine-1002-1280.png",
+      "sha256": "61106a049ada6584234c250b49a71ee2af68f1c267933a4e5b0f81a7915726fb",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/medicine-1003-1280.png",
+      "sha256": "267cf01a3d043896a4008e91b14257da1bf8939bde6b297752926b6d473e5abe",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/medicine-1004-1280.png",
+      "sha256": "5047c324dc0b9a17ffe0420358fc3bc5cec4f324f39a52d04c533fd831418be6",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/medicine-1005-1280.png",
+      "sha256": "813e188a5164987dd5a24555de39211ce66483290adb031ba5ae7fe90f50f3fb",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/medicine-1006-1280.png",
+      "sha256": "7fcd5294e1745e8ec9ae36b228542bed821c641480527e7ae01c8f57cfb5e229",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/offers-1280.png",
+      "sha256": "94169249d24d5e4c08aef45090d155f4e70a945da6c5bc623ee29783347f2ba2",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/offers-1920.png",
+      "sha256": "09eb38e59bf23538381ba868a441ca6476ffca1fe185fdfe3b2d23b4646fea48",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/offers-320.png",
+      "sha256": "6436d0fcb5e908e96564aa722ed3d5f852e5a13aa2f962c0f44f6372af08e67e",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/offers-390.png",
+      "sha256": "406ef2b2cee3abc420c64ce9605d6fe62032821acf6f5805be23898741c11b5c",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/offers-768.png",
+      "sha256": "96f0c3f8e6a31bbed690d3d035d0e8f7111d5fd550fb5a37411563451a9ad811",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/products-1280.png",
+      "sha256": "c396f513c3b21f464421224e778be81a7fa828d05ca79f611d9da168344b444e",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/products-1920.png",
+      "sha256": "f25d340e8d720fa9ab6393b86b9ec95a98d781f75f59cef7fa7a3524fdea8283",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/products-320.png",
+      "sha256": "dd7d16ac05d204d4c63adf19e046ed8a6182cc262cd25cd9660f32731f6826a8",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/products-390.png",
+      "sha256": "9933a9246fe91c0a8b2153bea8c379a89db8856436660f905ddde9971f213642",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/products-768.png",
+      "sha256": "46aa4d32257e64ffa9861661340f268fd9c2e492733a9ff185174854263d56b2",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/query-error-1280.png",
+      "sha256": "b7d794630a63a7da15499c36ed9016b61501a56bec28c0c10036f9481412eb72",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/sobre-1280.png",
+      "sha256": "4f1d577952cb72d4df9a3a97ac749f38be2208a3417e170288503fb8e708ceb6",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/sobre-1920.png",
+      "sha256": "27af4c2906bc626fc1e0dfbbd3d8a75a612616377e47217f38fe6fc97a51563d",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/sobre-320.png",
+      "sha256": "7cc2e512213c4a5c7cb16cb1efb75c2e652482066375054ae9764860bcaf13c9",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/sobre-390.png",
+      "sha256": "0ebcdecede444b64ad140316903e91594d8127c229c334a0e5df387a6e60240c",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/browser/sobre-768.png",
+      "sha256": "140930c9e57f49492b91005baacbac17d99bb5b5d15e3affccc7cb4e76f948b9",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/como-funciona-1280.png",
+      "sha256": "a9e1e3c370ff6de104765b1997efbaef0b68ee90081ec82faf114f8507aa01cc",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/como-funciona-320.png",
+      "sha256": "e821f82526f6bb93eb0fcd385f76f20ecbb269f1ff11e4086f006e3f358332cf",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/consulta-1280.png",
+      "sha256": "fc60ee2be5ab18cc3aaf51edd351e8b627bb7e35293324ca576e6465b3de3f2c",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/consulta-320.png",
+      "sha256": "800273d53ae777a192a0e8118c8aeb7177c4bcfc1f2ed00d5ff632de19e26c95",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/index-1280.png",
+      "sha256": "c81dc961007f0807b98899851066b934a34e1dcbc38cdf1238faec723b77ba6c",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/index-320.png",
+      "sha256": "d044db9a016cd8b429698e86761127c928e6274a15d7a124f275847222bc9716",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/sobre-1280.png",
+      "sha256": "54de2c9d5e85bb05f8e1b57a0cd8961a3a302f98dd699e87a87e03f8103b0041",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "path": "docs/evidencias/u10/homologacao/sticky/sobre-320.png",
+      "sha256": "382cf8c3b8074b106c10c354246b1557ded9204a56035c13ecc2555c4c584bd3",
+      "chunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    }
+  ],
+  "json": [
+    "docs/evidencias/u10/report.json",
+    "docs/evidencias/u10/homologacao/comandos-tecnicos.json",
+    "docs/evidencias/u10/homologacao/estado-testado.json",
+    "docs/evidencias/u10/homologacao/evidencias-inspecao.json",
+    "docs/evidencias/u10/homologacao/resultado-consolidado.json",
+    "docs/evidencias/u10/homologacao/seed-checks.json",
+    "docs/evidencias/u10/homologacao/tecnico-checks.json",
+    "docs/evidencias/u10/refinamento/report.json",
+    "docs/evidencias/u10/homologacao/acessibilidade/report.json",
+    "docs/evidencias/u10/homologacao/browser/comparacoes-observadas.json",
+    "docs/evidencias/u10/homologacao/browser/dados-observados.json",
+    "docs/evidencias/u10/homologacao/browser/report.json",
+    "docs/evidencias/u10/homologacao/browser/zoom-tentativa.json",
+    "docs/evidencias/u10/homologacao/sticky/report.json"
+  ],
+  "credentialPatternMatches": [],
+  "embeddedMetadata": [],
+  "note": "Automated pattern/metadata inspection of all evidence; visual sampling. Not a universal guarantee of absence of PII."
+}

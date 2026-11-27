@@ -11,7 +11,7 @@ const cepClose = document.getElementById('cepClose');
 const cepInput = document.getElementById('cepInput');
 const saveCep = document.getElementById('saveCep');
 
-let ultimoDisparador = null;
+let fundoInerte = [];
 
 function criarAvisoAcessivel(mensagem) {
   let aviso = document.getElementById('toastStatus');
@@ -42,20 +42,35 @@ if (locationPopup) {
 
 if (cepBox) {
   cepBox.setAttribute('role', 'dialog');
-  cepBox.setAttribute('aria-modal', 'true');
+  cepBox.setAttribute('aria-modal', 'false');
   cepBox.setAttribute('aria-label', 'Informar CEP');
 }
 
 function fecharPopupLocalizacao() {
   if (!locationPopup) return;
   locationPopup.hidden = true;
-  if (ultimoDisparador) ultimoDisparador.focus();
+  fundoInerte.forEach(([elemento, inerte]) => { elemento.inert = inerte; });
+  fundoInerte = [];
+  locOpen?.focus();
 }
 
 if (locOpen && locationPopup) {
   locOpen.addEventListener('click', () => {
-    ultimoDisparador = locOpen;
+    if (!locationPopup.hidden) return;
+    if (cepBox) cepBox.hidden = true;
     locationPopup.hidden = false;
+    // Também funciona na página em que o diálogo está dentro de main.
+    let ramo = locationPopup;
+    while (ramo.parentElement) {
+      for (const elemento of ramo.parentElement.children) {
+        if (elemento !== ramo) {
+          fundoInerte.push([elemento, elemento.inert]);
+          elemento.inert = true;
+        }
+      }
+      ramo = ramo.parentElement;
+      if (ramo === document.body) break;
+    }
     locClose?.focus();
   });
 }
@@ -83,16 +98,15 @@ if (allow) {
 
 if (cepOpen && cepBox) {
   cepOpen.addEventListener('click', () => {
-    ultimoDisparador = cepOpen;
     cepBox.hidden = false;
-    cepClose?.focus();
+    cepInput?.focus();
   });
 }
 
 if (cepClose && cepBox) {
   cepClose.addEventListener('click', () => {
     cepBox.hidden = true;
-    if (ultimoDisparador) ultimoDisparador.focus();
+    cepOpen?.focus();
   });
 }
 
@@ -112,7 +126,7 @@ if (saveCep && cepInput && cepBox) {
     cepInput.value = cepFormatado;
     cepBox.hidden = true;
     criarAvisoAcessivel(`CEP ${cepFormatado} registrado. A comparação por distância ainda não está integrada.`);
-    if (ultimoDisparador) ultimoDisparador.focus();
+    cepOpen?.focus();
   });
 }
 
@@ -129,6 +143,7 @@ if (mobileMenuButton && mobileMenu) {
   mobileMenuButton.setAttribute('type', 'button');
   mobileMenuButton.setAttribute('aria-controls', 'mobileMenu');
   mobileMenuButton.setAttribute('aria-expanded', 'false');
+  mobileMenuButton.setAttribute('aria-label', 'Abrir menu');
 
   mobileMenuButton.addEventListener('click', () => {
     const isOpen = mobileMenu.hidden;
@@ -162,9 +177,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Tab') {
     const dialogo = locationPopup && !locationPopup.hidden
       ? locationPopup
-      : cepBox && !cepBox.hidden
-        ? cepBox
-        : null;
+      : null;
 
     if (dialogo) {
       const focaveis = Array.from(dialogo.querySelectorAll(
@@ -187,11 +200,15 @@ document.addEventListener('keydown', (event) => {
   }
 
   if (event.key === 'Escape') {
-    if (locationPopup && !locationPopup.hidden) fecharPopupLocalizacao();
+    if (locationPopup && !locationPopup.hidden) {
+      event.preventDefault();
+      fecharPopupLocalizacao();
+      return;
+    }
 
     if (cepBox && !cepBox.hidden) {
       cepBox.hidden = true;
-      if (ultimoDisparador) ultimoDisparador.focus();
+      cepOpen?.focus();
     }
 
     if (mobileMenu && mobileMenuButton && !mobileMenu.hidden) {

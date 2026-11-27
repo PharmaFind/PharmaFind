@@ -1,0 +1,236 @@
+{
+  "checks": [
+    {
+      "name": "index.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharma\nfind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        },
+        {
+          "label": "Pesquisar",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        },
+        {
+          "label": "Consultar medicamentos",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "index.html: modal Escape returns to location trigger with menu previously open",
+      "passed": false,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": false
+    },
+    {
+      "name": "index.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true
+    },
+    {
+      "name": "index.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharma\nfind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        },
+        {
+          "label": "Pesquisar",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "consulta.html: modal Escape returns to location trigger with menu previously open",
+      "passed": false,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": false
+    },
+    {
+      "name": "consulta.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharmafind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html: modal Escape returns to location trigger with menu previously open",
+      "passed": false,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": false
+    },
+    {
+      "name": "como-funciona.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: primary controls and navigation contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "pharma\nfind",
+          "fg": "rgb(16, 43, 78)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 14.21
+        },
+        {
+          "label": "Consultar medicamentos",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(214, 47, 63)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "sobre.html: modal Escape returns to location trigger with menu previously open",
+      "passed": false,
+      "expected": "locationPopup.hidden && document.activeElement===locOpen",
+      "obtained": false
+    },
+    {
+      "name": "sobre.html: CEP Shift Tab reaches close button",
+      "passed": true,
+      "expected": "document.activeElement===cepClose",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement===cepOpen",
+      "obtained": true
+    },
+    {
+      "name": "offer prices, availability and addresses contrast",
+      "expected": ">=4.5:1",
+      "obtained": [
+        {
+          "label": "Endereço fictício 01 - Ponte Alta, Gama/DF",
+          "fg": "rgb(82, 100, 119)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 6.09
+        },
+        {
+          "label": "Disponível",
+          "fg": "rgb(23, 99, 68)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 7.23
+        },
+        {
+          "label": "R$ 15,90",
+          "fg": "rgb(214, 47, 63)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 4.84
+        },
+        {
+          "label": "Endereço fictício 02 - Setor Leste, Gama/DF",
+          "fg": "rgb(82, 100, 119)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 6.09
+        },
+        {
+          "label": "Disponível",
+          "fg": "rgb(23, 99, 68)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 7.23
+        },
+        {
+          "label": "R$ 15,90",
+          "fg": "rgb(214, 47, 63)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 4.84
+        },
+        {
+          "label": "Endereço fictício 04 - Setor Sul, Gama/DF",
+          "fg": "rgb(82, 100, 119)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 6.09
+        },
+        {
+          "label": "Disponível",
+          "fg": "rgb(23, 99, 68)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 7.23
+        },
+        {
+          "label": "R$ 18,50",
+          "fg": "rgb(214, 47, 63)",
+          "bg": "rgb(255, 255, 255)",
+          "ratio": 4.84
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "jsErrors": [],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/158.0.8127.92",
+    "revision": "@80c75da68097f674d782368eae87463b89d1720",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+    "jsVersion": "15.8.62.31"
+  },
+  "networkErrors": [
+    {
+      "method": "Log.entryAdded",
+      "params": {
+        "entry": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "timestamp": 1795749405234.637,
+          "url": "http://127.0.0.1:59261/favicon.ico",
+          "networkRequestId": "15664.33"
+        }
+      }
+    }
+  ]
+}

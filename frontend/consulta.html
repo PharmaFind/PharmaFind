@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 
 <head>
   <meta charset="utf-8">
@@ -32,10 +32,7 @@
 
       max-width: 760px;
 
-      padding:
-        4rem
-        0
-        2rem;
+      padding: 1.5rem 0 1rem;
 
     }
 
@@ -63,28 +60,31 @@
       color: var(--pf-navy);
 
       font-family:
-        "Playfair Display",
-        serif;
+        "DM Sans",
+        sans-serif;
 
       font-size:
         clamp(
-          2.5rem,
-          5vw,
-          4.5rem
+          1.6rem,
+          3vw,
+          2.1rem
         );
 
-      line-height: 1;
+      line-height: 1.2;
 
-      letter-spacing: -0.04em;
+      letter-spacing: -0.02em;
 
     }
 
 
     .consulta-header p {
 
+      margin-bottom: 0;
+
       color: var(--pf-muted);
 
-      line-height: 1.7;
+      font-size: 0.9rem;
+      line-height: 1.5;
 
     }
 
@@ -95,7 +95,7 @@
 
       gap: 0.8rem;
 
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
 
       padding: 1.25rem;
 
@@ -114,6 +114,8 @@
 
 
     .search-panel label {
+
+      margin: 0;
 
       min-width: 0;
 
@@ -139,12 +141,20 @@
 
     }
 
+    .search-panel > button {
+      align-self: end;
+    }
+
     .comparison-panel {
       margin-bottom: 2rem;
-      padding: 1.25rem;
-      background: white;
-      border: 1px solid var(--pf-border);
-      border-radius: 18px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+    }
+
+    /* O medicamento selecionado substitui a introdução no estado de comparação. */
+    #conteudo-principal:has(> #comparisonPanel:not([hidden])) > .consulta-header {
+      display: none;
     }
 
     .comparison-header {
@@ -152,7 +162,12 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
+      padding: 14px;
+      border-radius: 12px;
+      background: var(--pf-navy);
+      color: var(--pf-white);
     }
 
     .comparison-header h2,
@@ -161,28 +176,48 @@
     }
 
     .comparison-header h2 {
-      color: var(--pf-navy);
-      font-family: "Playfair Display", serif;
+      font-size: clamp(1.2rem, 3vw, 1.45rem);
+      line-height: 1.3;
+      color: var(--pf-white);
+      font-family: "DM Sans", sans-serif;
     }
 
     .comparison-header p {
-      color: var(--pf-muted);
+      margin-top: 0.25rem;
+      color: var(--pf-white);
+      font-size: 0.85rem;
+    }
+
+    .comparison-header > div {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .comparison-header > button {
+      flex-shrink: 0;
+    }
+
+    .comparison-header > button:focus-visible {
+      outline-color: var(--pf-white);
     }
 
     .offers-list {
       display: grid;
-      gap: 0.75rem;
+      gap: 14px;
     }
 
     .offer-card {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      margin: 0;
       gap: 0.8rem;
-      padding: 1rem;
+      padding: 14px;
       background: #fff;
       color: var(--pf-navy);
       border: 1px solid var(--pf-border);
       border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(16, 43, 78, 0.04);
     }
 
     .offer-card.unavailable {
@@ -197,6 +232,9 @@
 
     .offer-card h3 {
       color: var(--pf-navy);
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-bottom: 0.2rem;
     }
 
     .offer-card .product-description {
@@ -215,7 +253,7 @@
 
     #searchInput {
 
-      background: #f5f8fc;
+      background: var(--pf-white);
 
       border:
         1px solid #cbd5e1;
@@ -231,7 +269,7 @@
 
     #searchInput::placeholder {
 
-      color: #718096;
+      color: #5f6f82;
 
       opacity: 1;
 
@@ -242,7 +280,7 @@
 
       border-color: #9fb1c4;
 
-      background: #f9fbfd;
+      background: var(--pf-white);
 
     }
 
@@ -275,8 +313,8 @@
       justify-content: space-between;
       align-items: center;
 
-      gap: 1rem;
-
+      gap: 0.5rem 1rem;
+      flex-wrap: wrap;
       margin-bottom: 1rem;
 
     }
@@ -285,13 +323,18 @@
     .results-header h2 {
 
       margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
 
       color: var(--pf-navy);
 
       font-family:
-        "Playfair Display",
-        serif;
+        "DM Sans",
+        sans-serif;
 
+    }
+
+    #resultsCount {
+      font-size: 0.85rem;
     }
 
 
@@ -299,13 +342,9 @@
 
       display: grid;
 
-      grid-template-columns:
-        repeat(
-          5,
-          minmax(0, 1fr)
-        );
-
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+      gap: 16px;
+      align-items: stretch;
 
     }
 
@@ -315,10 +354,11 @@
       display: flex;
 
       min-width: 0;
+      max-width: 260px;
+      margin: 0;
+      padding: 14px;
 
       flex-direction: column;
-
-      overflow: hidden;
 
       background: white;
 
@@ -349,14 +389,10 @@
 
     .product-card img {
 
-      width: calc(100% - 1.2rem);
-
-      height: 150px;
-
-      margin:
-        0.6rem
-        0.6rem
-        0;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      height: auto;
+      margin: 0;
 
       border-radius: 12px;
 
@@ -373,13 +409,12 @@
 
       display: flex;
 
-      height: 100%;
+      flex: 1;
 
       flex-direction: column;
 
-      gap: 0.45rem;
-
-      padding: 0.7rem;
+      gap: 0.35rem;
+      padding: 0.75rem 0 0;
 
     }
 
@@ -441,9 +476,9 @@
 
     .product-price {
 
-      margin-top: auto;
-
-      padding-top: 0.35rem;
+      margin: 0;
+      padding: 0;
+      align-self: center;
 
       color: var(--pf-red);
 
@@ -462,7 +497,8 @@
 
       justify-content: center;
 
-      margin-top: 0.25rem;
+      margin: auto 0 0;
+      min-height: 44px;
 
       padding:
         0.5rem
@@ -485,7 +521,7 @@
 
     .empty-message {
 
-      padding: 3rem;
+      padding: 1.25rem 0.75rem;
 
       text-align: center;
 
@@ -517,70 +553,18 @@
     }
 
 
-    @media (max-width: 1100px) {
-
-      .products-grid {
-
-        grid-template-columns:
-          repeat(
-            4,
-            minmax(0, 1fr)
-          );
-
-      }
-
-
-      .search-panel {
-
-        grid-template-columns:
-          repeat(
-            2,
-            minmax(0, 1fr)
-          );
-
-      }
-
-
-      .search-panel label:first-child {
-
-        grid-column:
-          1 / -1;
-
-      }
-
-    }
-
-
-    @media (max-width: 800px) {
-
-      .products-grid {
-
-        grid-template-columns:
-          repeat(
-            2,
-            minmax(0, 1fr)
-          );
-
-      }
-
-    }
-
-
     @media (max-width: 560px) {
 
       .consulta-header {
 
-        padding:
-          3rem
-          0
-          1.5rem;
+        padding: 1.25rem 0 1rem;
 
       }
 
 
       .consulta-header h1 {
 
-        font-size: 2.5rem;
+        font-size: 1.6rem;
 
       }
 
@@ -588,50 +572,17 @@
         grid-template-columns: 1fr;
       }
 
-      .comparison-header,
+      .comparison-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
       .offer-card {
         grid-template-columns: 1fr;
       }
-
-
-      .search-panel {
-
-        grid-template-columns: 1fr;
-
+      .offer-card .product-price {
+        justify-self: start;
       }
-
-
-      .search-panel label:first-child {
-
-        grid-column: auto;
-
-      }
-
-
-      .products-grid {
-
-        gap: 0.65rem;
-
-      }
-
-
-      .product-content {
-
-        padding: 0.7rem;
-
-      }
-
-    }
-
-
-    @media (max-width: 390px) {
-
-      .products-grid {
-
-        grid-template-columns: 1fr;
-
-      }
-
     }
 
 
@@ -650,6 +601,7 @@
     }
 
   </style>
+  <link rel="icon" type="image/svg+xml" href="medicamento-placeholder.svg">
 </head>
 
 
@@ -657,7 +609,7 @@
 
   <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
 
-  <main class="container" id="conteudo-principal">
+  <main class="container">
 
     <div class="utility">
 
@@ -778,7 +730,8 @@
     </div>
 
 
-    <header class="consulta-header" id="conteudo-principal" tabindex="-1">
+    <div id="conteudo-principal" tabindex="-1">
+    <header class="consulta-header">
 
       <span>
         CONSULTA DE MEDICAMENTOS
@@ -813,11 +766,11 @@
 
         <div class="results-header">
 
-          <h2>
-            Apresentações encontradas
+          <h2 id="resultsTitle">
+            Pesquisa de medicamentos
           </h2>
 
-          <span id="resultsCount">6 apresentações</span>
+          <span id="resultsCount" role="status"></span>
 
         </div>
 
@@ -830,11 +783,24 @@
 
 
         <p
+          id="initialState"
+          class="empty-message"
+          role="status"
+        >
+          Digite o nome de um medicamento para encontrar suas apresentações.
+        </p>
+
+        <p
           id="loadingState"
           class="empty-message"
           hidden
         >
           Buscando medicamentos
+        </p>
+
+        <!-- Estado reservado para falhas reais da futura integração HTTP. -->
+        <p id="errorState" class="empty-message query-error" role="alert" hidden>
+          Não foi possível consultar os medicamentos. Tente pesquisar novamente.
         </p>
 
 
@@ -853,9 +819,12 @@
     <section
       id="comparisonPanel"
       class="comparison-panel"
+      tabindex="-1"
+      aria-labelledby="comparisonTitle"
       aria-live="polite"
       hidden
     ></section>
+    </div>
 
 
     <aside class="academic-notice">

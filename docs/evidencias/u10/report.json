@@ -1,0 +1,696 @@
+{
+  "checks": [
+    {
+      "name": "home 320: Pico loaded",
+      "passed": true
+    },
+    {
+      "name": "home 320: search in first viewport",
+      "passed": true
+    },
+    {
+      "name": "home 320: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "home 320: search precedes banner",
+      "passed": true
+    },
+    {
+      "name": "products 320: two presentations, no public IDs",
+      "passed": true
+    },
+    {
+      "name": "products 320: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "products 320: compact cards",
+      "passed": true
+    },
+    {
+      "name": "products 320: buttons aligned within row",
+      "passed": true
+    },
+    {
+      "name": "offers 320: focus transferred",
+      "passed": true
+    },
+    {
+      "name": "offers 320: no overflow",
+      "passed": true
+    },
+    {
+      "name": "offers 320: compact and 14px gap",
+      "passed": true
+    },
+    {
+      "name": "CEP 320: nonmodal and fits viewport",
+      "passed": true
+    },
+    {
+      "name": "location 320: fits viewport",
+      "passed": true
+    },
+    {
+      "name": "home 390: Pico loaded",
+      "passed": true
+    },
+    {
+      "name": "home 390: search in first viewport",
+      "passed": true
+    },
+    {
+      "name": "home 390: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "home 390: search precedes banner",
+      "passed": true
+    },
+    {
+      "name": "products 390: two presentations, no public IDs",
+      "passed": true
+    },
+    {
+      "name": "products 390: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "products 390: compact cards",
+      "passed": true
+    },
+    {
+      "name": "products 390: buttons aligned within row",
+      "passed": true
+    },
+    {
+      "name": "offers 390: focus transferred",
+      "passed": true
+    },
+    {
+      "name": "offers 390: no overflow",
+      "passed": true
+    },
+    {
+      "name": "offers 390: compact and 14px gap",
+      "passed": true
+    },
+    {
+      "name": "CEP 390: nonmodal and fits viewport",
+      "passed": true
+    },
+    {
+      "name": "location 390: fits viewport",
+      "passed": true
+    },
+    {
+      "name": "home 768: Pico loaded",
+      "passed": true
+    },
+    {
+      "name": "home 768: search in first viewport",
+      "passed": true
+    },
+    {
+      "name": "home 768: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "home 768: search precedes banner",
+      "passed": true
+    },
+    {
+      "name": "products 768: two presentations, no public IDs",
+      "passed": true
+    },
+    {
+      "name": "products 768: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "products 768: compact cards",
+      "passed": true
+    },
+    {
+      "name": "products 768: buttons aligned within row",
+      "passed": true
+    },
+    {
+      "name": "offers 768: focus transferred",
+      "passed": true
+    },
+    {
+      "name": "offers 768: no overflow",
+      "passed": true
+    },
+    {
+      "name": "offers 768: compact and 14px gap",
+      "passed": true
+    },
+    {
+      "name": "offers 768: price centered",
+      "passed": true
+    },
+    {
+      "name": "CEP 768: nonmodal and fits viewport",
+      "passed": true
+    },
+    {
+      "name": "location 768: fits viewport",
+      "passed": true
+    },
+    {
+      "name": "home 1280: Pico loaded",
+      "passed": true
+    },
+    {
+      "name": "home 1280: search in first viewport",
+      "passed": true
+    },
+    {
+      "name": "home 1280: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "home 1280: search precedes banner",
+      "passed": true
+    },
+    {
+      "name": "products 1280: two presentations, no public IDs",
+      "passed": true
+    },
+    {
+      "name": "products 1280: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "products 1280: compact cards",
+      "passed": true
+    },
+    {
+      "name": "products 1280: buttons aligned within row",
+      "passed": true
+    },
+    {
+      "name": "offers 1280: focus transferred",
+      "passed": true
+    },
+    {
+      "name": "offers 1280: no overflow",
+      "passed": true
+    },
+    {
+      "name": "offers 1280: compact and 14px gap",
+      "passed": true
+    },
+    {
+      "name": "offers 1280: price centered",
+      "passed": true
+    },
+    {
+      "name": "CEP 1280: nonmodal and fits viewport",
+      "passed": true
+    },
+    {
+      "name": "location 1280: fits viewport",
+      "passed": true
+    },
+    {
+      "name": "home 1920: Pico loaded",
+      "passed": true
+    },
+    {
+      "name": "home 1920: search in first viewport",
+      "passed": true
+    },
+    {
+      "name": "home 1920: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "home 1920: search precedes banner",
+      "passed": true
+    },
+    {
+      "name": "products 1920: two presentations, no public IDs",
+      "passed": true
+    },
+    {
+      "name": "products 1920: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "products 1920: compact cards",
+      "passed": true
+    },
+    {
+      "name": "products 1920: buttons aligned within row",
+      "passed": true
+    },
+    {
+      "name": "offers 1920: focus transferred",
+      "passed": true
+    },
+    {
+      "name": "offers 1920: no overflow",
+      "passed": true
+    },
+    {
+      "name": "offers 1920: compact and 14px gap",
+      "passed": true
+    },
+    {
+      "name": "offers 1920: price centered",
+      "passed": true
+    },
+    {
+      "name": "CEP 1920: nonmodal and fits viewport",
+      "passed": true
+    },
+    {
+      "name": "location 1920: fits viewport",
+      "passed": true
+    },
+    {
+      "name": "home search via button",
+      "passed": true
+    },
+    {
+      "name": "home search via Enter",
+      "passed": true
+    },
+    {
+      "name": "initial state distinct from no results",
+      "passed": true
+    },
+    {
+      "name": "search 'Dipi'",
+      "passed": true
+    },
+    {
+      "name": "search 'Dipirona'",
+      "passed": true
+    },
+    {
+      "name": "search 'zzzz-inexistente'",
+      "passed": true
+    },
+    {
+      "name": "search ''",
+      "passed": true
+    },
+    {
+      "name": "medicine 1001: offers, availability, exact prices",
+      "passed": true
+    },
+    {
+      "name": "medicine 1001: no public ID",
+      "passed": true
+    },
+    {
+      "name": "medicine 1001: return to search and focus",
+      "passed": true
+    },
+    {
+      "name": "medicine 1002: offers, availability, exact prices",
+      "passed": true
+    },
+    {
+      "name": "medicine 1002: no public ID",
+      "passed": true
+    },
+    {
+      "name": "medicine 1002: return to search and focus",
+      "passed": true
+    },
+    {
+      "name": "medicine 1003: offers, availability, exact prices",
+      "passed": true
+    },
+    {
+      "name": "all unavailable message",
+      "passed": true
+    },
+    {
+      "name": "medicine 1003: no public ID",
+      "passed": true
+    },
+    {
+      "name": "medicine 1003: return to search and focus",
+      "passed": true
+    },
+    {
+      "name": "medicine 1004: offers, availability, exact prices",
+      "passed": true
+    },
+    {
+      "name": "no offers message and focus",
+      "passed": true
+    },
+    {
+      "name": "medicine 1004: no public ID",
+      "passed": true
+    },
+    {
+      "name": "medicine 1004: return to search and focus",
+      "passed": true
+    },
+    {
+      "name": "medicine 1006: offers, availability, exact prices",
+      "passed": true
+    },
+    {
+      "name": "medicine 1006: no public ID",
+      "passed": true
+    },
+    {
+      "name": "medicine 1006: return to search and focus",
+      "passed": true
+    },
+    {
+      "name": "invalid CEP stays open and focuses input",
+      "passed": true
+    },
+    {
+      "name": "valid CEP formats, closes, returns focus",
+      "passed": true
+    },
+    {
+      "name": "CEP Tab can leave nonmodal dialog",
+      "passed": true
+    },
+    {
+      "name": "CEP Escape returns focus",
+      "passed": true
+    },
+    {
+      "name": "modal Tab wraps and background inert",
+      "passed": true
+    },
+    {
+      "name": "modal Shift Tab wraps",
+      "passed": true
+    },
+    {
+      "name": "location Escape restores focus and background",
+      "passed": true
+    },
+    {
+      "name": "denied GPS is handled",
+      "passed": true
+    },
+    {
+      "name": "image fallback loads",
+      "passed": true
+    },
+    {
+      "name": "placeholder contrast color",
+      "passed": true
+    },
+    {
+      "name": "select another presentation through its button",
+      "passed": true
+    },
+    {
+      "name": "catalog 320: 5 cards and no overflow",
+      "passed": true
+    },
+    {
+      "name": "catalog 320: actions align within every row",
+      "passed": true
+    },
+    {
+      "name": "catalog 390: 5 cards and no overflow",
+      "passed": true
+    },
+    {
+      "name": "catalog 390: actions align within every row",
+      "passed": true
+    },
+    {
+      "name": "catalog 768: 5 cards and no overflow",
+      "passed": true
+    },
+    {
+      "name": "catalog 768: actions align within every row",
+      "passed": true
+    },
+    {
+      "name": "catalog 1280: 5 cards and no overflow",
+      "passed": true
+    },
+    {
+      "name": "catalog 1280: actions align within every row",
+      "passed": true
+    },
+    {
+      "name": "catalog 1920: 5 cards and no overflow",
+      "passed": true
+    },
+    {
+      "name": "catalog 1920: actions align within every row",
+      "passed": true
+    },
+    {
+      "name": "buttons align with different content lengths",
+      "passed": true
+    },
+    {
+      "name": "keyboard action has visible outline",
+      "passed": true
+    },
+    {
+      "name": "keyboard selects medicine and focuses comparison",
+      "passed": true
+    },
+    {
+      "name": "keyboard returns to search",
+      "passed": true
+    },
+    {
+      "name": "reserved error state visible and legible",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html 320: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "sobre.html 320: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html 390: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "sobre.html 390: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html 768: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "sobre.html 768: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html 1280: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "sobre.html 1280: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html 1920: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "sobre.html 1920: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "index.html: unique IDs",
+      "passed": true
+    },
+    {
+      "name": "index.html: skip bypasses navigation",
+      "passed": true
+    },
+    {
+      "name": "index.html: mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "index.html: mobile menu Escape and focus",
+      "passed": true
+    },
+    {
+      "name": "index.html: modal restores inert elements",
+      "passed": true
+    },
+    {
+      "name": "consulta.html: unique IDs",
+      "passed": true
+    },
+    {
+      "name": "consulta.html: skip bypasses navigation",
+      "passed": true
+    },
+    {
+      "name": "consulta.html: mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "consulta.html: mobile menu Escape and focus",
+      "passed": true
+    },
+    {
+      "name": "consulta.html: modal restores inert elements",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html: unique IDs",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html: skip bypasses navigation",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html: mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html: mobile menu Escape and focus",
+      "passed": true
+    },
+    {
+      "name": "como-funciona.html: modal restores inert elements",
+      "passed": true
+    },
+    {
+      "name": "sobre.html: unique IDs",
+      "passed": true
+    },
+    {
+      "name": "sobre.html: skip bypasses navigation",
+      "passed": true
+    },
+    {
+      "name": "sobre.html: mobile menu opens",
+      "passed": true
+    },
+    {
+      "name": "sobre.html: mobile menu Escape and focus",
+      "passed": true
+    },
+    {
+      "name": "sobre.html: modal restores inert elements",
+      "passed": true
+    },
+    {
+      "name": "no JavaScript console errors",
+      "passed": true
+    }
+  ],
+  "metrics": [
+    {
+      "page": "home",
+      "width": 320,
+      "searchBottom": 393.53125
+    },
+    {
+      "page": "offers",
+      "width": 320,
+      "heights": [
+        155.09375,
+        155.09375
+      ]
+    },
+    {
+      "page": "home",
+      "width": 390,
+      "searchBottom": 393.53125
+    },
+    {
+      "page": "offers",
+      "width": 390,
+      "heights": [
+        138.734375,
+        138.734375
+      ]
+    },
+    {
+      "page": "home",
+      "width": 768,
+      "searchBottom": 323.703125
+    },
+    {
+      "page": "offers",
+      "width": 768,
+      "heights": [
+        104.171875,
+        104.171875
+      ]
+    },
+    {
+      "page": "home",
+      "width": 1280,
+      "searchBottom": 354.90625
+    },
+    {
+      "page": "offers",
+      "width": 1280,
+      "heights": [
+        112.421875,
+        112.421875
+      ]
+    },
+    {
+      "page": "home",
+      "width": 1920,
+      "searchBottom": 358.578125
+    },
+    {
+      "page": "offers",
+      "width": 1920,
+      "heights": [
+        112.421875,
+        112.421875
+      ]
+    }
+  ],
+  "jsErrors": [],
+  "networkErrors": [
+    {
+      "method": "Log.entryAdded",
+      "params": {
+        "entry": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "timestamp": 1795747102767.851,
+          "url": "http://127.0.0.1:58162/favicon.ico",
+          "networkRequestId": "30252.33"
+        }
+      }
+    },
+    {
+      "method": "Log.entryAdded",
+      "params": {
+        "entry": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "timestamp": 1795747109791.311,
+          "url": "http://127.0.0.1:58162/missing-u10-test.png",
+          "networkRequestId": "30252.491"
+        }
+      }
+    }
+  ]
+}

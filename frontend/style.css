@@ -6,16 +6,16 @@
 
   --pf-red: #d62f3f;
 
-  --pf-background: #f7f8fa;
+  --pf-background: #e8edf3;
   --pf-white: #ffffff;
 
   --pf-text: #172033;
-  --pf-muted: #697586;
+  --pf-muted: #526477;
 
-  --pf-border: #e5eaf0;
+  --pf-border: #cdd7e3;
 
   --pf-shadow:
-    0 22px 60px rgba(16, 43, 78, 0.09);
+    0 8px 24px rgba(16, 43, 78, 0.08);
 }
 
 input::placeholder,
@@ -32,18 +32,14 @@ textarea::placeholder {
 }
 
 html {
+  background: var(--pf-background);
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
 
-  background:
-    linear-gradient(
-      180deg,
-      #fdfcfb 0%,
-      var(--pf-background) 100%
-    );
+  background: var(--pf-background);
 
   color: var(--pf-text);
 
@@ -54,7 +50,6 @@ body {
     BlinkMacSystemFont,
     sans-serif;
 
-  overflow-x: hidden;
 }
 
 h1,
@@ -172,7 +167,7 @@ body > main.container {
 nav.container-fluid {
   position: sticky;
 
-  top: 0;
+  top: 14px;
 
   z-index: 20;
 
@@ -189,18 +184,15 @@ nav.container-fluid {
 
   padding:
     0.8rem
-    0;
+    clamp(0.75rem, 2vw, 1.25rem);
 
-  background:
-    rgba(255, 255, 255, 0.96);
+  background: var(--pf-white);
 
   backdrop-filter: blur(15px);
 
-  border-top:
-    1px solid var(--pf-border);
-
-  border-bottom:
-    1px solid var(--pf-border);
+  border: 1px solid var(--pf-border);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(16, 43, 78, 0.1);
 }
 
 nav.container-fluid ul {
@@ -516,12 +508,12 @@ nav.container-fluid a {
 .hero {
   position: relative;
 
-  min-height: 490px;
+  min-height: 0;
 
   margin:
-    1.2rem
+    1rem
     0
-    3.5rem;
+    2rem;
 
   overflow: hidden;
 
@@ -567,9 +559,9 @@ nav.container-fluid a {
 
   padding:
     clamp(
-      2.3rem,
-      6vw,
-      5rem
+      1.25rem,
+      3vw,
+      2rem
     );
 
   color:
@@ -595,7 +587,7 @@ nav.container-fluid a {
   letter-spacing: 0.12em;
 }
 
-.hero h1 {
+.hero h2 {
   max-width: 620px;
 
   margin:
@@ -612,12 +604,12 @@ nav.container-fluid a {
 
   font-size:
     clamp(
-      2.7rem,
-      5.5vw,
-      5rem
+      1.6rem,
+      3vw,
+      2.3rem
     );
 
-  line-height: 0.99;
+  line-height: 1.1;
 
   letter-spacing: -0.04em;
 }
@@ -630,9 +622,9 @@ nav.container-fluid a {
   color:
     rgba(255, 255, 255, 0.88);
 
-  font-size: 1rem;
+  font-size: 0.9rem;
 
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .hero-buttons {
@@ -1585,6 +1577,12 @@ footer.container {
       center;
   }
 
+  .mobile-menu {
+    position: sticky;
+    top: calc(14px + 5rem);
+    z-index: 19;
+  }
+
   nav.container-fluid {
     display:
       flex;
@@ -1598,7 +1596,7 @@ footer.container {
 
   .hero {
     min-height:
-      450px;
+      0;
   }
 
   .hero::after {
@@ -1613,7 +1611,7 @@ footer.container {
 
   .hero-content {
     position:
-      absolute;
+      relative;
 
     left:
       0;
@@ -1690,7 +1688,7 @@ footer.container {
 
     padding:
       0.65rem
-      0;
+      0.75rem;
   }
 
   .brand {
@@ -1700,7 +1698,7 @@ footer.container {
 
   .hero {
     min-height:
-      430px;
+      0;
 
     margin-top:
       0.8rem;
@@ -1717,12 +1715,12 @@ footer.container {
       1.25rem;
   }
 
-  .hero h1 {
+  .hero h2 {
     font-size:
       clamp(
-        2.2rem,
-        11vw,
-        3rem
+        1.6rem,
+        6vw,
+        2rem
       );
 
     line-height:
@@ -1842,12 +1840,12 @@ footer.container {
 
   .hero {
     min-height:
-      450px;
+      0;
   }
 
-  .hero h1 {
+  .hero h2 {
     font-size:
-      2.15rem;
+      1.6rem;
   }
 
   .cep-form {
@@ -1980,15 +1978,34 @@ nav.container-fluid a.nav-account-button:focus {
   color: var(--pf-white);
 }
 
-/* busca principal do hero */
+/* Pesquisa principal, antes do banner promocional. */
+.home-search {
+  margin: 1rem 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--pf-border);
+  border-top: 4px solid var(--pf-red);
+  border-radius: 18px;
+  background: var(--pf-white);
+  box-shadow: 0 4px 16px rgba(16, 43, 78, 0.05);
+}
+
+.home-search h1 {
+  margin: 0 0 0.5rem;
+  color: var(--pf-navy);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  line-height: 1.15;
+}
+
+.home-search > p {
+  margin: 0 0 1rem;
+  color: var(--pf-muted);
+  font-size: 0.9rem;
+}
+
 .hero-search {
   width: 100%;
-  max-width: 620px;
-  margin-top: 1.25rem;
-  padding: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.48);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.96);
+  margin: 0;
 }
 
 .hero-search label {
@@ -2006,6 +2023,7 @@ nav.container-fluid a.nav-account-button:focus {
 }
 
 .hero-search input {
+  min-width: 0;
   height: 44px;
   margin: 0;
   border: 1px solid var(--pf-border);
@@ -2023,6 +2041,38 @@ nav.container-fluid a.nav-account-button:focus {
   background: var(--pf-red);
   color: var(--pf-white);
   font-weight: 800;
+}
+
+@media (max-width: 560px) {
+  .hero-search-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+#conteudo-principal,
+.comparison-panel {
+  scroll-margin-top: 5rem;
+}
+
+.query-error {
+  border: 1px solid var(--pf-red);
+  border-radius: 12px;
+  background: #fff4f5;
+  color: var(--pf-navy);
+}
+
+/* Conteúdo dos diálogos continua acessível em janelas baixas/zoom. */
+.popup {
+  overflow-y: auto;
+}
+
+.cep-box {
+  max-height: calc(100dvh - 90px);
+  overflow-y: auto;
+}
+
+.cep-box h3 {
+  padding-right: 1rem;
 }
 
 .offer-button {
@@ -2088,6 +2138,6 @@ button:disabled,
 .mobile-menu-button:focus-visible,
 .utility-button:focus-visible,
 .offer-button:focus-visible {
-  outline: 3px solid #ffd166;
+  outline: 3px solid var(--pf-navy);
   outline-offset: 3px;
 }

@@ -1,0 +1,50 @@
+[
+  {
+    "suite": "browser",
+    "name": "public instructions do not promise missing filters",
+    "before": false,
+    "after": true,
+    "expected": "!/utilize os filtros/i.test(document.body.innerText)",
+    "obtained": true
+  },
+  {
+    "suite": "browser",
+    "name": "institutional catalog count agrees with six medicines",
+    "before": false,
+    "after": true,
+    "expected": "!/dez medicamentos/i.test(document.body.innerText)",
+    "obtained": true
+  },
+  {
+    "suite": "acessibilidade",
+    "name": "index.html: modal Escape returns to location trigger with menu previously open",
+    "before": false,
+    "after": true,
+    "expected": "locationPopup.hidden && document.activeElement===locOpen",
+    "obtained": true
+  },
+  {
+    "suite": "acessibilidade",
+    "name": "consulta.html: modal Escape returns to location trigger with menu previously open",
+    "before": false,
+    "after": true,
+    "expected": "locationPopup.hidden && document.activeElement===locOpen",
+    "obtained": true
+  },
+  {
+    "suite": "acessibilidade",
+    "name": "como-funciona.html: modal Escape returns to location trigger with menu previously open",
+    "before": false,
+    "after": true,
+    "expected": "locationPopup.hidden && document.activeElement===locOpen",
+    "obtained": true
+  },
+  {
+    "suite": "acessibilidade",
+    "name": "sobre.html: modal Escape returns to location trigger with menu previously open",
+    "before": false,
+    "after": true,
+    "expected": "locationPopup.hidden && document.activeElement===locOpen",
+    "obtained": true
+  }
+]

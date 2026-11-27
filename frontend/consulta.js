@@ -35,6 +35,8 @@ const searchStep = document.getElementById("searchStep");
 const productsGrid = document.getElementById("productsGrid");
 const resultsCount = document.getElementById("resultsCount");
 const emptyState = document.getElementById("emptyState");
+const initialState = document.getElementById("initialState");
+const resultsTitle = document.getElementById("resultsTitle");
 const comparisonPanel = document.getElementById("comparisonPanel");
 
 let medicamentoSelecionadoId = null;
@@ -59,12 +61,17 @@ function limparSelecao() {
 
 function atualizarProdutos() {
   const termo = searchInput.value.toLocaleLowerCase("pt-BR").trim();
+  productsGrid.replaceChildren();
+  initialState.hidden = Boolean(termo);
+  emptyState.hidden = true;
+  resultsTitle.textContent = termo ? "Apresentações encontradas" : "Pesquisa de medicamentos";
+  resultsCount.textContent = "";
+  if (!termo) return;
+
   const resultados = medicamentos.filter((medicamento) => {
     const texto = `${medicamento.id} ${medicamento.nome} ${medicamento.dosagem} ${medicamento.apresentacao}`;
     return !termo || texto.toLocaleLowerCase("pt-BR").includes(termo);
   });
-
-  productsGrid.replaceChildren();
 
   resultados.forEach((medicamento) => {
     const card = document.createElement("article");
@@ -81,8 +88,8 @@ function atualizarProdutos() {
     const conteudo = document.createElement("div");
     conteudo.className = "product-content";
     conteudo.append(
-      criarElemento("span", "product-type", `ID ${medicamento.id}`),
-      criarElemento("h3", "", `${medicamento.nome} ${medicamento.dosagem}`),
+      criarElemento("h3", "", medicamento.nome),
+      criarElemento("p", "product-description", medicamento.dosagem),
       criarElemento("p", "product-description", medicamento.apresentacao)
     );
 
@@ -90,6 +97,7 @@ function atualizarProdutos() {
     botao.type = "button";
     botao.className = "offer-button";
     botao.textContent = "Ver ofertas";
+    botao.setAttribute("aria-label", `Ver ofertas de ${medicamento.nome} ${medicamento.dosagem}, ${medicamento.apresentacao}`);
     botao.addEventListener("click", () => selecionarMedicamento(medicamento.id));
     conteudo.appendChild(botao);
 
@@ -99,7 +107,7 @@ function atualizarProdutos() {
 
   resultsCount.textContent = `${resultados.length} ${resultados.length === 1 ? "apresentação" : "apresentações"}`;
   emptyState.hidden = resultados.length !== 0;
-  emptyState.textContent = "Nenhum medicamento encontrado.";
+  emptyState.textContent = "Nenhum medicamento encontrado. Confira o nome ou tente outro termo.";
 }
 
 function pesquisarNovamente(event) {
@@ -120,9 +128,11 @@ function selecionarMedicamento(id) {
   cabecalho.className = "comparison-header";
 
   const identificacao = document.createElement("div");
+  const titulo = criarElemento("h2", "", `Ofertas — ${medicamento.nome} ${medicamento.dosagem}`);
+  titulo.id = "comparisonTitle";
   identificacao.append(
-    criarElemento("h2", "", `Ofertas — ${medicamento.nome} ${medicamento.dosagem}`),
-    criarElemento("p", "", `ID ${medicamento.id} — ${medicamento.apresentacao}`)
+    titulo,
+    criarElemento("p", "", medicamento.apresentacao)
   );
 
   const voltar = document.createElement("button");
@@ -135,6 +145,7 @@ function selecionarMedicamento(id) {
   });
   cabecalho.append(identificacao, voltar);
   comparisonPanel.appendChild(cabecalho);
+  comparisonPanel.focus();
 
   if (ofertasDoMedicamento.length === 0) {
     comparisonPanel.appendChild(criarElemento("p", "empty-message", "Nenhuma oferta cadastrada."));
@@ -171,7 +182,6 @@ function selecionarMedicamento(id) {
   });
 
   comparisonPanel.appendChild(lista);
-  comparisonPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 searchForm.addEventListener("submit", pesquisarNovamente);

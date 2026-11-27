@@ -160,6 +160,15 @@
       margin: 0;
     }
 
+    .comparison-header h2 {
+      color: var(--pf-navy);
+      font-family: "Playfair Display", serif;
+    }
+
+    .comparison-header p {
+      color: var(--pf-muted);
+    }
+
     .offers-list {
       display: grid;
       gap: 0.75rem;
@@ -787,58 +796,59 @@
     </header>
 
 
-    <form class="search-panel" id="searchForm" role="search">
-      <label for="searchInput">
-        Buscar medicamento
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Ex.: Dipirona"
+    <div id="searchStep">
+      <form class="search-panel" id="searchForm" role="search">
+        <label for="searchInput">
+          Buscar medicamento
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Ex.: Dipirona"
+          >
+        </label>
+        <button class="primary-button" type="submit">Pesquisar</button>
+      </form>
+
+      <section>
+
+        <div class="results-header">
+
+          <h2>
+            Apresentações encontradas
+          </h2>
+
+          <span id="resultsCount">6 apresentações</span>
+
+        </div>
+
+
+        <div
+          id="productsGrid"
+          class="products-grid"
+          aria-live="polite"
+        ></div>
+
+
+        <p
+          id="loadingState"
+          class="empty-message"
+          hidden
         >
-      </label>
-      <button class="primary-button" type="submit">Pesquisar</button>
-    </form>
+          Buscando medicamentos
+        </p>
 
 
-    <section>
+        <p
+          id="emptyState"
+          class="empty-message"
+          role="status"
+          hidden
+        >
+          Nenhum medicamento encontrado.
+        </p>
 
-      <div class="results-header">
-
-        <h2>
-          Medicamentos
-        </h2>
-
-        <span id="resultsCount">6 medicamentos</span>
-
-      </div>
-
-
-      <div
-        id="productsGrid"
-        class="products-grid"
-        aria-live="polite"
-      ></div>
-
-
-      <p
-        id="loadingState"
-        class="empty-message"
-        hidden
-      >
-        Carregando medicamentos…
-      </p>
-
-
-      <p
-        id="emptyState"
-        class="empty-message"
-        role="status"
-        hidden
-      >
-        Nenhum medicamento encontrado.
-      </p>
-
-    </section>
+      </section>
+    </div>
 
     <section
       id="comparisonPanel"

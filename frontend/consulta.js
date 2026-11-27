@@ -31,6 +31,7 @@ const ofertas = [
 
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");
+const searchStep = document.getElementById("searchStep");
 const productsGrid = document.getElementById("productsGrid");
 const resultsCount = document.getElementById("resultsCount");
 const emptyState = document.getElementById("emptyState");
@@ -53,6 +54,7 @@ function limparSelecao() {
   medicamentoSelecionadoId = null;
   comparisonPanel.hidden = true;
   comparisonPanel.replaceChildren();
+  searchStep.hidden = false;
 }
 
 function atualizarProdutos() {
@@ -87,7 +89,7 @@ function atualizarProdutos() {
     const botao = document.createElement("button");
     botao.type = "button";
     botao.className = "offer-button";
-    botao.textContent = "Selecionar apresentação";
+    botao.textContent = "Ver ofertas";
     botao.addEventListener("click", () => selecionarMedicamento(medicamento.id));
     conteudo.appendChild(botao);
 
@@ -95,7 +97,7 @@ function atualizarProdutos() {
     productsGrid.appendChild(card);
   });
 
-  resultsCount.textContent = `${resultados.length} ${resultados.length === 1 ? "medicamento" : "medicamentos"}`;
+  resultsCount.textContent = `${resultados.length} ${resultados.length === 1 ? "apresentação" : "apresentações"}`;
   emptyState.hidden = resultados.length !== 0;
   emptyState.textContent = "Nenhum medicamento encontrado.";
 }
@@ -110,6 +112,7 @@ function selecionarMedicamento(id) {
   medicamentoSelecionadoId = id;
   const medicamento = medicamentos.find((item) => item.id === id);
   const ofertasDoMedicamento = ofertas.filter((oferta) => oferta.medicamentoId === id);
+  searchStep.hidden = true;
   comparisonPanel.hidden = false;
   comparisonPanel.replaceChildren();
 
@@ -118,7 +121,7 @@ function selecionarMedicamento(id) {
 
   const identificacao = document.createElement("div");
   identificacao.append(
-    criarElemento("h2", "", `${medicamento.nome} ${medicamento.dosagem}`),
+    criarElemento("h2", "", `Ofertas — ${medicamento.nome} ${medicamento.dosagem}`),
     criarElemento("p", "", `ID ${medicamento.id} — ${medicamento.apresentacao}`)
   );
 

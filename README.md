@@ -137,6 +137,8 @@ Papéis não equivalem a atribuição automática das Issues. Cada responsável 
 
 ## 8. Trabalho, rastreabilidade e documentos
 
+- [Documento de Visão — versões históricas e evolução](docs/visao/README.md): versões de setembro e outubro de 2026, com rastreabilidade até a SPEC e os ADRs.
+
 - [Issues de implementação #10–#17](https://github.com/PharmaFind/PharmaFind/issues), U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e atualização da SPEC v1.1 [#18](https://github.com/PharmaFind/PharmaFind/issues/18).
 - [CONTEXTO.md](CONTEXTO.md): situação e decisões; [SPEC.md](docs/SPEC.md): requisitos e testes; [API.md](docs/API.md): contratos propostos.
 - [ADRs](docs/ADR/): escolhas e suas justificativas; [AGENTS.md](AGENTS.md): instruções para agentes; [CONTRIBUTING.md](CONTRIBUTING.md): contribuição e revisão.

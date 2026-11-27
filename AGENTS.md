@@ -20,7 +20,7 @@
 ## Arquitetura-alvo para esta entrega
 
 - **Frontend:** HTML + CSS + JavaScript existentes, sem migração React/Vite no MVP aprovado em 23/11; aproveitar visual e CSS, corrigir navegação e integrar via `fetch` com a API. Mudança de framework depende de novo ADR/Issue/PR. U06 [#15](https://github.com/PharmaFind/PharmaFind/issues/15); auditoria visual/UX do professor U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20).
-- **Backend:** Java 21, Spring Boot (Spring Web), Maven e Spring JDBC; separar Controller, Service, Repository e modelos de resposta. U02 [#11](https://github.com/PharmaFind/PharmaFind/issues/11). O código Java ainda precisa ser implementado.
+- **Backend:** Java 21, Spring Boot (Spring Web), Maven e Spring JDBC; U02 [#11](https://github.com/PharmaFind/PharmaFind/issues/11) fornece a fundação e os repositórios JDBC. Endpoints de negócio e integração funcional permanecem pendentes até validação documentada.
 - **Persistência:** MySQL e dados fictícios de Gama e região, U01 [#10](https://github.com/PharmaFind/PharmaFind/issues/10); preparar migrações/dados de teste reproduzíveis. Não versionar credenciais.
 - **Histórico de preços:** U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), associado a medicamento **e** farmácia; exibir gráfico com Chart.js e dados fictícios persistidos. Não gerar tendências aleatórias, previsões ou valores reais.
 - **Testes:** JUnit/Spring Boot Test para backend; testes JavaScript e de interface a selecionar e executar de fato conforme U07 [#16](https://github.com/PharmaFind/PharmaFind/issues/16).

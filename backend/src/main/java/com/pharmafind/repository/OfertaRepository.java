@@ -6,20 +6,22 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.List;
 
 @Repository
 public class OfertaRepository {
 
     private static final RowMapper<Oferta> ROW_MAPPER = (resultSet, rowNumber) -> {
-        Timestamp atualizacao = resultSet.getTimestamp("DATA_ATUALIZACAO");
+        Timestamp atualizacao = resultSet.getTimestamp("DATA_ATUALIZACAO", Calendar.getInstance(TimeZone.getTimeZone("UTC")));
         return new Oferta(
                 resultSet.getInt("ID_MEDICAMENTO_FARMACIA"),
                 resultSet.getInt("ID_MEDICAMENTO"),
                 resultSet.getInt("ID_FARMACIA"),
                 resultSet.getBigDecimal("PRECO"),
                 resultSet.getBoolean("DISPONIVEL"),
-                atualizacao == null ? null : atualizacao.toLocalDateTime());
+                atualizacao == null ? null : atualizacao.toInstant());
     };
 
     private final JdbcTemplate jdbcTemplate;

@@ -6,5 +6,6 @@ public record Medicamento(
         String principioAtivo,
         String categoria,
         String dosagem,
-        String descricao) {
+        String descricao,
+        String apresentacao) {
 }

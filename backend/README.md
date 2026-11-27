@@ -1,26 +1,42 @@
 # Backend PharmaFind
 
-Backend Java 21 com Spring Boot, Spring Web, Spring JDBC (`JdbcTemplate`) e MySQL Connector/J. A persistência nesta etapa é somente de leitura; ainda não há endpoints de negócio.
+Fundação Java 21 com Spring Boot, Spring Web, Spring JDBC (`JdbcTemplate`), Maven e MySQL Connector/J. Nesta etapa há repositórios de leitura; endpoints de negócio permanecem pendentes. Iniciar o processo sem banco não comprova persistência operacional.
 
-## Configurar o MySQL
+## Pré-requisitos e banco
 
-Defina as variáveis de ambiente no terminal antes de iniciar a aplicação. No PowerShell:
+- JDK 21 e Maven 3.9 ou superior.
+- MySQL 8.0.16 ou superior, com o esquema oficial e a carga fictícia documentados em [`../database/README.md`](../database/README.md).
+- Para testes de integração, use exclusivamente um banco descartável, por exemplo `pharmafind_test`, preparado com `database/PharmaFindDB.sql` e `database/seeds/demonstracao.sql`. Não aponte testes de escrita a bancos compartilhados. Os testes de leitura não alteram registros.
+
+Execute os comandos Maven a partir de `backend/`.
+
+## Configuração
+
+Defina as variáveis no terminal; nenhum segredo deve ser versionado. PowerShell:
 
 ```powershell
 $env:DB_URL = "jdbc:mysql://localhost:3306/pharmafind_demo"
-$env:DB_USERNAME = "<usuario_mysql>"
-$env:DB_PASSWORD = "<senha_mysql>"
+$env:DB_USERNAME = "seu_usuario"
+$env:DB_PASSWORD = "sua_senha"
+```
+
+`DB_URL` aceita propriedades Connector/J. As sessões configuram fuso `+00:00` e modo estrito. Os instantes são lidos como `Instant`; datas nulas permanecem `null`.
+
+## Compilar, testar e iniciar
+
+```powershell
+mvn clean compile
+mvn test
+mvn package
 mvn spring-boot:run
 ```
 
-Substitua os marcadores pelos dados locais, sem gravar credenciais em arquivos versionados. `DB_URL` pode apontar para outro banco MySQL compatível. A aplicação também inicia sem conexão disponível; consultas aos repositórios exigem um banco acessível.
+`ConexaoMySqlIntegrationTest` é habilitado quando `DB_URL` existe e espera a seed oficial. Confira `backend/target/surefire-reports/` para distinguir testes executados, ignorados e falhos. Sem `DB_URL`, a integração é ignorada; os testes unitários não dependem de MySQL.
 
-## Validar
+O cenário CT17 de alteração temporária exige também `DB_TEST_EXCLUSIVE=true` e valida que o schema selecionado é exatamente `pharmafind_test`. O teste usa transação revertida; não habilite essa variável para banco compartilhado.
 
-```powershell
-mvn test
-```
+## Verificar conexão e sessão
 
-Os testes unitários não dependem de um banco. `ConexaoMySqlIntegrationTest` roda somente quando `DB_URL` está definido e usa as demais variáveis acima. Nenhum teste cria, altera ou remove dados do banco.
+`ConexaoRepository.conexaoAtiva()` executa `SELECT 1`. Falhas de infraestrutura propagam as exceções controladas do Spring JDBC; não são convertidas em resultado vazio. O teste de integração consulta ainda `@@SESSION.time_zone` e `@@SESSION.sql_mode`, e valida a recuperação dos medicamentos, farmácias, ofertas, nulos e preços da seed.
 
-Os repositórios disponíveis são `MedicamentoRepository`, `FarmaciaRepository`, `OfertaRepository` e `ConexaoRepository`. Consultas com entrada externa usam parâmetros JDBC (`?`).
+Versões efetivamente observadas neste ambiente: OpenJDK Temurin 21.0.13.1 e Maven 3.10.2. As versões do Spring Boot, Connector/J e MySQL só devem ser registradas após a execução de compilação e integração; o POM fixa Spring Boot 3.5.16.

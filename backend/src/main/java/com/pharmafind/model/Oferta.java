@@ -1,7 +1,7 @@
 package com.pharmafind.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record Oferta(
         int id,
@@ -9,5 +9,5 @@ public record Oferta(
         int farmaciaId,
         BigDecimal preco,
         boolean disponivel,
-        LocalDateTime dataAtualizacao) {
+        Instant dataAtualizacao) {
 }

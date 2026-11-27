@@ -363,9 +363,9 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 
 ## 8. Modelo de dados e implementação em Java
 
-**Estado do código nesta branch — U01/#10:** o esquema tem as cinco tabelas existentes, InnoDB, par medicamento/farmácia `UNIQUE`, preço `DECIMAL(10,2)` positivo, `DISPONIVEL` restrito a `0/1` e `DATA_ATUALIZACAO TIMESTAMP` automática, permitindo `NULL` desconhecido. Coordenadas permanecem `DECIMAL(10,7)`. A seed versionada fornece 6 medicamentos, 4 farmácias e 12 ofertas; os CEPs ficam em JSON, sem nova tabela. Instalação, migração, UTC e modo estrito em [database/README.md](../database/README.md). **Suíte SQL ampliada e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); não há API implementada.**
+**Estado do código nesta branch:** o esquema e seed U01 fornecem 6 medicamentos, 4 farmácias e 12 ofertas. `backend/` contém fundação Spring Boot/JDBC e repositórios de leitura; a persistência integrada requer teste com MySQL. Não há endpoints de negócio nem serialização HTTP implementados. A compatibilidade com `APRESENTACAO` depende da integração do PR #34.
 
-**Separação de responsabilidades na arquitetura-alvo (ainda não implementada):**
+**Separação prevista para os endpoints de negócio (ainda não implementados):**
 
 1. **Controller** recebe HTTP, valida campos e devolve códigos/JSON, sem fórmulas monetárias embutidas.
 2. **Service** filtra ofertas válidas/disponíveis, calcula resumo com decimal exato, ordena e calcula distâncias opcionalmente.

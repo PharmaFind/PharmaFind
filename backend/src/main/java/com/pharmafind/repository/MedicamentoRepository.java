@@ -17,7 +17,8 @@ public class MedicamentoRepository {
             resultSet.getString("PRINCIPIO_ATIVO"),
             resultSet.getString("CATEGORIA"),
             resultSet.getString("DOSAGEM"),
-            resultSet.getString("DESCRICAO"));
+            resultSet.getString("DESCRICAO"),
+            resultSet.getString("APRESENTACAO"));
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -27,17 +28,20 @@ public class MedicamentoRepository {
 
     public List<Medicamento> buscarPorNome(String termo) {
         String sql = """
-                SELECT ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO
+                SELECT ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO, APRESENTACAO
                 FROM MEDICAMENTO
-                WHERE LOWER(NOME) LIKE LOWER(?)
+                WHERE LOWER(NOME) LIKE LOWER(?) ESCAPE '\\\\'
                 ORDER BY NOME, DOSAGEM, ID_MEDICAMENTO
                 """;
-        return jdbcTemplate.query(sql, ROW_MAPPER, "%" + termo + "%");
+        if (termo == null || termo.isBlank()) return List.of();
+        if (termo.length() > 100) throw new IllegalArgumentException("Termo de busca excede 100 caracteres.");
+        String literal = termo.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
+        return jdbcTemplate.query(sql, ROW_MAPPER, "%" + literal + "%");
     }
 
     public Optional<Medicamento> buscarPorId(int id) {
         String sql = """
-                SELECT ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO
+                SELECT ID_MEDICAMENTO, NOME, PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO, APRESENTACAO
                 FROM MEDICAMENTO
                 WHERE ID_MEDICAMENTO = ?
                 """;

@@ -1,10 +1,10 @@
 const medicamentos = [
-  { id: 1001, nome: "Dipirona", dosagem: "500 mg", apresentacao: "20 comprimidos" },
-  { id: 1002, nome: "Dipirona", dosagem: "1 g", apresentacao: "10 comprimidos" },
-  { id: 1003, nome: "Paracetamol", dosagem: "750 mg", apresentacao: "20 comprimidos" },
-  { id: 1004, nome: "Ibuprofeno", dosagem: "400 mg", apresentacao: "10 cápsulas" },
-  { id: 1005, nome: "Loratadina", dosagem: "10 mg", apresentacao: "12 comprimidos" },
-  { id: 1006, nome: "Omeprazol", dosagem: "20 mg", apresentacao: "28 cápsulas" }
+  { id: 1001, nome: "Dipirona", dosagem: "500 mg", apresentacao: "20 comprimidos", imagem: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=85" },
+  { id: 1002, nome: "Dipirona", dosagem: "1 g", apresentacao: "10 comprimidos", imagem: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=800&q=85" },
+  { id: 1003, nome: "Paracetamol", dosagem: "750 mg", apresentacao: "20 comprimidos", imagem: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=800&q=85" },
+  { id: 1004, nome: "Ibuprofeno", dosagem: "400 mg", apresentacao: "10 cápsulas", imagem: "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?auto=format&fit=crop&w=800&q=85" },
+  { id: 1005, nome: "Loratadina", dosagem: "10 mg", apresentacao: "12 comprimidos", imagem: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=85" },
+  { id: 1006, nome: "Omeprazol", dosagem: "20 mg", apresentacao: "28 cápsulas", imagem: "https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=800&q=85" }
 ];
 
 const farmacias = {
@@ -68,6 +68,14 @@ function atualizarProdutos() {
     const card = document.createElement("article");
     card.className = "product-card";
 
+    const imagem = document.createElement("img");
+    imagem.src = medicamento.imagem;
+    imagem.alt = `Imagem ilustrativa de ${medicamento.nome} ${medicamento.dosagem}`;
+    imagem.loading = "lazy";
+    imagem.addEventListener("error", () => {
+      imagem.src = "medicamento-placeholder.svg";
+    }, { once: true });
+
     const conteudo = document.createElement("div");
     conteudo.className = "product-content";
     conteudo.append(
@@ -83,7 +91,7 @@ function atualizarProdutos() {
     botao.addEventListener("click", () => selecionarMedicamento(medicamento.id));
     conteudo.appendChild(botao);
 
-    card.appendChild(conteudo);
+    card.append(imagem, conteudo);
     productsGrid.appendChild(card);
   });
 

@@ -3,7 +3,7 @@
 SET SESSION time_zone = '+00:00';
 SET SESSION group_concat_max_len = 8192;
 SELECT DATABASE() AS banco, VERSION() AS versao_servidor,
-    (SELECT COUNT(*) = 5 FROM information_schema.tables
+    (SELECT COUNT(*) = 4 FROM information_schema.tables
         WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE' AND engine = 'InnoDB') AS esquema_ok,
     (SELECT COUNT(*) = 6 FROM MEDICAMENTO) AS medicamentos_ok,
     (SELECT COUNT(*) = 4 FROM FARMACIA) AS farmacias_ok,
@@ -13,7 +13,7 @@ SELECT DATABASE() AS banco, VERSION() AS versao_servidor,
     (SELECT COUNT(*) = 3 AND SUM(DISPONIVEL) = 0 FROM MEDICAMENTO_FARMACIA WHERE ID_MEDICAMENTO = 1003) AS indisponiveis_ok,
     (SELECT COUNT(*) = 0 FROM HISTORICO_PRECO) AS historico_intacto_ok;
 SELECT 'medicamentos' AS conjunto, SHA2(GROUP_CONCAT(SHA2(JSON_ARRAY(ID_MEDICAMENTO, NOME,
-    PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, DESCRICAO), 256) ORDER BY ID_MEDICAMENTO SEPARATOR ''), 256) AS hash_dados
+    PRINCIPIO_ATIVO, CATEGORIA, DOSAGEM, APRESENTACAO, DESCRICAO), 256) ORDER BY ID_MEDICAMENTO SEPARATOR ''), 256) AS hash_dados
 FROM MEDICAMENTO
 UNION ALL
 SELECT 'farmacias', SHA2(GROUP_CONCAT(SHA2(JSON_ARRAY(ID_FARMACIA, NOME, ENDERECO, CEP,

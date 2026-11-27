@@ -1,4 +1,247 @@
-# Verificações desta etapa U01 — 17/11/2026
+# Correção complementar U01 / Issue #33 — 23/11/2026
+
+## Correção P2 da segunda auditoria — 23/11/2026
+
+A segunda auditoria reproduziu uma lacuna no preflight: um índice chamado
+`UQ_MEDICAMENTO_FARMACIA` com três colunas `(ID_MEDICAMENTO, ID_FARMACIA, PRECO)`
+era aceito porque a consulta contava apenas as duas posições esperadas. Em esquema
+divergente, isso permitia concluir 003a/003b mantendo ofertas repetidas para o mesmo par.
+O sucesso histórico das 313 asserções abaixo não cobria esse caso.
+
+**Correção autorizada:** cada etapa agora verifica, independentemente, pares duplicados
+e a composição integral em `information_schema.STATISTICS`: exatamente duas entradas,
+ordem/nomes esperados, `NON_UNIQUE = 0` e `SUB_PART IS NULL`. Duplicidades listam
+medicamento/farmácia/quantidade; índices divergentes listam suas colunas/metadados.
+Ambas as situações geram erro 1644/SQLSTATE 45000 antes de qualquer ALTER da etapa.
+Não há reconstrução de índice, exclusão de ofertas ou saneamento automático.
+
+### Execução real da correção
+
+Instância MySQL **8.0.45/Windows** nova, com datadir
+`%TEMP%\pharmafind_p2_33_zn12yrn7\data`, somente em `127.0.0.1:57526`,
+mysqlx desabilitado, `lower_case_table_names=1`. Nenhum serviço/banco da equipe foi
+selecionado; o cliente foi conferido sem defaults adicionais e sem perfil pessoal.
+A preparação temporária inicialmente parou numa verificação do processo lançador e,
+depois, numa comparação de caminho escapado pelo cliente; a identificação foi
+reconferida com `--raw`, `@@datadir` e `@@port`, sem mudar o projeto por essas verificações.
+
+Comando efetivamente executado, com identificador novo e preflight de existência do runner:
+
+```powershell
+.\database\tests\Executar-Testes.cmd 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe' c33_b6e6dc02 57526 --sem-senha
+```
+
+**Código de saída 0; 389 linhas `OK:`, incluindo 76 novas asserções P2.**
+As 313 verificações anteriores continuaram passando. A suíte cria/remove exclusivamente:
+
+- `pharmafind_u01_test_novo_c33_b6e6dc02`;
+- `pharmafind_u01_test_migrado_c33_b6e6dc02`;
+- `pharmafind_u01_test_protecao_c33_b6e6dc02`;
+- `pharmafind_u01_test_integridade_c33_b6e6dc02`.
+
+| Regressão executada separadamente na 003a e 003b | Resultado |
+|---|---|
+| Índice correto com duas colunas únicas, na ordem esperada e sem prefixos | Aceito; caminhos válidos da migração/seed preservados. |
+| Três colunas, sem duplicidade de ofertas | Recusado e diagnosticado como índice divergente. |
+| Três colunas, com duas ofertas no mesmo medicamento/farmácia | Recusado e diagnosticado como par duplicado. |
+| Duas colunas sem unicidade | Recusado e diagnosticado. |
+| Duas colunas com ordem invertida | Recusado e diagnosticado. |
+| Nomes de colunas divergentes, uma coluna ou índice ausente | Todos recusados e diagnosticados. |
+| Cada recusa | Hashes de colunas, índices, constraints e de todos os atributos das ofertas inalterados. |
+
+Cada chamada de teste verifica código **e mensagem**, evitando aceitar um erro 1644 de
+outro preflight como evidência da correção. O suporte às FKs, as trocas de índices e a
+inclusão/limpeza do ID 3999 pertencem somente às fixtures descartáveis, não às migrações.
+Os testes anteriores continuam comprovando IDs/preços/datas, demais dados do domínio,
+seed e cenários do medicamento 1001. Não houve modificação na seed ou em 001/002.
+
+A primeira rodada `c33_a71bdc49` parou com erro **1553** ao trocar a fixture de índice
+invertido: o InnoDB dependia dele para a FK da farmácia. Havia 269 asserções OK (23 P2),
+sem sucesso global. Foi corrigido exclusivamente o suporte da fixture às duas FKs,
+sem afrouxar validações. Os quatro bancos dessa rodada ficaram preservados; a rodada
+bem-sucedida usou nomes novos.
+
+### Arquivos completos, além das chamadas da suíte
+
+Em dois novos bancos `pharmafind_u01_test_integridade_c33_a03b51ef_a` e
+`pharmafind_u01_test_integridade_c33_a03b51ef_b`, o agente enviou por stdin ao cliente
+os arquivos 003a/003b completos, com `--no-defaults --protocol=TCP --host=127.0.0.1
+--port=57526 --user=root --skip-password --batch --raw --default-character-set=utf8mb4
+--skip-force`. Nenhuma senha foi fornecida.
+
+- 003a com índice de três colunas, sem duplicados: erro 1644, saída 1 esperada,
+  `APRESENTACAO` continuou ausente.
+- 003b após preparação/preenchimento válidos, com índice divergente e par repetido:
+  erro 1644, saída 1 esperada, `APRESENTACAO` continuou anulável e o par 1001/2001
+  permaneceu com suas duas ofertas para revisão.
+
+Logs integrais e resultados temporários: `%TEMP%\pharmafind_p2_33_zn12yrn7`
+(`suite01-integral.log`, `suite02-integral.log`, `scripts-completos.log` e JSONs).
+Não versionar esses logs ou o datadir. A instância foi encerrada com `mysqladmin shutdown`,
+saída 0, e a porta foi confirmada fechada. A ausência dos quatro bancos da suíte de sucesso
+foi consultada; o general log contém somente schemas novos desta rodada, sem seleção de
+`pharmafind_demo`. Arquivos/bancos de diagnóstico ficaram preservados fora do Git.
+
+Limitações mantidas: MySQL 8.0.16, Linux, runner PS1 integral, concorrência e falha de
+infraestrutura no meio do DDL não foram executados nesta correção. Não houve nova
+execução do inicializador ou restauração de backup; seus resultados anteriores são
+históricos. Revisão humana do PR #34 continua obrigatória; sem merge automático.
+
+---
+
+**Estado: implementada e validada em MySQL 8.0.45/Windows, pendente de revisão humana.**
+Branch `feature/33-integridade-banco`, criada de `develop` `2045c94`.
+As evidências abaixo são desta execução pelo agente. O registro anterior de 17/11 foi
+preservado integralmente mais abaixo; seus estados de Issue/PR/branch são históricos.
+
+## Ambiente e isolamento
+
+Cliente/servidor: MySQL Community 8.0.45, Win64. Binários em
+`C:\Program Files\MySQL\MySQL Server 8.0\bin`.
+Os serviços MySQL80/wampmysqld64/wampmariadb64 estavam parados e não foram iniciados.
+Foi criada uma instância independente com `mysqld --no-defaults --initialize-insecure`
+em diretório temporário novo, ligada somente a `127.0.0.1:33333`, mysqlx desabilitado,
+`lower_case_table_names=1`. Ela começou somente com os quatro schemas de sistema.
+
+A conta root sem senha pertence exclusivamente a essa instância efêmera. Nenhuma senha,
+perfil pessoal ou credencial foi utilizado/versionado. O aviso genérico do cliente sobre
+senha em linha de comando apareceu com `--skip-password`; não foi passada senha.
+
+Todos os bancos citados foram novos, com existência previamente consultada. Nenhum banco
+preexistente da equipe, `pharmafind_demo` ou serviço da porta 3306 foi acessado.
+
+## Suíte final — 313 asserções aprovadas
+
+Comando efetivamente executado na raiz do repositório:
+
+```powershell
+.\database\tests\Executar-Testes.cmd 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe' a33_06 33333 --sem-senha
+```
+
+Servidor retornou `8.0.45` e `lower_case_table_names = 1`. Código de saída **0**.
+A contagem de linhas iniciadas por `OK:` no log foi **313**.
+A saída terminou com:
+
+```text
+SUCESSO: esquema, migracoes 001/002/003, seed, integridade e remocao protegida; quatro bancos exclusivos removidos.
+```
+
+| Cobertura efetivamente executada | Resultado |
+|---|---|
+| Esquema novo com quatro tabelas, sem USUARIO | Aprovado. |
+| Testes anteriores de ofertas, IDs, FKs, preços, disponibilidade, timestamps/fuso | Aprovados. |
+| Histórico negativo/zero, positivo, par oferta/data duplicado, datas/ofertas diferentes, UPDATE e FK | Aprovados. |
+| CEP válido, NULL, letras, vazio, 7/9 dígitos e dígitos Unicode | Aprovados. |
+| Coordenadas válidas, limites, ausência, parciais, fora dos limites e UPDATE | Aprovados. |
+| Apresentação obrigatória/não vazia; identidade; outra dosagem/apresentação; caixa/acento/espaço final | Aprovados. |
+| Legado → 001/002 → 003; preservação de data desconhecida e histórico | Aprovado. |
+| Snapshot U01 anterior com seis medicamentos → 003a/preenchimento/003b | Aprovado, sem recriar tabelas. |
+| Dados incompatíveis, estrutura extra, colisão de constraint/índice, collation divergente e reaplicação | Recusados como esperado. |
+| Preenchimento opcional: conteúdo alterado e medicamento externo desconhecido | Preservados, sem preenchimento parcial/inventado. |
+| Preservação dos atributos antigos de medicamentos/farmácias/ofertas/histórico | Aprovada com comparação de todas as linhas/colunas antigas. |
+| Seed inicial/repetida, conflitos de identidade/ID/preço/par/apresentação, dados externos | Aprovados. |
+| Cenários 6 medicamentos/4 farmácias/12 ofertas; 8 disponíveis/4 indisponíveis | Preservados. |
+| Dipirona 1001: três ofertas, duas disponíveis; 8,99/9,99/2,00 e 7,50 indisponível | Aprovado na camada SQL. |
+| USUARIO sem autorização, alvo errado, sem backup, com registros, FK, view, rotina, trigger ou evento | Remoção recusada; tabela preservada. |
+| USUARIO vazia/sem dependências, alvo e backup confirmados | Removida somente nos bancos novos marcados. |
+| Reaplicação de remoção e consumo das autorizações | Aprovados; quatro conjuntos do domínio preservados. |
+| Limpeza com marcador ausente/incorreto e execução isolada sem asserções | Proteções anteriores preservadas e aprovadas. |
+
+Bancos da suíte final criados/removidos:
+`pharmafind_u01_test_novo_a33_06`, `pharmafind_u01_test_migrado_a33_06`,
+`pharmafind_u01_test_protecao_a33_06`, `pharmafind_u01_test_integridade_a33_06`.
+As rodadas intermediárias bem-sucedidas `a33_04` e `a33_05` também removeram apenas seus quatro alvos.
+
+## Inicializador e reaplicação
+
+Comandos executados:
+
+```powershell
+.\database\Inicializar-Demonstracao.cmd 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe' --criar pharmafind_u01_test_inicializado_a33_11 33333 --sem-senha
+.\database\Inicializar-Demonstracao.cmd 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe' --reaplicar pharmafind_u01_test_inicializado_a33_11 33333 --sem-senha
+```
+
+Ambos terminaram com código **0**. `verificar-inicializacao.sql` foi enviado ao cliente
+antes/depois por Python `subprocess`, sem credenciais, com sucesso. Os sete booleanos foram
+`1` e os três hashes idênticos:
+
+| Conjunto | SHA-256 antes e depois |
+|---|---|
+| medicamentos (inclui apresentação) | `7361a54427631b98e2f0dbb3e03d4b4b55d5dceeb7eeda5d5af2af24d186b967` |
+| farmacias | `916558885307058054789d2071dfc02bc22698422b088182f247389d9c544303` |
+| ofertas | `a76abc2f8b23810c79d0f83058c8f438c31ef46bfa11fe44f66229a60cc9cf7a` |
+
+Um alvo alternativo com sufixo fora do padrão foi recusado antes da conexão.
+O clone válido permaneceu no diretório temporário para inspeção.
+
+## Scripts publicados e recuperação real por backup
+
+Além dos executores da suíte, foram executados via `SOURCE` os arquivos completos 003a,
+preenchimento opcional, 003b e instalação dos auxiliares 003c em bancos novos da instância.
+As reaplicações completas 003a/003b foram recusadas com `ERROR 1644 (45000)`, código 1,
+mantendo os hashes do domínio. Rotinas deixadas pelas recusas ficaram disponíveis para inspeção.
+
+A orquestração foi Python `subprocess` chamando mysql/mysqldump, sem senhas. Para a rodada
+`a33_14`, o comando de backup efetivo correspondeu a:
+
+```bat
+mysqldump --no-defaults --host=127.0.0.1 --port=33333 --user=root --skip-password --default-character-set=utf8mb4 --single-transaction --routines --events --triggers --no-tablespaces --set-gtid-purged=OFF pharmafind_u01_test_integridade_a33_14
+```
+
+O stdout foi salvo em arquivo binário temporário, **antes de executar 003a**, e depois
+enviado por stdin ao mysql selecionando `pharmafind_u01_test_integridade_a33_15`, criado novo.
+Todos os processos terminaram com código 0. O backup restaurou a estrutura antiga, sem
+APRESENTACAO, USUARIO vazia, seis medicamentos, quatro farmácias, 12 ofertas e um ponto histórico.
+A origem migrou para a estrutura nova e removeu USUARIO sob autorização de teste.
+
+Hashes de todas as colunas originais, serializadas por linha/PK, foram iguais antes,
+depois da migração/remoção e na restauração:
+
+| Tabela | SHA-256 |
+|---|---|
+| MEDICAMENTO | `9ce65bd17233f40cab33906f4f0db5828cad7b57dcc0baf9920e1be7c3c6f2c8` |
+| FARMACIA | `497d65b2f46d118bafa60726cb1cc614a2bdf320ea188712901d512566437f34` |
+| MEDICAMENTO_FARMACIA | `8e8f201f8378460a90b2eae1c0f615328b5cd1caaad5289490897c6b9a7a89af` |
+| HISTORICO_PRECO | `52215d5d0041b2bd57f69be6af2aea8931bee059660055c66b8d8d8d5bf43424` |
+
+Uma rodada anterior (`a33_12` → backup → `a33_13`) também restaurou com sucesso um snapshot
+após 003b e antes da remoção de USUARIO. Esses quatro bancos ficaram para inspeção na instância
+temporária. Dumps/logs/diretório de dados ficam fora do repositório, sem dados de pessoas.
+
+## Falhas observadas durante o desenvolvimento
+
+| Rodada | Falha real | Correção |
+|---|---|---|
+| a33_01 | 003b recebeu apresentação NULL na fixture legada, erro 1644. | FINDSTR /x não filtrava os rodapés dos arquivos LF; runner passou a usar filtro literal de prefixo. Nenhuma restrição foi afrouxada. |
+| a33_02 | Asserção de recusa da remoção falhou. | Teste esperava SQLSTATE 45000 no campo MYSQL_ERRNO; corrigido para erro 1644. A busca textual de dependências foi limitada ao schema ou referências qualificadas ao alvo, evitando falso positivo de outro banco de teste. |
+| a33_03 | Fixture de colisão usou CHECK (1), rejeitado com erro 3812 antes do cenário esperado. | Fixture corrigida para expressão booleana CHECK (1 = 1). |
+
+Essas rodadas interromperam e preservaram seus quatro bancos descartáveis; não foram
+reutilizadas nem limpas automaticamente. O sucesso posterior usou outros nomes previamente
+verificados. Não houve falha funcional observada na suíte final.
+
+## Limitações e estado da revisão
+
+Verificações estáticas desta entrega: `git diff --check` sem erros; parser PS1 sem erros;
+13 exemplos JSON da API e um da SPEC válidos; snapshots históricos conferidos contra
+`2045c94`, com migrações 001/002 intactas. Inspeção dos arquivos alterados não encontrou
+dumps/logs/temporários, caracteres de substituição ou tokens/chaves privadas pelos padrões
+consultados. Essa inspeção por padrões não é garantia geral de ausência de segredos.
+
+- MySQL **8.0.45/Windows** foi executado; MySQL 8.0.16 e Linux não foram executados.
+- Runner PS1: parser sem erros; execução integral não realizada porque a política local é
+  Restricted. Não foi alterada a ExecutionPolicy. O runner CMD executou a suíte completa.
+- Não foram testados concorrência/performance, contas com roles, SQL dinâmico externo ou
+  bancos existentes de pessoas. Escritas suspensas e inspeção administrativa são requisitos.
+- DDL não tem rollback global. A recuperação comprovada foi restauração em cópia nova;
+  não houve injeção de falha de disco no meio dos ALTERs.
+- API, Java, frontend, geolocalização e gráfico não foram implementados/testados.
+- Revisão humana independente, aprovação, merge e encerramento da Issue continuam pendentes.
+- As evidências históricas abaixo não devem ser usadas como resultado da correção #33.
+
+---
+
+# Verificações históricas U01 — 17/11/2026
 
 Branch de trabalho: `feature/10-esquema-ofertas`, criada de `develop` no commit
 `075473435dbaef49594d1bf526e4964c6b5ed269`. Alterações locais para parte da Issue #10;

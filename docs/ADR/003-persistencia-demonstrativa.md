@@ -46,3 +46,23 @@ Criar scripts de dados de teste e migração, conferir integridade referencial e
 ## 6. Status da decisão
 
 **Aceita:** MySQL, base fictícia e atualização pela equipe. **Autorizado nesta tarefa:** esquema, migração e massa descritos acima. Suíte ampliada e criação/reaplicação do clone descartável passaram, com sete booleanos em `1` e três hashes preservados; ver [evidência](../../database/tests/RESULTADOS.md). **Pendente:** obter revisão humana, integrar backend e definir a política de histórico na U09 (`DATA_REGISTRO DATE`). A validação ocorreu em bancos descartáveis, sem inicializar um banco integrado à aplicação. As demais propostas da SPEC/API continuam com seu status próprio.
+
+## 7. Evolução autorizada — U01/#33, 23/11/2026
+
+O solicitante aprovou APRESENTACAO própria obrigatória e identidade única por nome/dosagem/
+apresentação, domínio de CEP/coordenadas e histórico positivo/único por oferta/dia DATE.
+Adotar utf8mb4_unicode_ci consistentemente; bases divergentes são recusadas para decisão prévia.
+A migração 003a prepara sem inferir apresentações; após preenchimento revisado, 003b consolida.
+As etapas 001/002 permanecem históricas e intactas. DDL não é revertido por ROLLBACK:
+backup restaurado e validação são pré-requisitos, com recuperação em cópia nova se necessário.
+
+**MVP sem autenticação nem cadastro:** USUARIO deixa de existir na instalação nova.
+Em bases anteriores, a etapa separada 003c inspeciona contagem/dependências e exige backup e
+aprovação explícita do alvo não descartável. Tabela com registros/dependências é preservada.
+Não há exclusão automática nem migração de pessoas para outro destino. A manutenção não cria
+endpoints e não altera medicamentos/farmácias/ofertas/histórico.
+
+Esta evolução não implementa gráfico nem gravação automática de pontos da U09, que deverá
+respeitar a unicidade diária. API permanece proposta; backend/frontend não foram implementados.
+Ver [procedimento](../../database/README.md), [Issue #33](https://github.com/PharmaFind/PharmaFind/issues/33)
+e [evidências atuais](../../database/tests/RESULTADOS.md). Revisão humana desta alteração pendente.

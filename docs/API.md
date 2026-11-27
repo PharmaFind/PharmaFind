@@ -2,7 +2,7 @@
 
 **Status de toda esta API: PROPOSTA, NÃO IMPLEMENTADA.**  
 **Documento de referência:** [SPEC v1.1](SPEC.md). **Registro inicial:** 12/11/2026. **Refinamento:** 16/11/2026.  
-**Arquitetura-alvo aprovada pela coordenação em 23/11/2026:** Java 21 + Spring Boot / Spring Web + Spring JDBC + Maven + MySQL; API consumida por **HTML/CSS/JavaScript sem React/Vite**, conforme ADRs 001/004 e a não adoção de React registrada no ADR 006. A implementação e os contratos HTTP continuam pendentes. A árvore atualmente inspecionada **não contém servidor nem rotas HTTP**.
+**Arquitetura-alvo aprovada pela coordenação em 23/11/2026:** Java 21 + Spring Boot / Spring Web + Spring JDBC + Maven + MySQL; API consumida por **HTML/CSS/JavaScript sem React/Vite**, conforme ADRs 001/004 e a não adoção de React registrada no ADR 006. Os contratos HTTP continuam pendentes. A branch U02 contém aplicação Spring Boot e repositórios JDBC de leitura, **sem endpoints de negócio**.
 
 ## 1. Princípios
 
@@ -45,6 +45,7 @@ Accept: application/json
       "id": 10,
       "nome": "Dipirona",
       "dosagem": "500 mg",
+      "apresentacao": "20 comprimidos",
       "categoria": "Analgésico",
       "principioAtivo": "Dipirona sódica",
       "descricao": "Apresentação demonstrativa de 500 mg"
@@ -53,6 +54,7 @@ Accept: application/json
       "id": 11,
       "nome": "Dipirona",
       "dosagem": "1 g",
+      "apresentacao": "10 comprimidos",
       "categoria": "Analgésico",
       "principioAtivo": "Dipirona sódica",
       "descricao": "Apresentação demonstrativa de 1 g"
@@ -91,6 +93,7 @@ Accept: application/json
   "id": 10,
   "nome": "Dipirona",
   "dosagem": "500 mg",
+  "apresentacao": "20 comprimidos",
   "categoria": "Analgésico",
   "principioAtivo": "Dipirona sódica",
   "descricao": "Apresentação demonstrativa de 500 mg"
@@ -170,6 +173,7 @@ Exemplo integral para **nenhuma localização informada**. Os dados são fictíc
     "id": 10,
     "nome": "Dipirona",
     "dosagem": "500 mg",
+    "apresentacao": "20 comprimidos",
     "categoria": "Analgésico",
     "principioAtivo": "Dipirona sódica",
     "descricao": "Apresentação demonstrativa de 500 mg"
@@ -263,6 +267,7 @@ Exemplo integral para **nenhuma localização informada**. Os dados são fictíc
     "id": 10,
     "nome": "Dipirona",
     "dosagem": "500 mg",
+    "apresentacao": "20 comprimidos",
     "categoria": "Analgésico",
     "principioAtivo": "Dipirona sódica",
     "descricao": "Apresentação demonstrativa de 500 mg"
@@ -363,7 +368,9 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 
 ## 8. Modelo de dados e implementação em Java
 
-**Estado do código nesta branch:** o esquema e seed U01 fornecem 6 medicamentos, 4 farmácias e 12 ofertas. `backend/` contém fundação Spring Boot/JDBC e repositórios de leitura; a persistência integrada requer teste com MySQL. Não há endpoints de negócio nem serialização HTTP implementados. A compatibilidade com `APRESENTACAO` depende da integração do PR #34.
+**Estado do código nesta branch — U01/#10:** o esquema tem as quatro tabelas do MVP, sem USUARIO, InnoDB, par medicamento/farmácia `UNIQUE`, preço `DECIMAL(10,2)` positivo, `DISPONIVEL` restrito a `0/1` e `DATA_ATUALIZACAO TIMESTAMP` automática, permitindo `NULL` desconhecido. Coordenadas permanecem `DECIMAL(10,7)`. A seed versionada fornece 6 medicamentos, 4 farmácias e 12 ofertas; os CEPs ficam em JSON, sem nova tabela. Instalação, migração, UTC e modo estrito em [database/README.md](../database/README.md). **Suíte SQL ampliada e inicialização/reaplicação passaram no MySQL 8.0.45 ([evidência](../database/tests/RESULTADOS.md)); não há API implementada.**
+
+**Fundação U02/#11:** `backend/` contém aplicação Spring Boot/JDBC e repositórios de leitura, incluindo `MEDICAMENTO.APRESENTACAO` como campo próprio. O esquema atualizado do PR #34 está na árvore deste merge. Evidências e limites da validação Java em [backend/tests/RESULTADOS.md](../backend/tests/RESULTADOS.md). Não há endpoints de negócio, motor de preços nem serialização HTTP implementados.
 
 **Separação prevista para os endpoints de negócio (ainda não implementados):**
 
@@ -372,7 +379,7 @@ O exemplo é **recorte de campos** da resposta `200`, não outro tipo de respost
 3. **Repository** consulta medicamentos/farmácias/ofertas no MySQL com parâmetros vinculados, sem concatenar entradas do usuário em SQL.
 4. **DTOs** representam os contratos JSON definidos aqui, separando-os das entidades persistidas.
 
-O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito à revisão do PR documental. Nomes concretos de classes, versões de dependências e portas só serão registrados após implementação. Não persistir GPS do usuário; não criar login administrativo para fazer updates no banco; registrar erros sem dados sensíveis.
+O uso de Spring Boot, Spring JDBC e Java 21 consta no ADR 004. Classes da fundação, versões verificadas e comandos estão em [backend/README.md](../backend/README.md); controllers, services de negócio e DTOs HTTP continuam pendentes. Não persistir GPS do usuário; não criar login administrativo para fazer updates no banco; registrar erros sem dados sensíveis.
 
 ## 9. Critérios de aceitação do contrato
 
@@ -395,9 +402,9 @@ O uso previsto de Spring Boot, Spring JDBC e Java 21 consta no ADR 004, sujeito 
 ## 10. Decisões em aberto
 
 - Aprovar rotas, nomes de campos, limites de busca e formato de erros deste contrato.
-- Stack aprovada pela coordenação em 23/11: Java 21 + Spring Boot + Spring JDBC + Maven + MySQL e frontend HTML/CSS/JavaScript. A decisão será revisada por PR, e versões/testes/harness continuam pendentes. O professor informou que Spring Boot é permitido.
+- Stack aprovada pela coordenação em 23/11: Java 21 + Spring Boot + Spring JDBC + Maven + MySQL e frontend HTML/CSS/JavaScript. Versões e testes da fundação JDBC estão em [backend/README.md](../backend/README.md); validação dos contratos HTTP e testes de negócio/frontend continuam pendentes. O professor informou que Spring Boot é permitido.
 - Fixar regras de preço válido, empate, arredondamento da média e da distância com atualização explícita da SPEC.
-- Integrar o backend à massa fictícia; a suíte SQL ampliada e o inicializador/reaplicação da U01 passaram ([evidência](../database/tests/RESULTADOS.md)). O contrato HTTP e o mapeamento SQL/JSON ainda não foram implementados ou testados.
+- A integração JDBC de leitura com a massa fictícia foi validada na U02 ([evidência Java](../backend/tests/RESULTADOS.md)); a suíte SQL ampliada e o inicializador/reaplicação da U01 têm [evidência própria](../database/tests/RESULTADOS.md). Implementar e testar o contrato HTTP e o mapeamento SQL/JSON permanece pendente.
 - Integrar o mapa local de CEPs/pontos de teste já versionado e documentado; nenhuma cobertura geográfica universal é prometida.
 - Definir eventual política de cache/logs que evite retenção indevida de GPS; exigir HTTPS se houver publicação em produção.
 
@@ -417,7 +424,7 @@ Accept: application/json
 - `id`: inteiro positivo correspondente ao medicamento exato.
 - `farmaciaId`: inteiro positivo **obrigatório**; o histórico é restrito à oferta formada pelo par medicamento/farmácia.
 - Datas/preços devem vir de `HISTORICO_PRECO` associado à oferta; não gerar uma série aleatória em cada consulta.
-- A gravação de histórico por dia ou por evento dependerá de política explícita de persistência na U09 (a tabela existente usa `DATA_REGISTRO DATE`).
+- A U01/#33 fixa um ponto por oferta/dia (`DATA_REGISTRO DATE`, preço positivo e par oferta/data único). A U09 deve definir gravação/atualização respeitando essa granularidade; eventos intradiários exigem nova decisão.
 
 ### 11.2 Resposta 200 (dados totalmente fictícios)
 
@@ -466,3 +473,12 @@ Uma oferta com zero pontos deve retornar `200` e `historico: []`; com um ponto, 
 **Tratamento de erros [PROPOSTA]:** `400` para `id`/`farmaciaId` inválidos ou ausentes; `404` para medicamento ou par medicamento/farmácia inexistente; `503` para indisponibilidade de dados; `500` para erro inesperado tratado. Usar o envelope de erro da seção 7. Não usar dados de outra farmácia como fallback nem devolver `0` para variação não calculável.
 
 **Verificações:** CT21–CT24 da SPEC v1.1, além de integridade e testes de persistência registrados em PR. Nenhuma resposta acima comprova implementação ou execução real.
+
+### Mapeamento SQL/JSON complementar — U01/#33
+
+MEDICAMENTO.APRESENTACAO é campo próprio e será mapeado ao campo proposto `apresentacao`
+nos resultados de busca, detalhes e medicamento da comparação. Os exemplos acima foram alinhados;
+DESCRICAO continua independente. O Repository Java deve usar os nomes SQL canônicos em maiúsculas,
+consultar pelo ID e preservar dosagens/apresentações distintas. Nenhuma rota foi criada/alterada.
+O MVP não possui autenticação nem cadastro: USUARIO foi retirada da instalação nova e sua remoção
+em bases anteriores é manutenção controlada separada, sem endpoint ou impacto nos IDs do domínio.

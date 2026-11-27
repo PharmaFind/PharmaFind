@@ -239,3 +239,16 @@ Esta atualização **não altera decisões de produto**. Corrige informações f
 - **Distribuição de trabalho:** responsáveis das U02–U07 aguardam validação; não atribuir tarefas por inferência. U08/U10 têm assignees já registrados no GitHub.
 - **Governança:** PR #29 integrado para sincronização excepcional `main` → `develop`; PR #31 também integrado, porém a checagem de origem/destino **ainda não é obrigatória na ruleset** até ser testada e configurada. Issue #30 acompanha prioridades. A aprovação de PR não comprova testes de aplicação.
 - **Correções da avaliação do professor:** banco da U01 atende com ressalvas e requer restrições adicionais; front-end não está integrado à API. O relatório não atribuiu nota. Os registros anteriores datados neste arquivo são históricos, não uma descrição do estado técnico em 23/11.
+
+## Correção complementar de persistência — U01/#33
+
+Escopo autorizado pelo solicitante em 23/11/2026: apresentação comercial própria e identidade
+única (nome/dosagem/apresentação), preço histórico positivo e um ponto por oferta/dia, CEP válido
+ou ausente e coordenadas ambas válidas ou ambas ausentes. A implementação preserva IDs e dados
+válidos, sem criar pontos históricos nem implementar backend/frontend.
+O MVP não possui autenticação nem cadastro; a instalação nova não cria USUARIO.
+Bancos anteriores mantêm a tabela até inspeção de registros/dependências, backup recuperável
+e remoção controlada aprovada por alvo, independente das etapas 003a/003b.
+As menções anteriores às cinco tabelas e à ausência de apresentação são registros históricos.
+Os PRs #29/#32 estão integrados; esta alteração complementar exige revisão humana própria.
+Testes desta correção e limites de ambiente em database/tests/RESULTADOS.md.

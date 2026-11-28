@@ -172,3 +172,32 @@ Após autorização, removida a quantidade incorreta em “Sobre” e a referên
 **Suíte consolidada reexecutada: 428 aprovadas, zero reprovadas.** As seis falhas anteriores foram revalidadas com sucesso, incluindo foco nas quatro páginas. Sintaxe JavaScript e `git diff --check` passaram; 71 referências locais válidas, favicon HTTP 200 e zero erros JavaScript. O único HTTP 404 novo foi o da imagem intencionalmente inválida do fallback. Resultados históricos preservados.
 
 [Relatório atual](evidencias/u10/homologacao/correcoes/RELATORIO.md), [resultados completos](evidencias/u10/homologacao/correcoes/resultado-consolidado.json) e [seis retestes](evidencias/u10/homologacao/correcoes/reteste-seis.json). **Parecer: APTO para publicar as alterações do frontend demonstrativo e submeter à revisão independente.** Permanecem pendentes zoom real em 200%, leitor de tela, dispositivos físicos, outros navegadores e aceite humano. Sem commit, push ou merge.
+
+## Hierarquia da pesquisa na inicial — ajuste local de 27/11/2026
+
+**Refs #20 / U10; RNF01–RNF18, CT16 e CT25 nas partes aplicáveis à interface.** Pedido pontual do solicitante: diferenciar a pesquisa funcional do banner institucional, cujos títulos estavam alinhados à esquerda com tamanhos próximos. Trata-se do diagnóstico e detalhamento trazidos nesta solicitação; não é uma nova transcrição literal do professor. Branch local `feature/20-auditoria-frontend`, baseada no commit `7a2a07b`, sem alterações locais na entrada. Consultadas as Issues #20 e #15 e seus limites; a consulta ao GitHub não retornou PRs abertos no repositório. Nenhuma Issue ou atribuição foi modificada.
+
+**Implementação:** somente `frontend/style.css` no código da aplicação. Título e subtítulo da pesquisa centralizados, formulário com largura máxima de 720 px e margens horizontais automáticas; rótulo permanece à esquerda, alinhado ao campo. Aumentados os espaçamentos verticais e a altura do campo/botão de 44 para 48 px. Preservados a lupa existente, vermelho, fontes, textos e estrutura HTML. No celular, campo e botão continuam empilhados pelo breakpoint existente de 560 px.
+
+O banner mantém imagem, textos e alinhamento à esquerda. Seu título usa `clamp(1.3rem, 2.4vw, 1.8rem)` e espaçamentos menores para atuar como conteúdo complementar. Os ajustes do banner usam `.home-search + .hero`, e as classes da pesquisa ocorrem apenas na inicial: não houve alteração de seletores genéricos das outras páginas. Hashes anteriores/posteriores confirmam que todos os demais arquivos do frontend permaneceram idênticos, incluindo HTML e JavaScript. Sem instalação de dependências, alterações no backend, banco ou API.
+
+**Validação executada:** Brave headless, Chromium 158, viewports de 320, 390, 768, 1280 e 1920 px, altura de 900 px. **91 verificações aprovadas, zero falhas, zero exceções JavaScript e zero erros de rede registrados na rodada final.** Conferidos centralização, limite de largura, associação/alinhamento do rótulo, hierarquia dos títulos, lupa, botão vermelho, disposição responsiva, ausência de overflow, alvos de toque e foco visível com Tab. Pesquisa por clique, Enter no botão e Enter no campo, remoção de espaços do termo, busca vazia, distinção das apresentações e seleção com ofertas disponíveis/indisponíveis passaram.
+
+Consulta com resultados, Como funciona e Sobre tiveram **nove comparações pixel a pixel sem diferenças**, a 320, 768 e 1280 px, na área visível de 900 px de altura. As imagens de referência estão em `evidencias/u10/hierarquia-home/regressao-antes/`; o relatório registra os resultados das comparações. `git diff --check` passou. Também foram inspecionadas visualmente as capturas da inicial em desktop, tablet e celular.
+
+| Inicial | Antes | Depois |
+|---|---|---|
+| Desktop, 1280 px | [Antes](evidencias/u10/hierarquia-home/home-antes-1280.png) | [Depois](evidencias/u10/hierarquia-home/home-depois-1280.png) |
+| Tablet, 768 px | [Antes](evidencias/u10/hierarquia-home/home-antes-768.png) | [Depois](evidencias/u10/hierarquia-home/home-depois-768.png) |
+| Celular, 320 px | [Antes](evidencias/u10/hierarquia-home/home-antes-320.png) | [Depois](evidencias/u10/hierarquia-home/home-depois-320.png) |
+
+Capturas adicionais de 390 e 1920 px, [estado anterior](evidencias/u10/hierarquia-home/report-antes.json), [relatório final](evidencias/u10/hierarquia-home/report-depois.json) e [roteiro executável](evidencias/u10/hierarquia-home/validar.py) estão na mesma pasta. A captura anterior foi executada antes da edição com `python -u target/validar_home_hierarquia.py antes`. O roteiro foi posteriormente movido para junto das evidências e a rodada final executada com:
+
+```powershell
+python -u docs/evidencias/u10/hierarquia-home/validar.py depois
+git diff --check
+```
+
+O roteiro utiliza Python, `websocket-client`, Pillow e Brave já disponíveis; não instala pacotes. O modo `depois` compara com as referências anteriores preservadas. Não executar o modo `antes` sobre a versão modificada, pois substituiria as referências históricas. A primeira tentativa de captura no sandbox falhou com `WinError 10054`; a execução autorizada fora dessa restrição concluiu normalmente.
+
+**Limites:** pesquisa validada com os dados demonstrativos locais existentes; esta rodada não comprova integração com API/MySQL. Dispositivos físicos, outros navegadores, leitor de tela e zoom real não foram avaliados. Resultado permanece local, aguardando validação do solicitante; sem commit, push ou merge, e sem declarar a U10 inteira concluída.

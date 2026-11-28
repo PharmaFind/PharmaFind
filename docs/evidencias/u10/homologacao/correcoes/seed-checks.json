@@ -1,0 +1,304 @@
+[
+  {
+    "name": "official seed at PR base",
+    "expected": "a8e546f574fedaa38cdca6844ff76e352c075fbd",
+    "obtained": "a8e546f574fedaa38cdca6844ff76e352c075fbd",
+    "passed": true
+  },
+  {
+    "name": "six medications and presentations",
+    "expected": [
+      {
+        "id": 1001,
+        "nome": "Dipirona",
+        "dosagem": "500 mg",
+        "apresentacao": "20 comprimidos"
+      },
+      {
+        "id": 1002,
+        "nome": "Dipirona",
+        "dosagem": "1 g",
+        "apresentacao": "10 comprimidos"
+      },
+      {
+        "id": 1003,
+        "nome": "Paracetamol",
+        "dosagem": "750 mg",
+        "apresentacao": "20 comprimidos"
+      },
+      {
+        "id": 1004,
+        "nome": "Ibuprofeno",
+        "dosagem": "400 mg",
+        "apresentacao": "10 cápsulas"
+      },
+      {
+        "id": 1005,
+        "nome": "Loratadina",
+        "dosagem": "10 mg",
+        "apresentacao": "12 comprimidos"
+      },
+      {
+        "id": 1006,
+        "nome": "Omeprazol",
+        "dosagem": "20 mg",
+        "apresentacao": "28 cápsulas"
+      }
+    ],
+    "obtained": [
+      {
+        "id": 1001,
+        "nome": "Dipirona",
+        "dosagem": "500 mg",
+        "apresentacao": "20 comprimidos"
+      },
+      {
+        "id": 1002,
+        "nome": "Dipirona",
+        "dosagem": "1 g",
+        "apresentacao": "10 comprimidos"
+      },
+      {
+        "id": 1003,
+        "nome": "Paracetamol",
+        "dosagem": "750 mg",
+        "apresentacao": "20 comprimidos"
+      },
+      {
+        "id": 1004,
+        "nome": "Ibuprofeno",
+        "dosagem": "400 mg",
+        "apresentacao": "10 cápsulas"
+      },
+      {
+        "id": 1005,
+        "nome": "Loratadina",
+        "dosagem": "10 mg",
+        "apresentacao": "12 comprimidos"
+      },
+      {
+        "id": 1006,
+        "nome": "Omeprazol",
+        "dosagem": "20 mg",
+        "apresentacao": "28 cápsulas"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "name": "four pharmacies",
+    "expected": {
+      "2001": {
+        "nome": "Farmácia Demo Ponte Alta",
+        "endereco": "Endereço fictício 01 - Ponte Alta, Gama/DF"
+      },
+      "2002": {
+        "nome": "Farmácia Demo Gama Leste",
+        "endereco": "Endereço fictício 02 - Setor Leste, Gama/DF"
+      },
+      "2003": {
+        "nome": "Farmácia Demo Recanto",
+        "endereco": "Endereço fictício 03 - Recanto das Emas/DF"
+      },
+      "2004": {
+        "nome": "Farmácia Demo Gama Sul",
+        "endereco": "Endereço fictício 04 - Setor Sul, Gama/DF"
+      }
+    },
+    "obtained": {
+      "2001": {
+        "nome": "Farmácia Demo Ponte Alta",
+        "endereco": "Endereço fictício 01 - Ponte Alta, Gama/DF"
+      },
+      "2002": {
+        "nome": "Farmácia Demo Gama Leste",
+        "endereco": "Endereço fictício 02 - Setor Leste, Gama/DF"
+      },
+      "2003": {
+        "nome": "Farmácia Demo Recanto",
+        "endereco": "Endereço fictício 03 - Recanto das Emas/DF"
+      },
+      "2004": {
+        "nome": "Farmácia Demo Gama Sul",
+        "endereco": "Endereço fictício 04 - Setor Sul, Gama/DF"
+      }
+    },
+    "passed": true
+  },
+  {
+    "name": "twelve offers and relations",
+    "expected": [
+      {
+        "id": 3001,
+        "medicamentoId": 1001,
+        "farmaciaId": 2001,
+        "preco": 8.99,
+        "disponivel": true
+      },
+      {
+        "id": 3002,
+        "medicamentoId": 1001,
+        "farmaciaId": 2002,
+        "preco": 10.99,
+        "disponivel": true
+      },
+      {
+        "id": 3003,
+        "medicamentoId": 1001,
+        "farmaciaId": 2003,
+        "preco": 7.5,
+        "disponivel": false
+      },
+      {
+        "id": 3004,
+        "medicamentoId": 1002,
+        "farmaciaId": 2001,
+        "preco": 14.0,
+        "disponivel": true
+      },
+      {
+        "id": 3005,
+        "medicamentoId": 1002,
+        "farmaciaId": 2004,
+        "preco": 16.0,
+        "disponivel": true
+      },
+      {
+        "id": 3006,
+        "medicamentoId": 1003,
+        "farmaciaId": 2001,
+        "preco": 6.5,
+        "disponivel": false
+      },
+      {
+        "id": 3007,
+        "medicamentoId": 1003,
+        "farmaciaId": 2002,
+        "preco": 7.25,
+        "disponivel": false
+      },
+      {
+        "id": 3008,
+        "medicamentoId": 1003,
+        "farmaciaId": 2003,
+        "preco": 5.99,
+        "disponivel": false
+      },
+      {
+        "id": 3009,
+        "medicamentoId": 1005,
+        "farmaciaId": 2002,
+        "preco": 12.0,
+        "disponivel": true
+      },
+      {
+        "id": 3010,
+        "medicamentoId": 1006,
+        "farmaciaId": 2001,
+        "preco": 15.9,
+        "disponivel": true
+      },
+      {
+        "id": 3011,
+        "medicamentoId": 1006,
+        "farmaciaId": 2002,
+        "preco": 15.9,
+        "disponivel": true
+      },
+      {
+        "id": 3012,
+        "medicamentoId": 1006,
+        "farmaciaId": 2004,
+        "preco": 18.5,
+        "disponivel": true
+      }
+    ],
+    "obtained": [
+      {
+        "id": 3001,
+        "medicamentoId": 1001,
+        "farmaciaId": 2001,
+        "preco": 8.99,
+        "disponivel": true
+      },
+      {
+        "id": 3002,
+        "medicamentoId": 1001,
+        "farmaciaId": 2002,
+        "preco": 10.99,
+        "disponivel": true
+      },
+      {
+        "id": 3003,
+        "medicamentoId": 1001,
+        "farmaciaId": 2003,
+        "preco": 7.5,
+        "disponivel": false
+      },
+      {
+        "id": 3004,
+        "medicamentoId": 1002,
+        "farmaciaId": 2001,
+        "preco": 14,
+        "disponivel": true
+      },
+      {
+        "id": 3005,
+        "medicamentoId": 1002,
+        "farmaciaId": 2004,
+        "preco": 16,
+        "disponivel": true
+      },
+      {
+        "id": 3006,
+        "medicamentoId": 1003,
+        "farmaciaId": 2001,
+        "preco": 6.5,
+        "disponivel": false
+      },
+      {
+        "id": 3007,
+        "medicamentoId": 1003,
+        "farmaciaId": 2002,
+        "preco": 7.25,
+        "disponivel": false
+      },
+      {
+        "id": 3008,
+        "medicamentoId": 1003,
+        "farmaciaId": 2003,
+        "preco": 5.99,
+        "disponivel": false
+      },
+      {
+        "id": 3009,
+        "medicamentoId": 1005,
+        "farmaciaId": 2002,
+        "preco": 12,
+        "disponivel": true
+      },
+      {
+        "id": 3010,
+        "medicamentoId": 1006,
+        "farmaciaId": 2001,
+        "preco": 15.9,
+        "disponivel": true
+      },
+      {
+        "id": 3011,
+        "medicamentoId": 1006,
+        "farmaciaId": 2002,
+        "preco": 15.9,
+        "disponivel": true
+      },
+      {
+        "id": 3012,
+        "medicamentoId": 1006,
+        "farmaciaId": 2004,
+        "preco": 18.5,
+        "disponivel": true
+      }
+    ],
+    "passed": true
+  }
+]

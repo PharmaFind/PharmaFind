@@ -1,0 +1,16 @@
+{
+  "method": "Browser shortcut Ctrl+0 and four Ctrl++ via CDP; no viewport reduction",
+  "before": {
+    "dpr": 1,
+    "innerWidth": 390,
+    "outerWidth": 392,
+    "visualScale": 1
+  },
+  "after": {
+    "dpr": 1,
+    "innerWidth": 390,
+    "outerWidth": 392,
+    "visualScale": 1
+  },
+  "verified200Percent": false
+}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 
 <head>
   <meta charset="utf-8">
@@ -32,10 +32,7 @@
 
       max-width: 760px;
 
-      padding:
-        4rem
-        0
-        2rem;
+      padding: 1.5rem 0 1rem;
 
     }
 
@@ -63,47 +60,44 @@
       color: var(--pf-navy);
 
       font-family:
-        "Playfair Display",
-        serif;
+        "DM Sans",
+        sans-serif;
 
       font-size:
         clamp(
-          2.5rem,
-          5vw,
-          4.5rem
+          1.6rem,
+          3vw,
+          2.1rem
         );
 
-      line-height: 1;
+      line-height: 1.2;
 
-      letter-spacing: -0.04em;
+      letter-spacing: -0.02em;
 
     }
 
 
     .consulta-header p {
 
+      margin-bottom: 0;
+
       color: var(--pf-muted);
 
-      line-height: 1.7;
+      font-size: 0.9rem;
+      line-height: 1.5;
 
     }
 
 
     .search-panel {
-
       display: grid;
-
-      grid-template-columns:
-        2fr
-        1fr
-        1fr
-        1fr;
+      grid-template-columns: 1fr auto;
 
       gap: 0.8rem;
 
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
 
-      padding: 1rem;
+      padding: 1.25rem;
 
       background: white;
 
@@ -112,10 +106,16 @@
 
       border-radius: 18px;
 
+      box-shadow:
+        0 10px 30px
+        rgba(16, 43, 78, 0.06);
+
     }
 
 
     .search-panel label {
+
+      margin: 0;
 
       min-width: 0;
 
@@ -137,6 +137,172 @@
 
       margin: 0;
 
+      min-height: 44px;
+
+    }
+
+    .search-panel > button {
+      align-self: end;
+    }
+
+    .comparison-panel {
+      margin-bottom: 2rem;
+      padding: 0;
+      background: transparent;
+      border: 0;
+    }
+
+    /* O medicamento selecionado substitui a introdução no estado de comparação. */
+    #conteudo-principal:has(> #comparisonPanel:not([hidden])) > .consulta-header {
+      display: none;
+    }
+
+    .comparison-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
+      padding: 14px;
+      border-radius: 12px;
+      background: var(--pf-navy);
+      color: var(--pf-white);
+    }
+
+    .comparison-header h2,
+    .comparison-header p {
+      margin: 0;
+    }
+
+    .comparison-header h2 {
+      font-size: clamp(1.2rem, 3vw, 1.45rem);
+      line-height: 1.3;
+      color: var(--pf-white);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .comparison-header p {
+      margin-top: 0.25rem;
+      color: var(--pf-white);
+      font-size: 0.85rem;
+    }
+
+    .comparison-header > div {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .comparison-header > button {
+      flex-shrink: 0;
+    }
+
+    .comparison-header > button:focus-visible {
+      outline-color: var(--pf-white);
+    }
+
+    .offers-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .offer-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      margin: 0;
+      gap: 0.8rem;
+      padding: 14px;
+      background: #fff;
+      color: var(--pf-navy);
+      border: 1px solid var(--pf-border);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(16, 43, 78, 0.04);
+    }
+
+    .offer-card.unavailable {
+      background: #f5f6f7;
+      border-style: dashed;
+    }
+
+    .offer-card h3,
+    .offer-card p {
+      margin: 0;
+    }
+
+    .offer-card h3 {
+      color: var(--pf-navy);
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-bottom: 0.2rem;
+    }
+
+    .offer-card .product-description {
+      color: var(--pf-muted);
+    }
+
+    .availability {
+      font-weight: 800;
+      color: #176344;
+    }
+
+    .unavailable .availability {
+      color: #9b2c35;
+    }
+
+
+    #searchInput {
+
+      background: var(--pf-white);
+
+      border:
+        1px solid #cbd5e1;
+
+      color: var(--pf-navy);
+
+      box-shadow:
+        inset 0 1px 2px
+        rgba(16, 43, 78, 0.04);
+
+    }
+
+
+    #searchInput::placeholder {
+
+      color: #5f6f82;
+
+      opacity: 1;
+
+    }
+
+
+    #searchInput:hover {
+
+      border-color: #9fb1c4;
+
+      background: var(--pf-white);
+
+    }
+
+
+    #searchInput:focus,
+    #searchInput:focus-visible {
+
+      background: var(--pf-white);
+
+      border-color: var(--pf-red);
+
+      outline:
+        3px solid
+        rgba(227, 48, 63, 0.16);
+
+      outline-offset:
+        1px;
+
+      box-shadow:
+        0 6px 18px
+        rgba(16, 43, 78, 0.08);
+
     }
 
 
@@ -147,8 +313,8 @@
       justify-content: space-between;
       align-items: center;
 
-      gap: 1rem;
-
+      gap: 0.5rem 1rem;
+      flex-wrap: wrap;
       margin-bottom: 1rem;
 
     }
@@ -157,13 +323,18 @@
     .results-header h2 {
 
       margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.7rem);
 
       color: var(--pf-navy);
 
       font-family:
-        "Playfair Display",
-        serif;
+        "DM Sans",
+        sans-serif;
 
+    }
+
+    #resultsCount {
+      font-size: 0.85rem;
     }
 
 
@@ -171,13 +342,9 @@
 
       display: grid;
 
-      grid-template-columns:
-        repeat(
-          5,
-          minmax(0, 1fr)
-        );
-
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
+      gap: 16px;
+      align-items: stretch;
 
     }
 
@@ -187,10 +354,11 @@
       display: flex;
 
       min-width: 0;
+      max-width: 260px;
+      margin: 0;
+      padding: 14px;
 
       flex-direction: column;
-
-      overflow: hidden;
 
       background: white;
 
@@ -203,16 +371,36 @@
         0 8px 25px
         rgba(16, 43, 78, 0.04);
 
+      transform: scale(1);
+
+      transition:
+        transform
+        180ms
+        ease-out,
+        box-shadow
+        180ms
+        ease-out;
+
+      will-change:
+        transform;
+
     }
 
 
     .product-card img {
 
       width: 100%;
+      aspect-ratio: 16 / 10;
+      height: auto;
+      margin: 0;
 
-      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+
+      background: #eef3f8;
 
       object-fit: cover;
+
+      object-position: center;
 
     }
 
@@ -221,13 +409,12 @@
 
       display: flex;
 
-      height: 100%;
+      flex: 1;
 
       flex-direction: column;
 
-      gap: 0.45rem;
-
-      padding: 0.9rem;
+      gap: 0.35rem;
+      padding: 0.75rem 0 0;
 
     }
 
@@ -289,9 +476,9 @@
 
     .product-price {
 
-      margin-top: auto;
-
-      padding-top: 0.35rem;
+      margin: 0;
+      padding: 0;
+      align-self: center;
 
       color: var(--pf-red);
 
@@ -310,7 +497,8 @@
 
       justify-content: center;
 
-      margin-top: 0.25rem;
+      margin: auto 0 0;
+      min-height: 44px;
 
       padding:
         0.5rem
@@ -333,7 +521,7 @@
 
     .empty-message {
 
-      padding: 3rem;
+      padding: 1.25rem 0.75rem;
 
       text-align: center;
 
@@ -365,119 +553,61 @@
     }
 
 
-    @media (max-width: 1100px) {
-
-      .products-grid {
-
-        grid-template-columns:
-          repeat(
-            4,
-            minmax(0, 1fr)
-          );
-
-      }
-
-
-      .search-panel {
-
-        grid-template-columns:
-          repeat(
-            2,
-            minmax(0, 1fr)
-          );
-
-      }
-
-
-      .search-panel label:first-child {
-
-        grid-column:
-          1 / -1;
-
-      }
-
-    }
-
-
-    @media (max-width: 800px) {
-
-      .products-grid {
-
-        grid-template-columns:
-          repeat(
-            2,
-            minmax(0, 1fr)
-          );
-
-      }
-
-    }
-
-
     @media (max-width: 560px) {
 
       .consulta-header {
 
-        padding:
-          3rem
-          0
-          1.5rem;
+        padding: 1.25rem 0 1rem;
 
       }
 
 
       .consulta-header h1 {
 
-        font-size: 2.5rem;
+        font-size: 1.6rem;
 
       }
-
 
       .search-panel {
-
         grid-template-columns: 1fr;
-
       }
 
-
-      .search-panel label:first-child {
-
-        grid-column: auto;
-
+      .comparison-header {
+        flex-direction: column;
+        align-items: stretch;
       }
 
-
-      .products-grid {
-
-        gap: 0.65rem;
-
+      .offer-card {
+        grid-template-columns: 1fr;
       }
-
-
-      .product-content {
-
-        padding: 0.7rem;
-
+      .offer-card .product-price {
+        justify-self: start;
       }
-
     }
 
 
-    @media (max-width: 390px) {
+    @media (hover: hover) and (pointer: fine) {
 
-      .products-grid {
+      .product-card:hover {
 
-        grid-template-columns: 1fr;
+        transform: scale(1.03);
+
+        box-shadow:
+          0 14px 32px
+          rgba(16, 43, 78, 0.12);
 
       }
 
     }
 
   </style>
+  <link rel="icon" type="image/svg+xml" href="medicamento-placeholder.svg">
 </head>
 
 
 <body>
+
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
 
   <main class="container">
 
@@ -561,11 +691,6 @@
           </a>
         </li>
 
-        <li class="auth-actions">
-          <a class="auth-login-button" href="login.html">Entrar</a>
-          <a class="auth-signup-button" href="conta.html">Criar conta</a>
-        </li>
-
       </ul>
 
 
@@ -602,12 +727,10 @@
         Sobre nós
       </a>
 
-      <a class="auth-login-button" href="login.html">Entrar</a>
-      <a class="auth-signup-button" href="conta.html">Criar conta</a>
-
     </div>
 
 
+    <div id="conteudo-principal" tabindex="-1">
     <header class="consulta-header">
 
       <span>
@@ -619,139 +742,89 @@
       </h1>
 
       <p>
-        Use a busca e os filtros para encontrar
-        medicamentos cadastrados neste protótipo.
-        Você também pode ordenar os resultados
-        pelo menor preço.
+        Pesquise uma apresentação específica e selecione-a
+        antes de consultar as ofertas associadas.
       </p>
 
     </header>
 
 
-    <section class="search-panel">
+    <div id="searchStep">
+      <form class="search-panel" id="searchForm" role="search">
+        <label for="searchInput">
+          Buscar medicamento
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Ex.: Dipirona"
+          >
+        </label>
+        <button class="primary-button" type="submit">Pesquisar</button>
+      </form>
 
-      <label>
+      <section>
 
-        Buscar medicamento
+        <div class="results-header">
 
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Ex.: Dipirona..."
+          <h2 id="resultsTitle">
+            Pesquisa de medicamentos
+          </h2>
+
+          <span id="resultsCount" role="status"></span>
+
+        </div>
+
+
+        <div
+          id="productsGrid"
+          class="products-grid"
+          aria-live="polite"
+        ></div>
+
+
+        <p
+          id="initialState"
+          class="empty-message"
+          role="status"
         >
+          Digite o nome de um medicamento para encontrar suas apresentações.
+        </p>
 
-      </label>
+        <p
+          id="loadingState"
+          class="empty-message"
+          hidden
+        >
+          Buscando medicamentos
+        </p>
 
-
-      <label>
-
-        Ordenar
-
-        <select id="sortSelect">
-
-          <option value="default">
-            Destaques
-          </option>
-
-          <option value="priceAsc">
-            Menor preço
-          </option>
-
-          <option value="priceDesc">
-            Maior preço
-          </option>
-
-        </select>
-
-      </label>
+        <!-- Estado reservado para falhas reais da futura integração HTTP. -->
+        <p id="errorState" class="empty-message query-error" role="alert" hidden>
+          Não foi possível consultar os medicamentos. Tente pesquisar novamente.
+        </p>
 
 
-      <label>
+        <p
+          id="emptyState"
+          class="empty-message"
+          role="status"
+          hidden
+        >
+          Nenhum medicamento encontrado.
+        </p>
 
-        Tipo
+      </section>
+    </div>
 
-        <select id="typeSelect">
-
-          <option value="all">
-            Todos
-          </option>
-
-          <option value="Genérico">
-            Genérico
-          </option>
-
-          <option value="Similar">
-            Similar
-          </option>
-
-          <option value="Referência">
-            Referência
-          </option>
-
-        </select>
-
-      </label>
-
-
-      <label>
-
-        Farmácia
-
-        <select id="pharmacySelect">
-
-          <option value="all">
-            Todas
-          </option>
-
-          <option value="Farmácia Vida">
-            Farmácia Vida
-          </option>
-
-          <option value="Saúde Popular">
-            Saúde Popular
-          </option>
-
-          <option value="Bem Estar">
-            Bem Estar
-          </option>
-
-        </select>
-
-      </label>
-
-    </section>
-
-
-    <section>
-
-      <div class="results-header">
-
-        <h2>
-          Medicamentos
-        </h2>
-
-        <span id="resultsCount">
-          10 itens
-        </span>
-
-      </div>
-
-
-      <div
-        id="productsGrid"
-        class="products-grid"
-      ></div>
-
-
-      <p
-        id="emptyState"
-        class="empty-message"
-        hidden
-      >
-        Nenhum medicamento encontrado.
-      </p>
-
-    </section>
+    <section
+      id="comparisonPanel"
+      class="comparison-panel"
+      tabindex="-1"
+      aria-labelledby="comparisonTitle"
+      aria-live="polite"
+      hidden
+    ></section>
+    </div>
 
 
     <aside class="academic-notice">
@@ -817,6 +890,7 @@
         id="locClose"
         class="popup-close"
         type="button"
+        aria-label="Fechar diálogo de localização"
       >
         ×
       </button>
@@ -832,8 +906,8 @@
       </h2>
 
       <p>
-        Podemos usar sua localização aproximada
-        para simular ofertas próximas.
+        Podemos solicitar sua localização aproximada.
+        Esta informação ainda não é usada para calcular distâncias.
       </p>
 
 
@@ -871,6 +945,8 @@
     <button
       id="cepClose"
       class="popup-close"
+      type="button"
+      aria-label="Fechar diálogo de CEP"
     >
       ×
     </button>
@@ -880,8 +956,8 @@
       Informe seu CEP
     </h3>
 
-    <p>
-      Usado somente para simular sua região.
+    <p id="cepOrientacao">
+      CEP opcional, usado somente quando a localização por distância estiver integrada.
     </p>
 
 
@@ -890,8 +966,11 @@
       <input
         id="cepInput"
         type="text"
+        inputmode="numeric"
         maxlength="9"
         placeholder="00000-000"
+        aria-label="CEP"
+        aria-describedby="cepOrientacao"
       >
 
       <button
@@ -907,7 +986,6 @@
 
 
   <script src="script.js"></script>
-  <script src="auth.js"></script>
   <script src="consulta.js"></script>
 
 </body>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 
 <head>
 
@@ -310,11 +310,13 @@
 
   </style>
 
+  <link rel="icon" type="image/svg+xml" href="medicamento-placeholder.svg">
 </head>
 
 
 <body>
 
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
 
   <main class="container">
 
@@ -399,11 +401,6 @@
           </a>
         </li>
 
-        <li class="auth-actions">
-          <a class="auth-login-button" href="login.html">Entrar</a>
-          <a class="auth-signup-button" href="conta.html">Criar conta</a>
-        </li>
-
       </ul>
 
 
@@ -439,13 +436,10 @@
         Sobre nós
       </a>
 
-      <a class="auth-login-button" href="login.html">Entrar</a>
-      <a class="auth-signup-button" href="conta.html">Criar conta</a>
-
     </div>
 
 
-    <header class="about-header">
+    <header class="about-header" id="conteudo-principal" tabindex="-1">
 
       <span>
         SOBRE NÓS
@@ -500,7 +494,7 @@
         </h2>
 
         <p>
-          A primeira versão utiliza dez medicamentos
+          Esta versão utiliza medicamentos
           demonstrativos, permitindo validar o fluxo
           antes de desenvolver uma estrutura maior.
         </p>
@@ -676,8 +670,8 @@
 
 
       <p>
-        Podemos usar sua localização aproximada
-        para simular ofertas próximas.
+        Podemos solicitar sua localização aproximada.
+        A comparação por distância ainda não está integrada.
       </p>
 
 
@@ -725,7 +719,7 @@
 
 
     <p>
-      Usado somente para simular sua região.
+      CEP opcional; a comparação por distância ainda não está integrada.
     </p>
 
 
@@ -752,7 +746,6 @@
 
 
   <script src="script.js"></script>
-  <script src="auth.js"></script>
 
 </body>
 </html>

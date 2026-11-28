@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 
 <head>
   <meta charset="utf-8">
@@ -28,9 +28,12 @@
 
     <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="medicamento-placeholder.svg">
 </head>
 
 <body>
+
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
 
   <main class="container">
 
@@ -111,11 +114,6 @@
           </a>
         </li>
 
-        <li class="auth-actions">
-          <a class="auth-login-button" href="login.html">Entrar</a>
-          <a class="auth-signup-button" href="conta.html">Criar conta</a>
-        </li>
-
       </ul>
 
 
@@ -151,15 +149,24 @@
         Sobre nós
       </a>
 
-      <a class="auth-login-button" href="login.html">Entrar</a>
-      <a class="auth-signup-button" href="conta.html">Criar conta</a>
-
     </div>
 
 
     <!--
          hero
      -->
+    <section class="home-search" id="conteudo-principal" tabindex="-1" aria-labelledby="homeSearchTitle">
+      <h1 id="homeSearchTitle">Compare preços de medicamentos</h1>
+      <p>Encontre ofertas de diferentes farmácias em um só lugar.</p>
+      <div class="hero-search" role="search" aria-label="Pesquisar medicamentos">
+        <label for="heroMedicineSearch">Qual medicamento você procura?</label>
+        <div class="hero-search-row">
+          <input id="heroMedicineSearch" type="search" placeholder="Ex.: Dipirona 500 mg">
+          <button id="heroSearchButton" type="button">Pesquisar</button>
+        </div>
+      </div>
+    </section>
+
     <section class="hero">
 
       <img
@@ -173,10 +180,10 @@
           COMPARE • ENCONTRE • ECONOMIZE
         </span>
 
-        <h1>
+        <h2>
           O melhor preço,
           de um jeito mais simples.
-        </h1>
+        </h2>
 
         <p>
           O PharmaFind reúne uma experiência de consulta
@@ -185,13 +192,6 @@
         </p>
 
         <div class="hero-buttons">
-
-          <a
-            class="primary-button"
-            href="consulta.html"
-          >
-            Consultar medicamentos
-          </a>
 
           <a
             class="secondary-button"
@@ -300,7 +300,7 @@
         </span>
 
         <h2>
-          Pesquise, filtre
+          Pesquise, selecione
           e compare.
         </h2>
 
@@ -487,8 +487,8 @@
       </h2>
 
       <p>
-        Podemos usar sua localização aproximada
-        para simular ofertas próximas.
+        Podemos solicitar sua localização aproximada.
+        A comparação por distância ainda não está integrada.
         Você pode permitir ou recusar.
       </p>
 
@@ -542,7 +542,7 @@
     </h3>
 
     <p>
-      Usado somente para simular sua região.
+      CEP opcional; a comparação por distância ainda não está integrada.
     </p>
 
 
@@ -572,7 +572,6 @@
 
   <!-- JavaScript -->
   <script src="script.js"></script>
-  <script src="auth.js"></script>
 
 </body>
 </html>

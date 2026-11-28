@@ -1,0 +1,1486 @@
+{
+  "checks": [
+    {
+      "name": "home 320: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true
+    },
+    {
+      "name": "home 320: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true
+    },
+    {
+      "name": "home 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "home 320: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true
+    },
+    {
+      "name": "palette 320: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true
+    },
+    {
+      "name": "products 320: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true
+    },
+    {
+      "name": "products 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "products 320: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true
+    },
+    {
+      "name": "products 320: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 320: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true
+    },
+    {
+      "name": "offers 320: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true
+    },
+    {
+      "name": "offers 320: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "offers 320: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true
+    },
+    {
+      "name": "CEP 320: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "location 320: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "home 390: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true
+    },
+    {
+      "name": "home 390: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true
+    },
+    {
+      "name": "home 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "home 390: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true
+    },
+    {
+      "name": "palette 390: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true
+    },
+    {
+      "name": "products 390: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true
+    },
+    {
+      "name": "products 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "products 390: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true
+    },
+    {
+      "name": "products 390: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 390: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true
+    },
+    {
+      "name": "offers 390: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true
+    },
+    {
+      "name": "offers 390: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "offers 390: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true
+    },
+    {
+      "name": "CEP 390: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "location 390: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "home 768: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true
+    },
+    {
+      "name": "home 768: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true
+    },
+    {
+      "name": "home 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "home 768: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true
+    },
+    {
+      "name": "palette 768: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true
+    },
+    {
+      "name": "products 768: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true
+    },
+    {
+      "name": "products 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "products 768: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true
+    },
+    {
+      "name": "products 768: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 768: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true
+    },
+    {
+      "name": "offers 768: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true
+    },
+    {
+      "name": "offers 768: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "offers 768: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 768: price centered",
+      "passed": true,
+      "expected": "[...document.querySelectorAll('.offer-card')].every(c => {const a=c.firstElementChild.getBoundingClientRect(), b=c.lastElementChild.getBoundingClientRect(); return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<1})",
+      "obtained": true
+    },
+    {
+      "name": "CEP 768: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "location 768: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "home 1280: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true
+    },
+    {
+      "name": "home 1280: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true
+    },
+    {
+      "name": "home 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "home 1280: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true
+    },
+    {
+      "name": "palette 1280: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true
+    },
+    {
+      "name": "products 1280: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true
+    },
+    {
+      "name": "products 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "products 1280: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true
+    },
+    {
+      "name": "products 1280: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 1280: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true
+    },
+    {
+      "name": "offers 1280: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true
+    },
+    {
+      "name": "offers 1280: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "offers 1280: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 1280: price centered",
+      "passed": true,
+      "expected": "[...document.querySelectorAll('.offer-card')].every(c => {const a=c.firstElementChild.getBoundingClientRect(), b=c.lastElementChild.getBoundingClientRect(); return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<1})",
+      "obtained": true
+    },
+    {
+      "name": "CEP 1280: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "location 1280: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "home 1920: Pico loaded",
+      "passed": true,
+      "expected": "!!document.querySelector('link[href*=picocss]').sheet",
+      "obtained": true
+    },
+    {
+      "name": "home 1920: search in first viewport",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom <= innerHeight && document.querySelector('#heroMedicineSearch').getBoundingClientRect().top > 0",
+      "obtained": true
+    },
+    {
+      "name": "home 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "home 1920: search precedes banner",
+      "passed": true,
+      "expected": "document.querySelector('.home-search').getBoundingClientRect().bottom <= document.querySelector('.hero').getBoundingClientRect().top",
+      "obtained": true
+    },
+    {
+      "name": "palette 1920: blue gray background and white search",
+      "passed": true,
+      "expected": "getComputedStyle(document.documentElement).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.body).backgroundColor === 'rgb(232, 237, 243)' && getComputedStyle(document.querySelector('.home-search')).backgroundColor === 'rgb(255, 255, 255)'",
+      "obtained": true
+    },
+    {
+      "name": "products 1920: two presentations, no public IDs",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 2 && !/ID 100/.test(document.querySelector('#productsGrid').innerText)",
+      "obtained": true
+    },
+    {
+      "name": "products 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "products 1920: compact cards",
+      "passed": true,
+      "expected": "Array.from(document.querySelectorAll('.product-card')).every(c => c.getBoundingClientRect().height < 380 && c.getBoundingClientRect().width <= 261)",
+      "obtained": true
+    },
+    {
+      "name": "products 1920: buttons aligned within row",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.product-card')]; return c[0].offsetTop !== c[1].offsetTop || Math.abs(c[0].querySelector('button').getBoundingClientRect().bottom - c[1].querySelector('button').getBoundingClientRect().bottom) < 1})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 1920: focus transferred",
+      "passed": true,
+      "expected": "document.activeElement.id === 'comparisonPanel'",
+      "obtained": true
+    },
+    {
+      "name": "offers 1920: compact navy header replaces introduction",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display === 'none' && getComputedStyle(document.querySelector('.comparison-header')).backgroundColor === 'rgb(16, 43, 78)' && document.querySelector('.comparison-header').getBoundingClientRect().height < 210 && getComputedStyle(comparisonPanel).backgroundColor === 'rgba(0, 0, 0, 0)'",
+      "obtained": true
+    },
+    {
+      "name": "offers 1920: no overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "offers 1920: compact and 14px gap",
+      "passed": true,
+      "expected": "(() => {const c = [...document.querySelectorAll('.offer-card')]; return c.length === 2 && c.every(e => e.getBoundingClientRect().height < 250 && getComputedStyle(e).marginTop === '0px' && getComputedStyle(e).marginBottom === '0px') && getComputedStyle(document.querySelector('.offers-list')).rowGap === '14px'})()",
+      "obtained": true
+    },
+    {
+      "name": "offers 1920: price centered",
+      "passed": true,
+      "expected": "[...document.querySelectorAll('.offer-card')].every(c => {const a=c.firstElementChild.getBoundingClientRect(), b=c.lastElementChild.getBoundingClientRect(); return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<1})",
+      "obtained": true
+    },
+    {
+      "name": "CEP 1920: nonmodal and fits viewport",
+      "passed": true,
+      "expected": "cepBox.getAttribute('aria-modal') === 'false' && cepBox.getBoundingClientRect().left >= 0 && cepBox.getBoundingClientRect().right <= innerWidth && cepBox.getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "location 1920: fits viewport",
+      "passed": true,
+      "expected": "document.querySelector('.popup-card').getBoundingClientRect().right <= innerWidth && document.querySelector('.popup-card').getBoundingClientRect().bottom <= innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "home search via button",
+      "passed": true,
+      "expected": "location.pathname.endsWith('consulta.html') && new URLSearchParams(location.search).get('termo') === 'Dipi' && document.querySelectorAll('.product-card').length === 2",
+      "obtained": true
+    },
+    {
+      "name": "home search via Enter",
+      "passed": true,
+      "expected": "location.pathname.endsWith('consulta.html') && new URLSearchParams(location.search).get('termo') === 'Dipi' && document.querySelectorAll('.product-card').length === 2",
+      "obtained": true
+    },
+    {
+      "name": "initial state distinct from no results",
+      "passed": true,
+      "expected": "!initialState.hidden && emptyState.hidden && document.querySelectorAll('.product-card').length === 0",
+      "obtained": true
+    },
+    {
+      "name": "search 'Dipi'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 2 && emptyState.hidden === true",
+      "obtained": true
+    },
+    {
+      "name": "search 'Dipirona'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 2 && emptyState.hidden === true",
+      "obtained": true
+    },
+    {
+      "name": "search 'DIPIRONA'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 2 && emptyState.hidden === true",
+      "obtained": true
+    },
+    {
+      "name": "search 'zzzz-inexistente'",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 0 && emptyState.hidden === false",
+      "obtained": true
+    },
+    {
+      "name": "search ''",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 0 && emptyState.hidden === true",
+      "obtained": true
+    },
+    {
+      "name": "search '   '",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".product-card\").length === 0 && emptyState.hidden === true",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1001: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 3 && document.querySelectorAll(\".offer-card.unavailable\").length === 1 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"8,99\\\",\\\"10,99\\\",\\\"7,50\\\"]\"",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1001: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1001: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1002: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 2 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"14,00\\\",\\\"16,00\\\"]\"",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1002: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1002: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1003: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 3 && document.querySelectorAll(\".offer-card.unavailable\").length === 3 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"6,50\\\",\\\"7,25\\\",\\\"5,99\\\"]\"",
+      "obtained": true
+    },
+    {
+      "name": "all unavailable message",
+      "passed": true,
+      "expected": "comparisonPanel.innerText.includes(\"Nenhuma oferta disponível\")",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1003: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1003: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1004: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 0 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[]\"",
+      "obtained": true
+    },
+    {
+      "name": "no offers message and focus",
+      "passed": true,
+      "expected": "comparisonPanel.innerText.includes(\"Nenhuma oferta cadastrada\") && document.activeElement === comparisonPanel",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1004: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1004: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1005: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 1 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"12,00\\\"]\"",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1005: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1005: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1006: offers, availability, exact prices",
+      "passed": true,
+      "expected": "document.querySelectorAll(\".offer-card\").length === 3 && document.querySelectorAll(\".offer-card.unavailable\").length === 0 && JSON.stringify([...document.querySelectorAll(\".product-price\")].map(e=>e.textContent.replace(/[^0-9,]/g,\"\"))) === \"[\\\"15,90\\\",\\\"15,90\\\",\\\"18,50\\\"]\"",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1006: no public ID",
+      "passed": true,
+      "expected": "!/ID 100/.test(comparisonPanel.innerText)",
+      "obtained": true
+    },
+    {
+      "name": "medicine 1006: return to search and focus",
+      "passed": true,
+      "expected": "!searchStep.hidden && comparisonPanel.hidden && document.activeElement === searchInput",
+      "obtained": true
+    },
+    {
+      "name": "invalid CEP stays open and focuses input",
+      "passed": true,
+      "expected": "!cepBox.hidden && document.activeElement === cepInput && document.querySelector('#toastStatus').innerText.includes('inválido')",
+      "obtained": true
+    },
+    {
+      "name": "valid CEP formats, closes, returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement === cepOpen && localStorage.getItem('pharmafindCep') === '72429-005'",
+      "obtained": true
+    },
+    {
+      "name": "CEP Tab can leave nonmodal dialog",
+      "passed": true,
+      "expected": "document.activeElement !== cepClose",
+      "obtained": true
+    },
+    {
+      "name": "CEP Escape returns focus",
+      "passed": true,
+      "expected": "cepBox.hidden && document.activeElement === cepOpen",
+      "obtained": true
+    },
+    {
+      "name": "modal Tab wraps and background inert",
+      "passed": true,
+      "expected": "document.activeElement === locClose && document.querySelector(\"main\").inert",
+      "obtained": true
+    },
+    {
+      "name": "modal Shift Tab wraps",
+      "passed": true,
+      "expected": "document.activeElement === decline",
+      "obtained": true
+    },
+    {
+      "name": "location Escape restores focus and background",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.activeElement === locOpen && !document.querySelector(\"main\").inert",
+      "obtained": true
+    },
+    {
+      "name": "denied GPS is handled",
+      "passed": true,
+      "expected": "locationPopup.hidden && document.querySelector(\"#toastStatus\").innerText.includes(\"GPS negado\") && !searchStep.hidden",
+      "obtained": true
+    },
+    {
+      "name": "image fallback loads",
+      "passed": true,
+      "expected": "document.querySelector('.product-card img').getAttribute('src') === 'medicamento-placeholder.svg' && document.querySelector('.product-card img').naturalWidth > 0",
+      "obtained": true
+    },
+    {
+      "name": "placeholder contrast color",
+      "passed": true,
+      "expected": "getComputedStyle(searchInput,'::placeholder').color === 'rgb(95, 111, 130)'",
+      "obtained": true
+    },
+    {
+      "name": "select another presentation through its button",
+      "passed": true,
+      "expected": "document.querySelector('#comparisonTitle').textContent.includes('Dipirona 1 g') && document.querySelectorAll('.offer-card').length === 2 && !comparisonPanel.textContent.includes('8,99')",
+      "obtained": true
+    },
+    {
+      "name": "catalog 320: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "catalog 320: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true
+    },
+    {
+      "name": "catalog 390: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "catalog 390: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true
+    },
+    {
+      "name": "catalog 768: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "catalog 768: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true
+    },
+    {
+      "name": "catalog 1280: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "catalog 1280: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true
+    },
+    {
+      "name": "catalog 1920: 5 cards and no overflow",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length === 5 && document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "catalog 1920: actions align within every row",
+      "passed": true,
+      "expected": "(() => {const rows = new Map(); for(const c of document.querySelectorAll('.product-card')){const y=c.offsetTop;const b=c.querySelector('button').getBoundingClientRect().bottom;if(rows.has(y) && Math.abs(rows.get(y)-b)>1)return false; rows.set(y,b)}return true})()",
+      "obtained": true
+    },
+    {
+      "name": "buttons align with different content lengths",
+      "passed": true,
+      "expected": "(() => {const b=[...document.querySelectorAll('.offer-button')].map(e=>e.getBoundingClientRect().bottom);return Math.abs(b[0]-b[1])<1})()",
+      "obtained": true
+    },
+    {
+      "name": "keyboard action has visible outline",
+      "passed": true,
+      "expected": "getComputedStyle(document.activeElement).outlineStyle !== 'none' && parseFloat(getComputedStyle(document.activeElement).outlineWidth) >= 2",
+      "obtained": true
+    },
+    {
+      "name": "keyboard selects medicine and focuses comparison",
+      "passed": true,
+      "expected": "document.activeElement === comparisonPanel && comparisonPanel.innerText.includes('Dipirona 500 mg')",
+      "obtained": true
+    },
+    {
+      "name": "keyboard returns to search",
+      "passed": true,
+      "expected": "document.activeElement === searchInput && comparisonPanel.hidden",
+      "obtained": true
+    },
+    {
+      "name": "reserved error state visible and legible",
+      "passed": true,
+      "expected": "getComputedStyle(document.getElementById('errorState')).display !== 'none' && document.getElementById('errorState').getAttribute('role') === 'alert'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: no horizontal overflow",
+      "passed": true,
+      "expected": "document.documentElement.scrollWidth <= innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "index.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true
+    },
+    {
+      "name": "index.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true
+    },
+    {
+      "name": "index.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true
+    },
+    {
+      "name": "index.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "index.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: unique IDs",
+      "passed": true,
+      "expected": "(() => {const ids = [...document.querySelectorAll('[id]')].map(e=>e.id);return new Set(ids).size===ids.length})()",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: skip bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement.id === 'conteudo-principal' && !document.activeElement.contains(document.querySelector('nav'))",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: mobile menu opens",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded') === 'true'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: mobile menu Escape and focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement === mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: modal restores inert elements",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('[inert]')].some(e=>e.inert)",
+      "obtained": true
+    },
+    {
+      "name": "contrast: secondary text on blue gray >= 4.5",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(document.querySelector('.consulta-header p')).color, getComputedStyle(document.body).backgroundColor)>=4.5",
+      "obtained": true
+    },
+    {
+      "name": "contrast: placeholder on white >= 4.5",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(searchInput,'::placeholder').color, getComputedStyle(searchInput).backgroundColor)>=4.5",
+      "obtained": true
+    },
+    {
+      "name": "contrast: selected medicine on navy >= 4.5",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(document.querySelector('#comparisonTitle')).color, getComputedStyle(document.querySelector('.comparison-header')).backgroundColor)>=4.5",
+      "obtained": true
+    },
+    {
+      "name": "contrast: comparison return focus outline >= 3",
+      "passed": true,
+      "expected": "contrastRatio(getComputedStyle(document.activeElement).outlineColor, getComputedStyle(document.querySelector('.comparison-header')).backgroundColor)>=3",
+      "obtained": true
+    },
+    {
+      "name": "comparison skip link still bypasses navigation",
+      "passed": true,
+      "expected": "document.activeElement === document.querySelector('.comparison-header button')",
+      "obtained": true
+    },
+    {
+      "name": "search introduction restored after comparison",
+      "passed": true,
+      "expected": "getComputedStyle(document.querySelector('.consulta-header')).display !== 'none' && !searchStep.hidden",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1001: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1001 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1001).length && comparisonPanel.textContent.includes(\"Dipirona 500 mg\")",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1001: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1001: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1001: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1002: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1002 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1002).length && comparisonPanel.textContent.includes(\"Dipirona 1 g\")",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1002: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1002: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1002: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1003: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1003 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1003).length && comparisonPanel.textContent.includes(\"Paracetamol 750 mg\")",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1003: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1003: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1003: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1004: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1004 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1004).length && comparisonPanel.textContent.includes(\"Ibuprofeno 400 mg\")",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1004: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1004: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1004: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1005: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1005 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1005).length && comparisonPanel.textContent.includes(\"Loratadina 10 mg\")",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1005: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1005: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1005: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1006: exact selection and isolation",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===1006 && document.querySelectorAll('.offer-card').length===ofertas.filter(o=>o.medicamentoId===1006).length && comparisonPanel.textContent.includes(\"Omeprazol 20 mg\")",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1006: available order and unavailable not highlighted",
+      "passed": true,
+      "expected": "(() => {const cards=[...document.querySelectorAll('.offer-card')];let unavailable=false;const prices=[];for(const c of cards){if(c.classList.contains('unavailable')){unavailable=true;if(!c.textContent.includes('Indisponível')||/melhor preço|menor preço/i.test(c.textContent))return false}else{if(unavailable)return false;prices.push(Number(c.querySelector('.product-price').textContent.replace(/[^0-9,]/g,'').replace(',','.')))}}return prices.every((p,i)=>!i||p>=prices[i-1])})()",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1006: no economic calculations in UI",
+      "passed": true,
+      "expected": "!/[Mm]édia|[Ee]conomia potencial|[Rr]anking/.test(comparisonPanel.textContent)",
+      "obtained": true
+    },
+    {
+      "name": "UI medicine 1006: selection cleared",
+      "passed": true,
+      "expected": "medicamentoSelecionadoId===null && comparisonPanel.hidden && comparisonPanel.children.length===0 && document.activeElement===searchInput",
+      "obtained": true
+    },
+    {
+      "name": "CEP input 72429-005",
+      "passed": true,
+      "expected": "cepBox.hidden && cepInput.value==='72429-005' && document.activeElement===cepOpen && toastStatus.textContent.includes('ainda não está integrada')",
+      "obtained": true
+    },
+    {
+      "name": "CEP input 72429005",
+      "passed": true,
+      "expected": "cepBox.hidden && cepInput.value==='72429-005' && document.activeElement===cepOpen && toastStatus.textContent.includes('ainda não está integrada')",
+      "obtained": true
+    },
+    {
+      "name": "GPS unavailable simulated without coordinates",
+      "passed": true,
+      "expected": "locationPopup.hidden && toastStatus.textContent.includes('Localização indisponível') && toastStatus.textContent.includes('ainda não está integrada') && !searchStep.hidden",
+      "obtained": true
+    },
+    {
+      "name": "search continues after GPS unavailable",
+      "passed": true,
+      "expected": "document.querySelectorAll('.product-card').length===2",
+      "obtained": true
+    },
+    {
+      "name": "index.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true
+    },
+    {
+      "name": "index.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "index.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "index.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/index.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "consulta.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/consulta.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "como-funciona.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/como-funciona.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "public instructions do not promise missing filters",
+      "passed": false,
+      "expected": "!/utilize os filtros/i.test(document.body.innerText)",
+      "obtained": false
+    },
+    {
+      "name": "sobre.html: no public authentication links",
+      "passed": true,
+      "expected": "![...document.querySelectorAll('a')].some(a=>/login|cadastro|signup|signin/i.test(a.getAttribute('href')||''))",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: CEP nonmodal semantics",
+      "passed": true,
+      "expected": "cepBox.getAttribute('role')==='dialog' && cepBox.getAttribute('aria-modal')==='false' && !!cepBox.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: location modal semantics",
+      "passed": true,
+      "expected": "locationPopup.getAttribute('role')==='dialog' && locationPopup.getAttribute('aria-modal')==='true' && !!locationPopup.getAttribute('aria-label')",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html: public links HTTP",
+      "passed": true,
+      "expected": "200 for all local public links",
+      "obtained": [
+        {
+          "url": "/sobre.html#conteudo-principal",
+          "status": 200
+        },
+        {
+          "url": "/index.html",
+          "status": 200
+        },
+        {
+          "url": "/consulta.html",
+          "status": 200
+        },
+        {
+          "url": "/como-funciona.html",
+          "status": 200
+        },
+        {
+          "url": "/sobre.html",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "institutional catalog count agrees with six medicines",
+      "passed": false,
+      "expected": "!/dez medicamentos/i.test(document.body.innerText)",
+      "obtained": false
+    },
+    {
+      "name": "no JavaScript console errors",
+      "passed": true
+    }
+  ],
+  "metrics": [
+    {
+      "page": "home",
+      "width": 320,
+      "searchBottom": 393.53125
+    },
+    {
+      "page": "offers",
+      "width": 320,
+      "heights": [
+        138.734375,
+        138.734375
+      ]
+    },
+    {
+      "page": "home",
+      "width": 390,
+      "searchBottom": 393.53125
+    },
+    {
+      "page": "offers",
+      "width": 390,
+      "heights": [
+        138.734375,
+        138.734375
+      ]
+    },
+    {
+      "page": "home",
+      "width": 768,
+      "searchBottom": 323.703125
+    },
+    {
+      "page": "offers",
+      "width": 768,
+      "heights": [
+        104.171875,
+        104.171875
+      ]
+    },
+    {
+      "page": "home",
+      "width": 1280,
+      "searchBottom": 354.90625
+    },
+    {
+      "page": "offers",
+      "width": 1280,
+      "heights": [
+        112.421875,
+        112.421875
+      ]
+    },
+    {
+      "page": "home",
+      "width": 1920,
+      "searchBottom": 358.578125
+    },
+    {
+      "page": "offers",
+      "width": 1920,
+      "heights": [
+        112.421875,
+        112.421875
+      ]
+    }
+  ],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/158.0.8127.92",
+    "revision": "@80c75da68097f674d782368eae87463b89d1720",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+    "jsVersion": "15.8.62.31"
+  },
+  "jsErrors": [],
+  "networkErrors": [
+    {
+      "method": "Log.entryAdded",
+      "params": {
+        "entry": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "timestamp": 1795748820137.507,
+          "url": "http://127.0.0.1:65027/favicon.ico",
+          "networkRequestId": "55912.33"
+        }
+      }
+    },
+    {
+      "method": "Log.entryAdded",
+      "params": {
+        "entry": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "timestamp": 1795748827226.367,
+          "url": "http://127.0.0.1:65027/missing-u10-test.png",
+          "networkRequestId": "55912.493"
+        }
+      }
+    }
+  ],
+  "failedRequests": []
+}

@@ -1,0 +1,1041 @@
+{
+  "checks": [
+    {
+      "name": "index.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "index.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "home 320: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 320: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "index.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "home 390: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 390: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "index.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "home 768: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: mobile menu opens and fits",
+      "passed": true,
+      "expected": "!mobileMenu.hidden && mobileMenuButton.getAttribute('aria-expanded')==='true' && document.documentElement.scrollWidth<=innerWidth",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: scrolled mobile links visible and clickable",
+      "passed": true,
+      "expected": "[...mobileMenu.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.top>=nav.getBoundingClientRect().bottom && r.bottom<=innerHeight && a.contains(document.elementFromPoint(r.left+r.width/2,r.top+r.height/2))})",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 768: Escape closes menu and restores focus",
+      "passed": true,
+      "expected": "mobileMenu.hidden && document.activeElement===mobileMenuButton",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "home 1280: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1280: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "index.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "home 1920: search remains visible",
+      "passed": true,
+      "expected": "document.querySelector('#heroSearchButton').getBoundingClientRect().bottom<=innerHeight",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "consulta.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "como-funciona.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: rounded white nav and border",
+      "passed": true,
+      "expected": "getComputedStyle(nav).borderTopLeftRadius === '18px' && getComputedStyle(nav).backgroundColor === 'rgb(255, 255, 255)' && getComputedStyle(nav).borderLeftWidth === '1px'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: inset content and no overflow",
+      "passed": true,
+      "expected": "parseFloat(getComputedStyle(nav).paddingLeft)>=12 && parseFloat(getComputedStyle(nav).paddingRight)>=12 && document.documentElement.scrollWidth<=innerWidth && nav.querySelector('.brand').getBoundingClientRect().left-nav.getBoundingClientRect().left >=12",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: vertical alignment",
+      "passed": true,
+      "expected": "(() => {const a=nav.querySelector('.brand').getBoundingClientRect(),b=(innerWidth<=850?mobileMenuButton:nav.querySelector('.desktop-menu')).getBoundingClientRect();return Math.abs((a.top+a.bottom-b.top-b.bottom)/2)<4})()",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: initial natural position",
+      "passed": true,
+      "expected": "nav.getBoundingClientRect().top>=14 && getComputedStyle(nav).position==='sticky' && getComputedStyle(nav).zIndex==='20' && getComputedStyle(nav).boxShadow!=='none'",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: scroll 100 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: scroll 300 fixed inset and stable layout",
+      "passed": true,
+      "expected": "scrollY>28 && Math.abs(nav.getBoundingClientRect().top-14)<1 && Math.abs(nav.getBoundingClientRect().width-navBefore.width)<1 && Math.abs(nav.getBoundingClientRect().left-navBefore.left)<1 && Math.abs(nav.getBoundingClientRect().height-navBefore.height)<1 && Math.abs(document.querySelector('#conteudo-principal').getBoundingClientRect().top+scrollY-navBefore.contentY)<1",
+      "obtained": true
+    },
+    {
+      "name": "sobre.html 1920: desktop navigation fits",
+      "passed": true,
+      "expected": "nav.querySelector('.desktop-menu').getBoundingClientRect().right <= nav.getBoundingClientRect().right-12 && getComputedStyle(mobileMenuButton).display==='none'",
+      "obtained": true
+    }
+  ],
+  "jsErrors": [],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/158.0.8127.92",
+    "revision": "@80c75da68097f674d782368eae87463b89d1720",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+    "jsVersion": "15.8.62.31"
+  },
+  "networkErrors": [
+    {
+      "method": "Log.entryAdded",
+      "params": {
+        "entry": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "timestamp": 1795748883272.231,
+          "url": "http://127.0.0.1:52488/favicon.ico",
+          "networkRequestId": "49544.33"
+        }
+      }
+    }
+  ]
+}

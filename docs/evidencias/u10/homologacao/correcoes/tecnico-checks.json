@@ -1,0 +1,95 @@
+[
+  {
+    "name": "frontend\\como-funciona.html: unique IDs",
+    "expected": "all unique",
+    "obtained": true,
+    "passed": true
+  },
+  {
+    "name": "frontend\\consulta.html: unique IDs",
+    "expected": "all unique",
+    "obtained": true,
+    "passed": true
+  },
+  {
+    "name": "frontend\\index.html: unique IDs",
+    "expected": "all unique",
+    "obtained": true,
+    "passed": true
+  },
+  {
+    "name": "frontend\\sobre.html: unique IDs",
+    "expected": "all unique",
+    "obtained": true,
+    "passed": true
+  },
+  {
+    "name": "local HTML references",
+    "expected": "no broken references",
+    "obtained": {
+      "checked": 71,
+      "broken": []
+    },
+    "passed": true
+  },
+  {
+    "name": "no removed authentication references in public HTML/JS",
+    "expected": "none",
+    "obtained": [],
+    "passed": true
+  },
+  {
+    "name": "no economic engine added",
+    "expected": "none",
+    "obtained": [],
+    "passed": true
+  },
+  {
+    "name": "branch",
+    "expected": "feature/20-auditoria-frontend",
+    "obtained": "feature/20-auditoria-frontend",
+    "passed": true
+  },
+  {
+    "name": "tracked changes scope",
+    "expected": "only authorized frontend and audit",
+    "obtained": [
+      "docs/U10-AUDITORIA.md",
+      "frontend/como-funciona.html",
+      "frontend/consulta.html",
+      "frontend/consulta.js",
+      "frontend/index.html",
+      "frontend/script.js",
+      "frontend/sobre.html",
+      "frontend/style.css"
+    ],
+    "passed": true
+  },
+  {
+    "name": "untracked artifacts",
+    "expected": "only QA evidence files",
+    "obtained": {
+      "count": 181,
+      "unexpected": []
+    },
+    "passed": true
+  },
+  {
+    "name": "evidence secret scan",
+    "expected": "no matching credential patterns",
+    "obtained": [],
+    "passed": true
+  },
+  {
+    "name": "PNG embedded metadata",
+    "expected": "no text or EXIF metadata",
+    "obtained": [],
+    "passed": true
+  },
+  {
+    "name": "JSON evidence integrity",
+    "expected": "all JSON parse",
+    "obtained": 22,
+    "passed": true
+  }
+]

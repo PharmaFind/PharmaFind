@@ -1,0 +1,82 @@
+[
+  {
+    "command": [
+      "git",
+      "status"
+    ],
+    "exit_code": 0,
+    "stdout": "On branch feature/20-auditoria-frontend\nYour branch is up to date with 'origin/feature/20-auditoria-frontend'.\n\nChanges not staged for commit:\n  (use \"git add <file>...\" to update what will be committed)\n  (use \"git restore <file>...\" to discard changes in working directory)\n\tmodified:   docs/U10-AUDITORIA.md\n\tmodified:   frontend/como-funciona.html\n\tmodified:   frontend/consulta.html\n\tmodified:   frontend/consulta.js\n\tmodified:   frontend/index.html\n\tmodified:   frontend/script.js\n\tmodified:   frontend/sobre.html\n\tmodified:   frontend/style.css\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tdocs/evidencias/\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "branch",
+      "--show-current"
+    ],
+    "exit_code": 0,
+    "stdout": "feature/20-auditoria-frontend\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--stat"
+    ],
+    "exit_code": 0,
+    "stdout": " docs/U10-AUDITORIA.md       | 107 +++++++++++++++++\n frontend/como-funciona.html |  48 ++++----\n frontend/consulta.html      | 282 ++++++++++++++++++++------------------------\n frontend/consulta.js        |  26 ++--\n frontend/index.html         |  45 +++----\n frontend/script.js          |  39 ++++--\n frontend/sobre.html         |   8 +-\n frontend/style.css          | 156 +++++++++++++++---------\n 8 files changed, 424 insertions(+), 287 deletions(-)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--name-only"
+    ],
+    "exit_code": 0,
+    "stdout": "docs/U10-AUDITORIA.md\nfrontend/como-funciona.html\nfrontend/consulta.html\nfrontend/consulta.js\nfrontend/index.html\nfrontend/script.js\nfrontend/sobre.html\nfrontend/style.css\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "ls-files",
+      "--others",
+      "--exclude-standard"
+    ],
+    "exit_code": 0,
+    "stdout": "docs/evidencias/u10/cep-320.png\ndocs/evidencias/u10/home-1280.png\ndocs/evidencias/u10/home-320.png\ndocs/evidencias/u10/homologacao/estado-testado.json\ndocs/evidencias/u10/location-320.png\ndocs/evidencias/u10/offers-1280.png\ndocs/evidencias/u10/offers-320.png\ndocs/evidencias/u10/products-1280.png\ndocs/evidencias/u10/products-320.png\ndocs/evidencias/u10/refinamento/cep-1280.png\ndocs/evidencias/u10/refinamento/cep-1920.png\ndocs/evidencias/u10/refinamento/cep-320.png\ndocs/evidencias/u10/refinamento/cep-390.png\ndocs/evidencias/u10/refinamento/cep-768.png\ndocs/evidencias/u10/refinamento/como-funciona-1280.png\ndocs/evidencias/u10/refinamento/como-funciona-1920.png\ndocs/evidencias/u10/refinamento/como-funciona-320.png\ndocs/evidencias/u10/refinamento/como-funciona-390.png\ndocs/evidencias/u10/refinamento/como-funciona-768.png\ndocs/evidencias/u10/refinamento/home-1280.png\ndocs/evidencias/u10/refinamento/home-1920.png\ndocs/evidencias/u10/refinamento/home-320.png\ndocs/evidencias/u10/refinamento/home-390.png\ndocs/evidencias/u10/refinamento/home-768.png\ndocs/evidencias/u10/refinamento/location-1280.png\ndocs/evidencias/u10/refinamento/location-1920.png\ndocs/evidencias/u10/refinamento/location-320.png\ndocs/evidencias/u10/refinamento/location-390.png\ndocs/evidencias/u10/refinamento/location-768.png\ndocs/evidencias/u10/refinamento/offers-1280.png\ndocs/evidencias/u10/refinamento/offers-1920.png\ndocs/evidencias/u10/refinamento/offers-320.png\ndocs/evidencias/u10/refinamento/offers-390.png\ndocs/evidencias/u10/refinamento/offers-768.png\ndocs/evidencias/u10/refinamento/products-1280.png\ndocs/evidencias/u10/refinamento/products-1920.png\ndocs/evidencias/u10/refinamento/products-320.png\ndocs/evidencias/u10/refinamento/products-390.png\ndocs/evidencias/u10/refinamento/products-768.png\ndocs/evidencias/u10/refinamento/query-error-1280.png\ndocs/evidencias/u10/refinamento/report.json\ndocs/evidencias/u10/refinamento/sobre-1280.png\ndocs/evidencias/u10/refinamento/sobre-1920.png\ndocs/evidencias/u10/refinamento/sobre-320.png\ndocs/evidencias/u10/refinamento/sobre-390.png\ndocs/evidencias/u10/refinamento/sobre-768.png\ndocs/evidencias/u10/report.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "frontend/script.js"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "frontend/consulta.js"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

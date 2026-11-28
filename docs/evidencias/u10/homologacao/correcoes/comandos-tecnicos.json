@@ -1,0 +1,82 @@
+[
+  {
+    "command": [
+      "git",
+      "status"
+    ],
+    "exit_code": 0,
+    "stdout": "On branch feature/20-auditoria-frontend\nYour branch is up to date with 'origin/feature/20-auditoria-frontend'.\n\nChanges not staged for commit:\n  (use \"git add <file>...\" to update what will be committed)\n  (use \"git restore <file>...\" to discard changes in working directory)\n\tmodified:   docs/U10-AUDITORIA.md\n\tmodified:   frontend/como-funciona.html\n\tmodified:   frontend/consulta.html\n\tmodified:   frontend/consulta.js\n\tmodified:   frontend/index.html\n\tmodified:   frontend/script.js\n\tmodified:   frontend/sobre.html\n\tmodified:   frontend/style.css\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tdocs/evidencias/\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "branch",
+      "--show-current"
+    ],
+    "exit_code": 0,
+    "stdout": "feature/20-auditoria-frontend\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--stat"
+    ],
+    "exit_code": 0,
+    "stdout": " docs/U10-AUDITORIA.md       | 117 ++++++++++++++++++\n frontend/como-funciona.html |  55 +++++----\n frontend/consulta.html      | 283 ++++++++++++++++++++------------------------\n frontend/consulta.js        |  26 ++--\n frontend/index.html         |  46 +++----\n frontend/script.js          |  45 ++++---\n frontend/sobre.html         |  11 +-\n frontend/style.css          | 156 +++++++++++++++---------\n 8 files changed, 447 insertions(+), 292 deletions(-)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--name-only"
+    ],
+    "exit_code": 0,
+    "stdout": "docs/U10-AUDITORIA.md\nfrontend/como-funciona.html\nfrontend/consulta.html\nfrontend/consulta.js\nfrontend/index.html\nfrontend/script.js\nfrontend/sobre.html\nfrontend/style.css\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "ls-files",
+      "--others",
+      "--exclude-standard"
+    ],
+    "exit_code": 0,
+    "stdout": "docs/evidencias/u10/cep-320.png\ndocs/evidencias/u10/home-1280.png\ndocs/evidencias/u10/home-320.png\ndocs/evidencias/u10/homologacao/RELATORIO.md\ndocs/evidencias/u10/homologacao/acessibilidade/como-funciona-focus-after-escape.png\ndocs/evidencias/u10/homologacao/acessibilidade/consulta-focus-after-escape.png\ndocs/evidencias/u10/homologacao/acessibilidade/index-focus-after-escape.png\ndocs/evidencias/u10/homologacao/acessibilidade/report.json\ndocs/evidencias/u10/homologacao/acessibilidade/sobre-focus-after-escape.png\ndocs/evidencias/u10/homologacao/browser/cep-1280.png\ndocs/evidencias/u10/homologacao/browser/cep-1920.png\ndocs/evidencias/u10/homologacao/browser/cep-320.png\ndocs/evidencias/u10/homologacao/browser/cep-390.png\ndocs/evidencias/u10/homologacao/browser/cep-768.png\ndocs/evidencias/u10/homologacao/browser/como-funciona-1280.png\ndocs/evidencias/u10/homologacao/browser/como-funciona-1920.png\ndocs/evidencias/u10/homologacao/browser/como-funciona-320.png\ndocs/evidencias/u10/homologacao/browser/como-funciona-390.png\ndocs/evidencias/u10/homologacao/browser/como-funciona-768.png\ndocs/evidencias/u10/homologacao/browser/comparacoes-observadas.json\ndocs/evidencias/u10/homologacao/browser/dados-observados.json\ndocs/evidencias/u10/homologacao/browser/finding-catalog-count.png\ndocs/evidencias/u10/homologacao/browser/finding-filters.png\ndocs/evidencias/u10/homologacao/browser/home-1280.png\ndocs/evidencias/u10/homologacao/browser/home-1920.png\ndocs/evidencias/u10/homologacao/browser/home-320.png\ndocs/evidencias/u10/homologacao/browser/home-390.png\ndocs/evidencias/u10/homologacao/browser/home-768.png\ndocs/evidencias/u10/homologacao/browser/location-1280.png\ndocs/evidencias/u10/homologacao/browser/location-1920.png\ndocs/evidencias/u10/homologacao/browser/location-320.png\ndocs/evidencias/u10/homologacao/browser/location-390.png\ndocs/evidencias/u10/homologacao/browser/location-768.png\ndocs/evidencias/u10/homologacao/browser/medicine-1001-1280.png\ndocs/evidencias/u10/homologacao/browser/medicine-1002-1280.png\ndocs/evidencias/u10/homologacao/browser/medicine-1003-1280.png\ndocs/evidencias/u10/homologacao/browser/medicine-1004-1280.png\ndocs/evidencias/u10/homologacao/browser/medicine-1005-1280.png\ndocs/evidencias/u10/homologacao/browser/medicine-1006-1280.png\ndocs/evidencias/u10/homologacao/browser/offers-1280.png\ndocs/evidencias/u10/homologacao/browser/offers-1920.png\ndocs/evidencias/u10/homologacao/browser/offers-320.png\ndocs/evidencias/u10/homologacao/browser/offers-390.png\ndocs/evidencias/u10/homologacao/browser/offers-768.png\ndocs/evidencias/u10/homologacao/browser/products-1280.png\ndocs/evidencias/u10/homologacao/browser/products-1920.png\ndocs/evidencias/u10/homologacao/browser/products-320.png\ndocs/evidencias/u10/homologacao/browser/products-390.png\ndocs/evidencias/u10/homologacao/browser/products-768.png\ndocs/evidencias/u10/homologacao/browser/query-error-1280.png\ndocs/evidencias/u10/homologacao/browser/report.json\ndocs/evidencias/u10/homologacao/browser/sobre-1280.png\ndocs/evidencias/u10/homologacao/browser/sobre-1920.png\ndocs/evidencias/u10/homologacao/browser/sobre-320.png\ndocs/evidencias/u10/homologacao/browser/sobre-390.png\ndocs/evidencias/u10/homologacao/browser/sobre-768.png\ndocs/evidencias/u10/homologacao/browser/zoom-tentativa.json\ndocs/evidencias/u10/homologacao/comandos-tecnicos.json\ndocs/evidencias/u10/homologacao/correcoes/acessibilidade/como-funciona-focus-after-escape.png\ndocs/evidencias/u10/homologacao/correcoes/acessibilidade/consulta-focus-after-escape.png\ndocs/evidencias/u10/homologacao/correcoes/acessibilidade/index-focus-after-escape.png\ndocs/evidencias/u10/homologacao/correcoes/acessibilidade/report.json\ndocs/evidencias/u10/homologacao/correcoes/acessibilidade/sobre-focus-after-escape.png\ndocs/evidencias/u10/homologacao/correcoes/browser/cep-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/cep-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/cep-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/cep-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/cep-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/como-funciona-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/como-funciona-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/como-funciona-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/como-funciona-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/como-funciona-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/comparacoes-observadas.json\ndocs/evidencias/u10/homologacao/correcoes/browser/dados-observados.json\ndocs/evidencias/u10/homologacao/correcoes/browser/finding-catalog-count.png\ndocs/evidencias/u10/homologacao/correcoes/browser/finding-filters.png\ndocs/evidencias/u10/homologacao/correcoes/browser/home-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/home-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/home-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/home-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/home-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/location-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/location-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/location-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/location-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/location-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/medicine-1001-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/medicine-1002-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/medicine-1003-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/medicine-1004-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/medicine-1005-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/medicine-1006-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/offers-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/offers-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/offers-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/offers-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/offers-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/products-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/products-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/products-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/products-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/products-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/query-error-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/report.json\ndocs/evidencias/u10/homologacao/correcoes/browser/sobre-1280.png\ndocs/evidencias/u10/homologacao/correcoes/browser/sobre-1920.png\ndocs/evidencias/u10/homologacao/correcoes/browser/sobre-320.png\ndocs/evidencias/u10/homologacao/correcoes/browser/sobre-390.png\ndocs/evidencias/u10/homologacao/correcoes/browser/sobre-768.png\ndocs/evidencias/u10/homologacao/correcoes/browser/zoom-tentativa.json\ndocs/evidencias/u10/homologacao/correcoes/comandos-tecnicos.json\ndocs/evidencias/u10/homologacao/correcoes/estado-testado.json\ndocs/evidencias/u10/homologacao/correcoes/evidencias-inspecao.json\ndocs/evidencias/u10/homologacao/correcoes/roteiro_brave.py\ndocs/evidencias/u10/homologacao/correcoes/seed-checks.json\ndocs/evidencias/u10/homologacao/correcoes/sticky/como-funciona-1280.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/como-funciona-320.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/consulta-1280.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/consulta-320.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/index-1280.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/index-320.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/report.json\ndocs/evidencias/u10/homologacao/correcoes/sticky/sobre-1280.png\ndocs/evidencias/u10/homologacao/correcoes/sticky/sobre-320.png\ndocs/evidencias/u10/homologacao/correcoes/tecnico-checks.json\ndocs/evidencias/u10/homologacao/estado-testado.json\ndocs/evidencias/u10/homologacao/evidencias-inspecao.json\ndocs/evidencias/u10/homologacao/resultado-consolidado.json\ndocs/evidencias/u10/homologacao/roteiro_brave.py\ndocs/evidencias/u10/homologacao/seed-checks.json\ndocs/evidencias/u10/homologacao/sticky/como-funciona-1280.png\ndocs/evidencias/u10/homologacao/sticky/como-funciona-320.png\ndocs/evidencias/u10/homologacao/sticky/consulta-1280.png\ndocs/evidencias/u10/homologacao/sticky/consulta-320.png\ndocs/evidencias/u10/homologacao/sticky/index-1280.png\ndocs/evidencias/u10/homologacao/sticky/index-320.png\ndocs/evidencias/u10/homologacao/sticky/report.json\ndocs/evidencias/u10/homologacao/sticky/sobre-1280.png\ndocs/evidencias/u10/homologacao/sticky/sobre-320.png\ndocs/evidencias/u10/homologacao/tecnico-checks.json\ndocs/evidencias/u10/location-320.png\ndocs/evidencias/u10/offers-1280.png\ndocs/evidencias/u10/offers-320.png\ndocs/evidencias/u10/products-1280.png\ndocs/evidencias/u10/products-320.png\ndocs/evidencias/u10/refinamento/cep-1280.png\ndocs/evidencias/u10/refinamento/cep-1920.png\ndocs/evidencias/u10/refinamento/cep-320.png\ndocs/evidencias/u10/refinamento/cep-390.png\ndocs/evidencias/u10/refinamento/cep-768.png\ndocs/evidencias/u10/refinamento/como-funciona-1280.png\ndocs/evidencias/u10/refinamento/como-funciona-1920.png\ndocs/evidencias/u10/refinamento/como-funciona-320.png\ndocs/evidencias/u10/refinamento/como-funciona-390.png\ndocs/evidencias/u10/refinamento/como-funciona-768.png\ndocs/evidencias/u10/refinamento/home-1280.png\ndocs/evidencias/u10/refinamento/home-1920.png\ndocs/evidencias/u10/refinamento/home-320.png\ndocs/evidencias/u10/refinamento/home-390.png\ndocs/evidencias/u10/refinamento/home-768.png\ndocs/evidencias/u10/refinamento/location-1280.png\ndocs/evidencias/u10/refinamento/location-1920.png\ndocs/evidencias/u10/refinamento/location-320.png\ndocs/evidencias/u10/refinamento/location-390.png\ndocs/evidencias/u10/refinamento/location-768.png\ndocs/evidencias/u10/refinamento/offers-1280.png\ndocs/evidencias/u10/refinamento/offers-1920.png\ndocs/evidencias/u10/refinamento/offers-320.png\ndocs/evidencias/u10/refinamento/offers-390.png\ndocs/evidencias/u10/refinamento/offers-768.png\ndocs/evidencias/u10/refinamento/products-1280.png\ndocs/evidencias/u10/refinamento/products-1920.png\ndocs/evidencias/u10/refinamento/products-320.png\ndocs/evidencias/u10/refinamento/products-390.png\ndocs/evidencias/u10/refinamento/products-768.png\ndocs/evidencias/u10/refinamento/query-error-1280.png\ndocs/evidencias/u10/refinamento/report.json\ndocs/evidencias/u10/refinamento/sobre-1280.png\ndocs/evidencias/u10/refinamento/sobre-1920.png\ndocs/evidencias/u10/refinamento/sobre-320.png\ndocs/evidencias/u10/refinamento/sobre-390.png\ndocs/evidencias/u10/refinamento/sobre-768.png\ndocs/evidencias/u10/report.json\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "frontend/script.js"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "frontend/consulta.js"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

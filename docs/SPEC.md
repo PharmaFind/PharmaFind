@@ -3,6 +3,7 @@
 **Estado:** SPEC v1.1 anterior consolidada na Issue [#18](https://github.com/PharmaFind/PharmaFind/issues/18); **atualização de 23/11/2026** registra a stack aceita pela coordenação e a não adoção de React no MVP, sob revisão humana da [Issue #30](https://github.com/PharmaFind/PharmaFind/issues/30). Nenhum contrato proposto ou código é automaticamente implementado.  
 **Data de elaboração da v1.0:** 12/11/2026. **Refinamento v1.1:** 16/11/2026. **Entrega final informada:** 30/11/2026.  
 **Fontes:** [`CONTEXTO.md`](../CONTEXTO.md) (prioridade para decisões recentes), Documento de Visão do Produto (RF01–RF30, RNF01–RNF42, RN01–RN05) e apostilas de SDD do professor Romes.  
+**Documentos de Visão de origem:** [histórico e versões em Markdown](visao/README.md) (registros históricos, sem substituir esta SPEC).
 **Contratos detalhados:** [`docs/API.md`](API.md). **Decisões técnicas:** [`docs/ADR/`](ADR/).
 
 > **Leitura obrigatória:** esta SPEC descreve o **comportamento a implementar**, não a implementação atual. O código observado em `develop` mantém dados fixos em JavaScript, não possui backend Java, não consulta o MySQL e não oferece ainda as estatísticas descritas. Requisitos originários do Documento de Visão preservam seus IDs; novos requisitos derivados de decisões do `CONTEXTO.md` recebem IDs a partir de RF31. As definições técnicas sinalizadas como **[PROPOSTA]** exigem validação da equipe.
@@ -242,7 +243,7 @@ Se |P| >= 1:
 ### 6.4 Histórico de preços (U09 — decisão de escopo e detalhes a implementar)
 
 - O histórico pertence **à mesma oferta**, identificada pelo medicamento exato e pela farmácia; não combinar preços de apresentações ou estabelecimentos diferentes (RN13).
-- Utilizar registros **fictícios persistidos em MySQL**. A tabela `HISTORICO_PRECO` existe no SQL legado (`DATA_REGISTRO DATE`), mas ainda não tem dados nem regra de gravação automatizada. A U09 deve definir, testar e documentar se a granularidade será **um ponto por dia** ou registros por evento com migração a `DATETIME` antes de criar dados.
+- Utilizar registros **fictícios persistidos em MySQL**. A tabela `HISTORICO_PRECO` existe no SQL legado (`DATA_REGISTRO DATE`), mas ainda não tem dados nem regra de gravação automatizada. A correção U01/#33 fixa **um ponto por oferta por dia**, com preço positivo e unicidade por oferta/data. A U09 deve definir gravação/atualização respeitando essa regra; eventos intradiários exigem nova decisão e migração aprovada.
 - Gráfico de linha com datas cronológicas e preços em reais; o navegador apresenta valores recebidos da API, não séries simuladas a cada carregamento.
 - Exibir `variacaoAbsoluta` e `variacaoPercentual` só com pelo menos **dois registros de datas distintas** e primeiro preço maior que zero. Valor negativo significa queda. Com série insuficiente, métricas `null` (RN14).
 - O endpoint adicional **proposto** de leitura é `GET /api/v1/medicamentos/{id}/historico?farmaciaId={id}`, detalhado em [API.md](API.md). Não altera a rota de comparação das ofertas atuais.
@@ -329,7 +330,7 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 3. **[CÁLCULOS]** Revisar/aceitar arredondamento monetário, empate por preço e ordenação por distância sem coordenadas; não prometer testes concluídos.
 4. **[GEOLOCALIZAÇÃO]** Integrar na U05/U02 o mapa JSON de três CEPs/pontos de teste já documentado na U01; testar o fluxo de distância. GPS continua opcional e depende de consentimento.
 5. **[API]** Validar contratos/erros de [API.md](API.md) antes da implementação, inclusive a nova consulta de histórico U09 sem alterar indevidamente os três contratos existentes.
-6. **[HISTÓRICO — U09]** Definir a gravação/atualização de pontos históricos (por dia ou por evento), massa fictícia cronológica, contrato JSON e testes CT21–CT24. A tabela SQL legada não comprova implementação.
+6. **[HISTÓRICO — U09]** Definir a gravação/atualização de pontos históricos respeitando unicidade por oferta/dia (#33), massa fictícia cronológica, contrato JSON e testes CT21–CT24. A tabela SQL legada não comprova implementação.
 7. **[FRONTEND — U10]** Registrar as **observações exatas do professor** na [Issue #20](https://github.com/PharmaFind/PharmaFind/issues/20), corrigir telas e comprovar avaliações de UX/responsividade/teclado, sem presumir problemas específicos.
 8. **[COLABORAÇÃO — ATRIBUIÇÕES EM ESPERA]** Confirmar responsáveis das Issues #11–#16 após validação da coordenação; manter atribuições existentes de U08/U10 sem inventar novos responsáveis; conduzir PRs por desenvolvedores diferentes e revisões cruzadas reais. `AGENTS.md` contém instruções, não comprova configuração operacional de agentes.
 9. **[ACADEMIA]** O professor confirmou que Spring Boot é permitido e PDF único de links/evidências deve ir ao AVA; confirmar apenas eventuais detalhes adicionais de agente, Docker e harness. Executar os CTs relevantes; nenhum teste é considerado aprovado apenas por estar descrito.
@@ -337,3 +338,18 @@ As dez unidades possuem Issues registradas no repositório (U01–U08 criadas em
 ---
 
 **Revisão de 23/11/2026:** a coordenação aprovou a stack simplificada, **sem congelar o escopo**. Histórico U09 continua planejado; expansão de funcionalidades exige Issue/avaliação de impacto e validação do PO/equipe. Responsáveis U02–U07 aguardam confirmação. Esta atualização documental depende de PR revisado e não comprova implementação.
+
+### Persistência complementar — decisão autorizada U01/#33 em 23/11/2026
+
+O MVP não possui autenticação nem cadastro. A instalação nova tem quatro tabelas, sem USUARIO;
+fixtures antigas mantêm a tabela somente para testar migração e recusa de perda de dados.
+A retirada em bancos anteriores é separada (003c), condicionada a tabela vazia, sem dependências,
+backup recuperável e autorização explícita do alvo não descartável. Não bloqueia 003a/003b.
+
+MEDICAMENTO tem APRESENTACAO VARCHAR(150) obrigatória/não vazia e identidade única por
+NOME/DOSAGEM/APRESENTACAO sob utf8mb4_unicode_ci, preservando os IDs. Diferentes dosagens e
+apresentações coexistem; valores desconhecidos impedem consolidar a migração.
+FARMACIA admite CEP NULL ou oito dígitos ASCII; coordenadas devem estar ambas NULL ou ambas
+preenchidas nos limites latitude [-90,90]/longitude [-180,180]. HISTORICO_PRECO exige preço
+positivo e unicidade por oferta/data DATE, preservando FK. Não há criação automática de histórico.
+Ver database/README.md e testes de integridade/migração da Issue #33 para execução e recuperação.

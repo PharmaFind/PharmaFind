@@ -1,0 +1,160 @@
+-- #33. Esquema U01 e seed originais, exclusivamente no quarto banco descartavel.
+-- P2 / #33. Auxiliares apenas do banco descartavel de integridade desta rodada.
+DELIMITER $$
+CREATE PROCEDURE pf33_testar_recusa_indice(IN etapa VARCHAR(4), IN motivo VARCHAR(50), IN cenario VARCHAR(70))
+BEGIN
+    DECLARE erro INT DEFAULT 0;
+    DECLARE mensagem TEXT DEFAULT '';
+    DECLARE limite_anterior BIGINT UNSIGNED;
+    SET limite_anterior = @@SESSION.group_concat_max_len;
+    SET SESSION group_concat_max_len = 65535;
+    SET @pf33_p2_colunas = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(TABLE_NAME, COLUMN_NAME, COLUMN_TYPE,
+        IS_NULLABLE, COLUMN_DEFAULT, EXTRA, COLLATION_NAME) ORDER BY TABLE_NAME, ORDINAL_POSITION SEPARATOR ''), 256)
+        FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME IN ('MEDICAMENTO','FARMACIA','MEDICAMENTO_FARMACIA','HISTORICO_PRECO'));
+    SET @pf33_p2_indices = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(TABLE_NAME, INDEX_NAME, SEQ_IN_INDEX, COLUMN_NAME,
+        NON_UNIQUE, SUB_PART) ORDER BY TABLE_NAME, INDEX_NAME, SEQ_IN_INDEX SEPARATOR ''), 256)
+        FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME IN ('MEDICAMENTO','FARMACIA','MEDICAMENTO_FARMACIA','HISTORICO_PRECO'));
+    SET @pf33_p2_constraints = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(t.TABLE_NAME, t.CONSTRAINT_NAME, t.CONSTRAINT_TYPE,
+        t.ENFORCED, c.CHECK_CLAUSE) ORDER BY t.TABLE_NAME, t.CONSTRAINT_NAME SEPARATOR ''), 256)
+        FROM information_schema.TABLE_CONSTRAINTS t LEFT JOIN information_schema.CHECK_CONSTRAINTS c
+            ON c.CONSTRAINT_SCHEMA = t.CONSTRAINT_SCHEMA AND c.CONSTRAINT_NAME = t.CONSTRAINT_NAME
+        WHERE t.CONSTRAINT_SCHEMA = DATABASE()
+        AND t.TABLE_NAME IN ('MEDICAMENTO','FARMACIA','MEDICAMENTO_FARMACIA','HISTORICO_PRECO'));
+    SET @pf33_p2_ofertas = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(ID_MEDICAMENTO_FARMACIA, ID_MEDICAMENTO, ID_FARMACIA,
+        PRECO, DISPONIVEL, DATA_ATUALIZACAO) ORDER BY ID_MEDICAMENTO_FARMACIA SEPARATOR ''), 256)
+        FROM MEDICAMENTO_FARMACIA);
+    BEGIN
+        DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+            GET DIAGNOSTICS CONDITION 1 erro = MYSQL_ERRNO, mensagem = MESSAGE_TEXT;
+        IF etapa = '003a' THEN
+            CALL pf33_preparar_integridade();
+        ELSEIF etapa = '003b' THEN
+            CALL pf33_consolidar_integridade();
+        END IF;
+    END;
+    CALL u01_assert(erro = 1644 AND mensagem LIKE CONCAT(etapa, ': ', motivo, '%'),
+        CONCAT(etapa, ' P2 recusa e diagnostica ', cenario));
+    CALL u01_assert(@pf33_p2_colunas = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(TABLE_NAME, COLUMN_NAME, COLUMN_TYPE,
+        IS_NULLABLE, COLUMN_DEFAULT, EXTRA, COLLATION_NAME) ORDER BY TABLE_NAME, ORDINAL_POSITION SEPARATOR ''), 256)
+        FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME IN ('MEDICAMENTO','FARMACIA','MEDICAMENTO_FARMACIA','HISTORICO_PRECO')),
+        CONCAT(etapa, ' P2 preserva colunas: ', cenario));
+    CALL u01_assert(@pf33_p2_indices = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(TABLE_NAME, INDEX_NAME, SEQ_IN_INDEX, COLUMN_NAME,
+        NON_UNIQUE, SUB_PART) ORDER BY TABLE_NAME, INDEX_NAME, SEQ_IN_INDEX SEPARATOR ''), 256)
+        FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME IN ('MEDICAMENTO','FARMACIA','MEDICAMENTO_FARMACIA','HISTORICO_PRECO')),
+        CONCAT(etapa, ' P2 preserva indices: ', cenario));
+    CALL u01_assert(@pf33_p2_constraints = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(t.TABLE_NAME, t.CONSTRAINT_NAME, t.CONSTRAINT_TYPE,
+        t.ENFORCED, c.CHECK_CLAUSE) ORDER BY t.TABLE_NAME, t.CONSTRAINT_NAME SEPARATOR ''), 256)
+        FROM information_schema.TABLE_CONSTRAINTS t LEFT JOIN information_schema.CHECK_CONSTRAINTS c
+            ON c.CONSTRAINT_SCHEMA = t.CONSTRAINT_SCHEMA AND c.CONSTRAINT_NAME = t.CONSTRAINT_NAME
+        WHERE t.CONSTRAINT_SCHEMA = DATABASE()
+        AND t.TABLE_NAME IN ('MEDICAMENTO','FARMACIA','MEDICAMENTO_FARMACIA','HISTORICO_PRECO')),
+        CONCAT(etapa, ' P2 preserva constraints: ', cenario));
+    CALL u01_assert(@pf33_p2_ofertas = (SELECT SHA2(GROUP_CONCAT(JSON_ARRAY(ID_MEDICAMENTO_FARMACIA, ID_MEDICAMENTO, ID_FARMACIA,
+        PRECO, DISPONIVEL, DATA_ATUALIZACAO) ORDER BY ID_MEDICAMENTO_FARMACIA SEPARATOR ''), 256)
+        FROM MEDICAMENTO_FARMACIA),
+        CONCAT(etapa, ' P2 preserva IDs, precos, datas e ofertas: ', cenario));
+    SET SESSION group_concat_max_len = limite_anterior;
+END$$
+CREATE PROCEDURE pf33_testar_indice_ofertas(IN etapa VARCHAR(4))
+BEGIN
+    CALL u01_assert(REGEXP_LIKE(DATABASE(), '^pharmafind_u01_test_integridade_[0-9a-f_]{1,24}$', 'c'),
+        'P2 limitado ao banco descartavel de integridade');
+    CALL u01_assert((SELECT COUNT(*) = 2 AND SUM(NON_UNIQUE = 0 AND SUB_PART IS NULL
+        AND ((SEQ_IN_INDEX = 1 AND COLUMN_NAME = 'ID_MEDICAMENTO')
+            OR (SEQ_IN_INDEX = 2 AND COLUMN_NAME = 'ID_FARMACIA'))) = 2
+        FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME = 'MEDICAMENTO_FARMACIA' AND INDEX_NAME = 'UQ_MEDICAMENTO_FARMACIA'),
+        CONCAT(etapa, ' P2 indice inicial correto tem duas colunas unicas sem prefixo'));
+    -- Suporte da FK enquanto SOMENTE a fixture troca o indice; a migracao nao o reconstroi.
+    CREATE INDEX pf33_p2_suporte_fk ON MEDICAMENTO_FARMACIA (ID_MEDICAMENTO);
+    CREATE INDEX pf33_p2_suporte_fk_farmacia ON MEDICAMENTO_FARMACIA (ID_FARMACIA);
+    ALTER TABLE MEDICAMENTO_FARMACIA DROP INDEX UQ_MEDICAMENTO_FARMACIA,
+        ADD UNIQUE INDEX UQ_MEDICAMENTO_FARMACIA (ID_MEDICAMENTO, ID_FARMACIA, PRECO);
+    CALL pf33_testar_recusa_indice(etapa, 'indice UQ_MEDICAMENTO_FARMACIA divergente', 'tres colunas sem duplicados');
+    INSERT INTO MEDICAMENTO_FARMACIA
+        (ID_MEDICAMENTO_FARMACIA, ID_MEDICAMENTO, ID_FARMACIA, PRECO, DISPONIVEL, DATA_ATUALIZACAO)
+        VALUES (3999, 1001, 2001, 9.99, 1, '2026-11-12 12:00:00');
+    CALL pf33_testar_recusa_indice(etapa, 'pares medicamento/farmacia duplicados', 'tres colunas com par duplicado');
+    CALL u01_assert((SELECT COUNT(*) = 2 FROM MEDICAMENTO_FARMACIA
+        WHERE ID_MEDICAMENTO = 1001 AND ID_FARMACIA = 2001),
+        CONCAT(etapa, ' P2 recusa mantem o par duplicado para revisao'));
+    -- Saneamento EXCLUSIVO da fixture criada acima, nunca parte das migracoes.
+    DELETE FROM MEDICAMENTO_FARMACIA WHERE ID_MEDICAMENTO_FARMACIA = 3999
+        AND ID_MEDICAMENTO = 1001 AND ID_FARMACIA = 2001 AND PRECO = 9.99
+        AND DISPONIVEL = 1 AND DATA_ATUALIZACAO = '2026-11-12 12:00:00';
+    ALTER TABLE MEDICAMENTO_FARMACIA DROP INDEX UQ_MEDICAMENTO_FARMACIA,
+        ADD INDEX UQ_MEDICAMENTO_FARMACIA (ID_MEDICAMENTO, ID_FARMACIA);
+    CALL pf33_testar_recusa_indice(etapa, 'indice UQ_MEDICAMENTO_FARMACIA divergente', 'indice sem unicidade');
+    ALTER TABLE MEDICAMENTO_FARMACIA DROP INDEX UQ_MEDICAMENTO_FARMACIA,
+        ADD UNIQUE INDEX UQ_MEDICAMENTO_FARMACIA (ID_FARMACIA, ID_MEDICAMENTO);
+    CALL pf33_testar_recusa_indice(etapa, 'indice UQ_MEDICAMENTO_FARMACIA divergente', 'ordem invertida');
+    ALTER TABLE MEDICAMENTO_FARMACIA DROP INDEX UQ_MEDICAMENTO_FARMACIA,
+        ADD UNIQUE INDEX UQ_MEDICAMENTO_FARMACIA (ID_MEDICAMENTO_FARMACIA, ID_FARMACIA);
+    CALL pf33_testar_recusa_indice(etapa, 'indice UQ_MEDICAMENTO_FARMACIA divergente', 'nomes de colunas divergentes');
+    ALTER TABLE MEDICAMENTO_FARMACIA DROP INDEX UQ_MEDICAMENTO_FARMACIA,
+        ADD UNIQUE INDEX UQ_MEDICAMENTO_FARMACIA (ID_MEDICAMENTO_FARMACIA);
+    CALL pf33_testar_recusa_indice(etapa, 'indice UQ_MEDICAMENTO_FARMACIA divergente', 'indice de uma coluna');
+    ALTER TABLE MEDICAMENTO_FARMACIA DROP INDEX UQ_MEDICAMENTO_FARMACIA;
+    CALL pf33_testar_recusa_indice(etapa, 'indice UQ_MEDICAMENTO_FARMACIA divergente', 'indice ausente');
+    ALTER TABLE MEDICAMENTO_FARMACIA
+        ADD UNIQUE INDEX UQ_MEDICAMENTO_FARMACIA (ID_MEDICAMENTO, ID_FARMACIA);
+    DROP INDEX pf33_p2_suporte_fk ON MEDICAMENTO_FARMACIA;
+    -- InnoDB pode remover o indice automatico redundante ao criar o suporte explicito.
+    IF NOT EXISTS (SELECT 1 FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME = 'MEDICAMENTO_FARMACIA' AND INDEX_NAME = 'FK_ID_FARMACIA') THEN
+        ALTER TABLE MEDICAMENTO_FARMACIA RENAME INDEX pf33_p2_suporte_fk_farmacia TO FK_ID_FARMACIA;
+    ELSE
+        DROP INDEX pf33_p2_suporte_fk_farmacia ON MEDICAMENTO_FARMACIA;
+    END IF;
+END$$
+DELIMITER ;
+CALL u01_seed_anterior_em_teste();
+INSERT INTO HISTORICO_PRECO (ID_HISTORICO_PRECO,ID_MEDICAMENTO_FARMACIA,PRECO,DATA_REGISTRO)
+VALUES (4001,3001,8.99,'2026-11-01');
+CREATE TEMPORARY TABLE pf33_medicamentos_antes AS SELECT * FROM MEDICAMENTO;
+CREATE TEMPORARY TABLE pf33_farmacias_antes AS SELECT * FROM FARMACIA;
+CREATE TEMPORARY TABLE pf33_ofertas_antes AS SELECT * FROM MEDICAMENTO_FARMACIA;
+CREATE TEMPORARY TABLE pf33_historico_antes AS SELECT * FROM HISTORICO_PRECO;
+UPDATE HISTORICO_PRECO SET PRECO = 0 WHERE ID_HISTORICO_PRECO = 4001;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa historico zero sem alterar estrutura');
+UPDATE HISTORICO_PRECO SET PRECO = -1 WHERE ID_HISTORICO_PRECO = 4001;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa historico negativo');
+UPDATE HISTORICO_PRECO SET PRECO = 8.99 WHERE ID_HISTORICO_PRECO = 4001;
+INSERT INTO HISTORICO_PRECO (ID_HISTORICO_PRECO,ID_MEDICAMENTO_FARMACIA,PRECO,DATA_REGISTRO)
+VALUES (4002,3001,9.99,'2026-11-01');
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa duplicidade preexistente');
+DELETE FROM HISTORICO_PRECO WHERE ID_HISTORICO_PRECO = 4002;
+UPDATE FARMACIA SET CEP = 'ABC' WHERE ID_FARMACIA = 2001;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa CEP preexistente invalido');
+UPDATE FARMACIA SET CEP = '72429005', LATITUDE = 999 WHERE ID_FARMACIA = 2001;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa latitude preexistente invalida');
+UPDATE FARMACIA SET LATITUDE = -15.9960000, LONGITUDE = NULL WHERE ID_FARMACIA = 2001;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa coordenadas preexistentes parciais');
+UPDATE FARMACIA SET LONGITUDE = -48.0560000 WHERE ID_FARMACIA = 2001;
+ALTER TABLE FARMACIA ADD CONSTRAINT CK_FARMACIA_CEP CHECK (1 = 1);
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa colisao de constraint');
+ALTER TABLE FARMACIA DROP CHECK CK_FARMACIA_CEP;
+ALTER TABLE FARMACIA ADD COLUMN PF33_EXTRA INT;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa estrutura inesperada');
+ALTER TABLE FARMACIA DROP COLUMN PF33_EXTRA;
+CREATE INDEX UQ_MEDICAMENTO_IDENTIDADE ON MEDICAMENTO (NOME);
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa colisao de indice independente');
+DROP INDEX UQ_MEDICAMENTO_IDENTIDADE ON MEDICAMENTO;
+ALTER TABLE MEDICAMENTO MODIFY NOME VARCHAR(150) COLLATE utf8mb4_0900_ai_ci NOT NULL;
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa collation divergente sem converter');
+ALTER TABLE MEDICAMENTO MODIFY NOME VARCHAR(150) COLLATE utf8mb4_unicode_ci NOT NULL;
+CALL u01_assert((SELECT COUNT(*) = 0 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE()
+    AND TABLE_NAME = 'MEDICAMENTO' AND COLUMN_NAME = 'APRESENTACAO'), 'Recusas 003a nao adicionam colunas');
+CALL pf33_testar_indice_ofertas('003a');
+CALL pf33_preparar_integridade();
+CALL u01_esperar_erro('CALL pf33_preparar_integridade()',1644,'003a recusa reaplicacao');
+CALL u01_assert((SELECT COUNT(*) = 6 FROM MEDICAMENTO WHERE APRESENTACAO IS NULL),
+    '003a nao inventa apresentacoes nem muda IDs');
+CALL u01_esperar_erro('CALL pf33_consolidar_integridade()',1644,'003b recusa apresentacoes desconhecidas');
+UPDATE MEDICAMENTO SET APRESENTACAO = '   ' WHERE ID_MEDICAMENTO = 1001;
+CALL u01_esperar_erro('CALL pf33_consolidar_integridade()',1644,'003b recusa apresentacoes vazias');
+UPDATE MEDICAMENTO SET APRESENTACAO = NULL WHERE ID_MEDICAMENTO = 1001;

@@ -93,7 +93,7 @@ mysql -u root -p -e "CREATE DATABASE pharmafind CHARACTER SET utf8mb4 COLLATE ut
 mysql -u root -p pharmafind < database/PharmaFindDB.sql
 ```
 
-Execute a criação somente em banco novo. Para banco existente, siga a migração em duas etapas, o preenchimento explícito da disponibilidade e a preservação das datas desconhecidas em [database/README.md](database/README.md), que também documenta os testes isolados. Para criar `pharmafind_demo` com o esquema e a massa fictícia, use `database/Inicializar-Demonstracao.cmd`; consulte [cenários, fontes e reexecução](database/seeds/README.md). Os CEPs/pontos de teste estão em JSON para a futura U05, ainda sem integração Java. Nenhum comando sobe aplicação integrada; histórico permanece com a U09.
+Execute a criação somente em banco novo. Para banco existente, siga as migrações 001/002 e a 003 em etapas, com preenchimento explícito da disponibilidade/apresentação e a preservação das datas desconhecidas em [database/README.md](database/README.md), que também documenta os testes isolados. Para criar `pharmafind_demo` com o esquema e a massa fictícia, use `database/Inicializar-Demonstracao.cmd`; consulte [cenários, fontes e reexecução](database/seeds/README.md). Os CEPs/pontos de teste estão em JSON para a futura U05, ainda sem integração Java. Nenhum comando sobe aplicação integrada; histórico permanece com a U09.
 
 ## 6. Organização do repositório
 
@@ -137,6 +137,8 @@ Papéis não equivalem a atribuição automática das Issues. Cada responsável 
 
 ## 8. Trabalho, rastreabilidade e documentos
 
+- [Documento de Visão — versões históricas e evolução](docs/visao/README.md): versões de setembro e outubro de 2026, com rastreabilidade até a SPEC e os ADRs.
+
 - [Issues de implementação #10–#17](https://github.com/PharmaFind/PharmaFind/issues), U09 [#19](https://github.com/PharmaFind/PharmaFind/issues/19), U10 [#20](https://github.com/PharmaFind/PharmaFind/issues/20) e atualização da SPEC v1.1 [#18](https://github.com/PharmaFind/PharmaFind/issues/18).
 - [CONTEXTO.md](CONTEXTO.md): situação e decisões; [SPEC.md](docs/SPEC.md): requisitos e testes; [API.md](docs/API.md): contratos propostos.
 - [ADRs](docs/ADR/): escolhas e suas justificativas; [AGENTS.md](AGENTS.md): instruções para agentes; [CONTRIBUTING.md](CONTRIBUTING.md): contribuição e revisão.
@@ -146,3 +148,11 @@ Papéis não equivalem a atribuição automática das Issues. Cada responsável 
 A documentação será atualizada conforme mudanças efetivamente implementadas. **Nenhuma aprovação de PR demonstra, por si só, que a aplicação ou testes integrados funcionam.**
 
 **Atualização documental:** decisão de stack da coordenação em 23/11/2026, sob revisão no PR correspondente à [Issue #30](https://github.com/PharmaFind/PharmaFind/issues/30). Sincronização da U01 entre `main` e `develop` concluída pelo PR #29, integrado em 23/11/2026.
+
+**Correção complementar U01 — [#33](https://github.com/PharmaFind/PharmaFind/issues/33):**
+o esquema novo contém quatro tabelas, sem USUARIO; o MVP não possui autenticação nem cadastro.
+Foram adicionadas apresentação própria e identidade única do medicamento, domínio de CEP/coordenadas
+e integridade diária de histórico. Bases existentes usam 003a/003b; remover USUARIO exige etapa
+separada, tabela vazia, ausência de dependências, backup e aprovação do alvo não descartável.
+Ver [migração e recuperação](database/README.md) e [execuções reais](database/tests/RESULTADOS.md).
+Nenhum banco preexistente da equipe foi migrado por esta entrega; integração Java permanece pendente.

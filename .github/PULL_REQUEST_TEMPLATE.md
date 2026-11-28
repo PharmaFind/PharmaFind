@@ -23,7 +23,7 @@
 - [ ] Regras de negócio e casos de borda verificados ou pendências descritas.
 - [ ] Nenhum dado sensível, senha ou localização real incluído em commits/logs.
 - [ ] Documentação atualizada quando necessário (SPEC, API, ADR, README, AGENTS).
-- [ ] Quando aplicável, alterações nos contratos de frontend React/backend Java foram verificadas conjuntamente e comunicadas às outras frentes.
+- [ ] Quando aplicável, alterações nos contratos de frontend HTML/CSS/JavaScript e backend Java foram verificadas conjuntamente e comunicadas às outras frentes.
 - [ ] Feedback do professor referenciado por evidências na Issue U10 (#20), quando houver ajustes visuais/UX.
 - [ ] Base do PR é `develop` (ou `main` apenas ao integrar uma entrega estável).
 - [ ] Revisão solicitada a outro integrante; correções e conversas de revisão resolvidas antes do merge.
